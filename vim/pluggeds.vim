@@ -9,8 +9,29 @@ Plug 'rakr/vim-one' "VIM ONE
 
 "Plugins para autocompletado
 Plug 'neovim/nvim-lspconfig' "Deteccion de los lenguajes (LSP)
+Plug 'williamboman/nvim-lsp-installer' " Intalador de lenguajes
 Plug 'nvim-lua/completion-nvim' "Autocompletado de lenguajes
-Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'} "Recuadro para las sugerencias del autocompletado
+" Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'} "Recuadro para las sugerencias del autocompletado
+"CMP
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'onsails/lspkind.nvim'
+Plug 'windwp/nvim-autopairs'
+
+" For vsnip users.
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip'
+
+" For luasnip users.
+Plug 'L3MON4D3/LuaSnip'
+Plug 'saadparwaiz1/cmp_luasnip'
+
+" For snippy users.
+Plug 'dcampos/nvim-snippy'
+Plug 'dcampos/cmp-snippy'
 
 "Plugins para JavaScript
 Plug 'pangloss/vim-javascript' "Resaltado con colores de sintaxis javascript

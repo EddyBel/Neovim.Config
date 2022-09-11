@@ -29,3 +29,8 @@ nnoremap <leader>hh <cmd>Telescope colorscheme<cr>
 "------------------Vim-Comment--------------------------
 nnoremap <leader>ll :CommentToggle<CR>
 "------------------Fin----------------------------------
+
+"------------------LSP-Installer--------------------------
+nnoremap <leader>lspin :LspInstallInfo<CR>
+nnoremap <leader>lspif :LspInfo<CR>
+"------------------Fin----------------------------------
