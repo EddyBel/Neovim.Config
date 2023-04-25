@@ -1,13 +1,18 @@
-vim.cmd 'source $HOME/AppData/Local/nvim/vim/pluggeds.vim'
-vim.cmd 'source $HOME/AppData/Local/nvim/vim/settings.vim'
-vim.cmd 'source $HOME/AppData/Local/nvim/vim/map.vim'
+vim.g.mapleader = " "
 
-require 'pluggeds_config.index'
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+require("lazy").setup("plugins")
 
-
-vim.cmd 'source $HOME/AppData/Local/nvim/vim/theme.vim'
-vim.cmd 'source $HOME/AppData/Local/nvim/vim/pluggeds_config/airline.vim'
-vim.cmd 'source $HOME/AppData/Local/nvim/vim/pluggeds_config/prettier.vim'
-vim.cmd 'source $HOME/AppData/Local/nvim/vim/pluggeds_config/close_tag.vim'
-vim.cmd 'source $HOME/AppData/Local/nvim/vim/pluggeds_config/emmet_vim.vim'
-vim.cmd 'source $HOME/AppData/Local/nvim/vim/pluggeds_config/hexokinase.vim'
+require("map")
+require("settings")
