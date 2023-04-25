@@ -17,7 +17,7 @@ cmp.setup {
   -- Tab Recorre las opciones hacia abajo
   -- Shift + Tab Recorre las opciones hacia arriba
   -- Ctrl + p para seleccionar el elemento anterior en la lista del autocompletado
-  -- Ctrl + y para confirmar la selección del autocompletado
+  -- Enter para confirmar la selección del autocompletado
   -- Ctrl + space para completar el autocompletado
   mapping = {
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
@@ -43,11 +43,11 @@ cmp.setup {
         end
       end, { "i", "s" }),
     -- ["<C-p>"] = cmp.mapping.select_prev_item(),
-    ["<C-y>"] = cmp.mapping.confirm {
+    ["<Enter>"] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Insert,
       select = true,
     },
-    ["<C-space>"] = cmp.mapping.complete(),
+    ["<C-Space>"] = cmp.mapping.complete(),
   },
 
   -- Deifne las fuentes que utilizara para mostrar información del autocompletado.

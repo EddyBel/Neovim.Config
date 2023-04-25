@@ -17,7 +17,8 @@ vim.api.nvim_set_keymap('n', '<leader>tr', ':botright vnew <BAR> :terminal<CR>',
 vim.api.nvim_set_keymap('n', '<leader>tb', ':botright new <BAR> :terminal<CR>', { noremap = true })  -- Abre la terminal en la parte inferior
 vim.api.nvim_set_keymap('n', '<leader>nr', ':botright vnew<CR>', { noremap = true })                 -- Abre un nuevo espacio de trabajo (right)
 vim.api.nvim_set_keymap('n', '<leader>nb', ':botright new<CR>', { noremap = true })                  -- Abre un nuevo espacio de trabajo (bottom)
-vim.api.nvim_set_keymap('n', '<C-B>', ':NERDTreeToggle<CR>', { noremap = true })                     -- Abre el arbol de archivos
+-- vim.api.nvim_set_keymap('n', '<C-B>', ':NERDTreeToggle<CR>', { noremap = true })                    -- Abre el arbol de archivos
+vim.api.nvim_set_keymap('n', '<C-B>', ':NeoTreeFocusToggle<CR>', { noremap = true })                 -- Abre el arbol de archivos
 vim.api.nvim_set_keymap('n', '<leader>ff', '<cmd>Telescope find_files<CR>', { noremap = true })      -- Muestra todos los archivos del documento
 vim.api.nvim_set_keymap('n', '<leader>fg', '<cmd>Telescope live_grep<CR>', { noremap = true })       --
 vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>Telescope buffers<CR>', { noremap = true })         -- Muestra los archivos y sus documentos

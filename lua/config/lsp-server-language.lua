@@ -41,6 +41,9 @@ lspconfig.emmet_ls.setup {
   filetypes = { "astro", "eruby", "html", "htmldjango", "javascriptreact", "pug", "svelte", "typescriptreact", "vue" },
   single_file_soport = true,
 } -- HTML
+-- lspconfig.rust_analyzer.setup {
+--     settings = { ['rust-analyzer'] = {} },
+-- }
 
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions

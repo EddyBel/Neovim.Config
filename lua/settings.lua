@@ -13,6 +13,7 @@ vim.opt.laststatus = 2                                -- Muestra la barra de est
 vim.opt.showmode = false                              -- Oculta el modo actual en la última línea
 vim.opt.clipboard:append { 'unnamed', 'unnamedplus' } -- Establece que lo que se copie vaya al portapapeles
 vim.opt.fillchars = { eob = ' ' }                     -- Limpia los simbolos ~ del editor
+vim.opt.termguicolors = true                          -- Marca los colores necesarios
 
 -- Formatear automáticamente al guardar :w
 vim.cmd([[ autocmd BufWritePre * lua vim.lsp.buf.format() ]])
