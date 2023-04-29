@@ -1,4 +1,7 @@
 vim.g.mapleader = " "
+vim.opt.termguicolors = true -- Marca los colores necesarios
+vim.o.termguicolors = true
+
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then

@@ -32,7 +32,7 @@ cmp.setup {
           fallback()
         end
       end, { "i", "s" }),
-    ["<S-TAB>"] = cmp.mapping(
+    ["<S-Tab>"] = cmp.mapping(
       function(fallback)
         if cmp.visible() then
           cmp.close()
@@ -63,7 +63,6 @@ cmp.setup {
     { name = "path" },
     { name = "luasnip" },
     { name = "nvim_lsp_signature_help" },
-    { name = "emmet_vim" },
     {
       name = "buffer",
       keyword_length = 4,
@@ -77,7 +76,7 @@ cmp.setup {
           return vim.tbl_keys(bufs)
         end,
       },
-    },
+    }
   },
 
   -- La sección snippet define una función anónima expand que se utilizará para expandir los snippets. Dentro de la función, se llama a la función lsp_expand de la biblioteca luasnip

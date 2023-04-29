@@ -62,32 +62,13 @@ cd NeoVim-config
 
 The next step is to copy the configuration files **init.lua** and **lua** to the neovim configuration folder.
 
-Finally, before loading the configuration it is necessary to install the LSP servers, they will take care of syntax highlighting and code autocompletion.
+For the language servers there is the Mason Plugin, this plugin allows you to download with a simple command the servers for syntax autocompletion.
 
-To install them you can use the file [servers.bat](./servers.bat) or [servers.sh](./servers.sh) to run them automatically or install them one by one:
-
-```bash
-npm i -g pyright # Python
-npm i -g typescript # JavaScript, TypeScript
-npm i -g typescript-language-server # JavaScript, TypeScript
-npm i -g emmet-ls # HTML
-npm i -g vscode-langservers-extracted # CSS, SASS, LESS, JSON
-npm i -g @tailwindcss/language-server # TailwindCss
-npm i -g @microsoft/compose-language-service # Docker-compose
-npm i -g dockerfile-language-server-nodejs # Dockerfile
-npm i -g bash-language-server # Bash
-npm install -g vim-language-server # Vim
-
-scoop install lua-language-server # Lua
-```
+The plugin comes preloaded with the most common languages to use, but you can add the ones you need in the mason-lspconfig.lua configuration files.
 
 You can install other programming languages you need as indicated in the [lsp-config](https://github.com/neovim/nvim-lspconfig) repository, the language configuration file is located inside the specific config folder [lsp-server-language.lua](./lua/config/lsp-server-language.lua), you can integrate there the language you need.
 
 Finally, just run neovim and Lazy will install and download all the listed plugins.
-
-> Note
->
-> In the repo you will find files called [install.bat](./install.bat) or [install.sh](./install.sh), these files can install neovim and load the configuration as indicated, this can help you if you do not want to manually install the configuration.
 
 ## 🎢 Project status
 

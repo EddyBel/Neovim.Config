@@ -14,6 +14,7 @@ vim.opt.showmode = false                              -- Oculta el modo actual e
 vim.opt.clipboard:append { 'unnamed', 'unnamedplus' } -- Establece que lo que se copie vaya al portapapeles
 vim.opt.fillchars = { eob = ' ' }                     -- Limpia los simbolos ~ del editor
 vim.opt.termguicolors = true                          -- Marca los colores necesarios
+vim.o.termguicolors = true
 
 -- Formatear automáticamente al guardar :w
 vim.cmd([[ autocmd BufWritePre * lua vim.lsp.buf.format() ]])
@@ -28,7 +29,7 @@ vim.opt.history = 1000 -- Marca el tamaño de historial que tendra
 -- vim.opt.t_ut = '' -- En caso de fallos con el fondo
 
 -- Gestor de archivos NERD
-vim.g.NERDTreeQuitOnOpen = 1
+-- vim.g.NERDTreeQuitOnOpen = 1
 
 -- ----------------> Configuraciones del tema del editor <----------------
 -- Define el tema a utilizar en el editor
@@ -37,5 +38,4 @@ vim.g.NERDTreeQuitOnOpen = 1
 -- kanagawa
 -- rose-pine
 -- onedark
--- vim.cmd("colorscheme rose-pine")
 vim.cmd("colorscheme rose-pine")

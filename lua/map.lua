@@ -6,6 +6,7 @@ vim.api.nvim_set_keymap('i', '<C-S>', '<Esc>:w<CR>a', { noremap = true })       
 vim.api.nvim_set_keymap('n', '<leader>qq', ':q!<CR>', { noremap = true })                            -- Forzar el cierre del buffer
 vim.api.nvim_set_keymap('v', '<C-c>', 'y', { noremap = true })                                       -- Copiar en el documento
 vim.api.nvim_set_keymap('i', '<C-v>', 'p', { noremap = true })                                       -- Pegar en el documento
+vim.api.nvim_set_keymap('v', '<C-x>',  'd', { noremap = true })                                         -- Corta el texto
 vim.api.nvim_set_keymap('i', '<C-z>', '<Esc>:undo<CR>', { noremap = true })                          -- Desase los cambios
 vim.api.nvim_set_keymap('n', '<C-z>', ':undo<CR>', { noremap = true })                               -- Desase los cambios
 vim.api.nvim_set_keymap('n', '<C-y>', ':redo<CR>', { noremap = true })                               -- Reconstruye los cambios

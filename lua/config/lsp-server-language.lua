@@ -1,26 +1,29 @@
 -- Setup language servers.
 local lspconfig = require('lspconfig')
+local util = require('lspconfig/util')
 --Enable (broadcasting) snippet capability for completion
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 -- Opciones de configuración de los servidores de lenguaje
 
+local current_path = function(fname) return vim.fn.getcwd() end
+
 local opt = {
-  root_dir = function(fname) return vim.fn.getcwd() end,
+  root_dir = current_path,
   autostart = true,
   single_file_soport = true,
 }
 
 local opt_cap = {
   capabilities = capabilities,
-  root_dir = function(fname) return vim.fn.getcwd() end,
+  root_dir = current_path,
   autostart = true,
   single_file_soport = true,
 }
 
 local opt_root = {
-  root_dir = function(fname) return vim.fn.getcwd() end
+  root_dir = current_path
 }
 
 -- Inicializa los servidores lsp que se utilizaran
@@ -33,6 +36,11 @@ lspconfig.bashls.setup(opt_root)                   -- BASH
 lspconfig.luau_lsp.setup(opt_root)                 -- Lua
 lspconfig.lua_ls.setup(opt_root)                   -- Lua
 lspconfig.vimls.setup(opt_root)                    -- Vim
+lspconfig.jdtls.setup(opt_root)                    -- Java
+lspconfig.rust_analyzer.setup(opt_root)            -- Rust
+lspconfig.gopls.setup(opt_root)                    -- Go
+lspconfig.clangd.setup(opt_root)                   -- C++, C, Objective C
+lspconfig.tailwindcss.setup(opt_root)              -- Tailwindcss
 lspconfig.dockerls.setup {}                        -- DOCKERFILE
 lspconfig.docker_compose_language_service.setup {} -- Docker-Compose
 lspconfig.emmet_ls.setup {
@@ -41,9 +49,7 @@ lspconfig.emmet_ls.setup {
   filetypes = { "astro", "eruby", "html", "htmldjango", "javascriptreact", "pug", "svelte", "typescriptreact", "vue" },
   single_file_soport = true,
 } -- HTML
--- lspconfig.rust_analyzer.setup {
---     settings = { ['rust-analyzer'] = {} },
--- }
+
 
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
