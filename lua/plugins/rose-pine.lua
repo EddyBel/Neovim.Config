@@ -1,12 +1,13 @@
 return {
   'rose-pine/neovim',
-  priority = 100,
+  lazy = false,
+  priority = 1000,
   as = 'rose-pine',
   config = function()
   end,
   opts = {
     --- @usage 'auto'|'main'|'moon'|'dawn'
-    variant = 'auto',
+    variant = 'main',
     --- @usage 'main'|'moon'|'dawn'
     dark_variant = 'main',
     bold_vert_split = false,

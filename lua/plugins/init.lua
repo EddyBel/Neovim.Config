@@ -5,12 +5,11 @@ return {
   'alvan/vim-closetag',
   'christoomey/vim-tmux-navigator',
   'p00f/nvim-ts-rainbow',
-  -- 'airblade/vim-gitgutter',
-  -- {
-  --   'ryanoasis/vim-devicons',
-  --   after = 'preservim/nerdtree'
-  -- },
-  init = function()
+  {
+    'mg979/vim-visual-multi',
+    branch = 'master'
+  },
+  config = function()
     -- NERDTree
     vim.g.NERDTreeMinimalUI = 1
     -- emmet_vim

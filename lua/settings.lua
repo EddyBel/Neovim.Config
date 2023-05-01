@@ -38,4 +38,5 @@ vim.opt.history = 1000 -- Marca el tamaño de historial que tendra
 -- kanagawa
 -- rose-pine
 -- onedark
+-- bluloco
 vim.cmd("colorscheme rose-pine")
