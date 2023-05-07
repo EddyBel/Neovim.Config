@@ -1,10 +1,29 @@
 return {
-  -- 'preservim/nerdtree',
   "jwalton512/vim-blade",
   'mattn/emmet-vim',
   'alvan/vim-closetag',
   'christoomey/vim-tmux-navigator',
   'p00f/nvim-ts-rainbow',
+  'moll/vim-bbye',
+  'romgrk/barbar.nvim',
+  'nvim-tree/nvim-web-devicons',
+  {
+    "norcalli/nvim-colorizer.lua",
+    event = "VeryLazy",
+    config = true,
+  },
+  {
+    "ziontee113/color-picker.nvim",
+    keys = { { "<C-c>", "<cmd>PickColorInsert<cr>", mode = "i", desc = "ColorPicker" } },
+    config = true,
+  },
+  {
+    'akinsho/toggleterm.nvim',
+    config = true,
+    opts = {
+      direction = "float"
+    }
+  },
   {
     'mg979/vim-visual-multi',
     branch = 'master'

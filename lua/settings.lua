@@ -13,8 +13,8 @@ vim.opt.laststatus = 2                                -- Muestra la barra de est
 vim.opt.showmode = false                              -- Oculta el modo actual en la última línea
 vim.opt.clipboard:append { 'unnamed', 'unnamedplus' } -- Establece que lo que se copie vaya al portapapeles
 vim.opt.fillchars = { eob = ' ' }                     -- Limpia los simbolos ~ del editor
-vim.opt.termguicolors = true                          -- Marca los colores necesarios
-vim.o.termguicolors = true
+vim.o.termguicolors = true                            -- Configuracion que mejora los colores y diseños
+vim.opt.wrap = false                                  -- No crees un salto de linea automatico
 
 -- Formatear automáticamente al guardar :w
 vim.cmd([[ autocmd BufWritePre * lua vim.lsp.buf.format() ]])
@@ -27,6 +27,7 @@ vim.opt.softtabstop = 2
 
 vim.opt.history = 1000 -- Marca el tamaño de historial que tendra
 -- vim.opt.t_ut = '' -- En caso de fallos con el fondo
+
 
 -- Gestor de archivos NERD
 -- vim.g.NERDTreeQuitOnOpen = 1

@@ -10,7 +10,8 @@
 
 <p align="center" >Configuración de NeoVim</p>
 
-![Preview Proyect](./assets/capture_2.png)
+![Preview Proyect](./assets/capture_3.png)
+![Preview proyect2](./assets/capture_4.png)
 
 This repository contains my custom configuration for Neovim, an advanced text editor that can be turned into a powerful integrated development environment (IDE). With my configuration, Neovim becomes a virtually full-featured IDE, supporting multiple programming languages and offering a smooth and agile user experience thanks to the use of the **[Lazy](https://github.com/folke/lazy.nvim)** plugin manager. You'll find everything you need to start working with Neovim right away, from installing plugins to customizing keyboard shortcuts and display options - enjoy the productivity Neovim has to offer!
 
@@ -60,7 +61,7 @@ git clone https://github.com/EddyBel/NeoVim-config.git
 cd NeoVim-config
 ```
 
-The next step is to copy the configuration files **init.lua** and **lua** to the neovim configuration folder.
+The next step is to copy the configuration files **init.lua**, **lua** and **lazy-lock.json** to the neovim configuration folder.
 
 For the language servers there is the Mason Plugin, this plugin allows you to download with a simple command the servers for syntax autocompletion.
 
