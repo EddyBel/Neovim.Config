@@ -21,6 +21,8 @@ return {
     vim.g.neoformat_enabled_html = { 'prettier' }
     vim.g.neoformat_enabled_css = { 'prettier' }
     vim.g.neoformat_enabled_scss = { 'prettier' }
+    vim.g.neoformat_enabled_typescriptreact = { 'prettier' }
+    vim.g.neoformat_enabled_javascriptreact = { 'prettier' }
     vim.g.neoformat_enabled_json = { 'prettier' }
     vim.g.neoformat_enabled_java = { 'prettier' }
     vim.g.neoformat_enabled_kotlin = { 'prettier' }

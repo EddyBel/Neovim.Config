@@ -13,6 +13,8 @@ function validates_the_code_formatting_type()
 end
 
 ---Lanza una notificación si se encuentra el modulo de notify
+---@param message string Mensaje que se mostrara en la notificación
+---@param type string Tipo de mensaje que se mostrara
 function notification(message, type)
   local ok, notify = pcall(require, "notify")
   if ok then

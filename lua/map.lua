@@ -32,6 +32,7 @@ vim.keymap.set('n', '<C-z>', ':undo<CR>', { noremap = true })                -- 
 vim.keymap.set('n', '<C-y>', ':redo<CR>', { noremap = true })                -- Reconstruye los cambios
 vim.keymap.set('n', '<C-p>', ':CommentToggle<CR>', { noremap = true })       -- Comenta la linea donde te encuentras
 vim.keymap.set('i', '<C-p>', '<Esc>:CommentToggle<CR>a', { noremap = true }) -- Comenta la linea donde te encuentras (Insertar)
+vim.keymap.set('v', '<C-p>', '<S-:>CommentToggle<CR>', { noremap = true })   -- Comenta todas las lineas seleccionadas (Visual)
 
 -- ATAJOS PARA LA TERMINAL
 

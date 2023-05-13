@@ -8,6 +8,8 @@ return {
   'romgrk/barbar.nvim',
   "sindrets/diffview.nvim",
   'editorconfig/editorconfig-vim',
+  'chrisbra/csv.vim',
+  -- "jbyuki/venn.nvim",
   {
     "iamcco/markdown-preview.nvim",
     config = function() vim.fn["mkdp#util#install"]() end,

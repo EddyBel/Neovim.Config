@@ -26,7 +26,7 @@ return {
         icon = "󰌛",
         color = "#BB8FCE",
         name = "Cs"
-      },
+      }
     },
     override_by_filename = {
       [".editorconfig"] = {

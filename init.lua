@@ -23,7 +23,7 @@ vim.opt.rtp:prepend(lazypath)
 local lazy = require("lazy")
 lazy.setup("plugins")
 
--- Carga los módulos o archivos necesarios para la configuración
+-- Carga los módulos "map" y "settings" que se encuentran en la misma ruta del archivo actual
 require("map")
 require("utils.files")
 require("utils.utils")

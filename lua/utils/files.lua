@@ -1,48 +1,112 @@
----Esta funcion crea un archivo inicial de prettier si no existe uno previo
----Al ejecutarse buscara en la raiz del proyecto si ya existe un archivo .prettierrc
----Si no existe un archivo .prettierrc lo creara con una configuración precargada
-function Init_prettier()
-  -- Define el nombre del archivo y su contenido
-  local prettierrc = "prettier.config.js"
-  local prettierrc_content = [[
-module.exports = {
-  singleQuote: true,
-  trailingComma: 'all',
-  useTabs: false,
-  tabWidth: 2,
-  endOfLine: 'lf',
-  overrides: [
-    {
-      files: '*.yaml',
-      options: {
-        tadWidth: 2,
-        printWidth: 40,
-        singleQuote: true,
-      },
-    },
-  ],
-};]]
-
-  -- Busca en la raiz si el archivo existe.
-  -- Si no existe entonces crealo con el contenido predefinido
-  -- Muestra un mensaje si el archivo se a creado o si ya existe
-  if vim.fn.filereadable(prettierrc) == 0 then
-    local prettierrc_file = io.open(prettierrc, "w")
-    prettierrc_file:write(prettierrc_content)
-    prettierrc_file:close()
-    notification(prettierrc .. " created with default settings", "info")
+---Esta función crea un archivo en el directorio de trabajo actual
+---Valida si el archivo a crear existe en el directorio
+---Envia un mensaje o notificación de que el archivo se a creado o no se puede crear
+---@param name_file string Nombre del archivo a crear
+---@param content_file string Contenido del archivo que se creara
+function create_file(name_file, content_file)
+  if vim.fn.filereadable(name_file) == 0 then
+    local file = io.open(name_file, "w")
+    file:write(content_file)
+    file:close()
+    vim.cmd(":Neotree")
+    notification(name_file .. " created with default settings", "info")
   else
-    notification(prettierrc .. " already exists", "warn")
+    notification(name_file .. " already exists", "warn")
   end
 end
 
----Esta funcion crea un archivo inicial de .editorconfig si no existe uno previo
----Al ejecutarse buscara en la raiz del proyecto si ya existe un archivo .editorconfig
----Si no existe un archivo .editorconfig lo creara con una configuración precargada
-function Init_editor_config()
-  -- Define el nombre del archivo y su contenido
-  local editorconfig = ".editorconfig"
-  local editorconfig_content = [[
+---Crea un arbol de direcotiorios segun las instrucciones de una tabla
+---@param structure table Tabla que denife la estructura de archivos
+---@param directory string Directorio donde se creara la estructura
+function create_folders_structure(structure, directory)
+  if directory == nil then directory = vim.fn.getcwd() end -- Obtener el directorio base si no se proporciona ningun directorio
+
+  for key, value in pairs(structure) do
+    if type(value) == "table" then
+      local new_directory = directory .. "/" .. key
+      vim.fn.mkdir(new_directory)
+      create_folders_structure(value, new_directory) -- llamada recursiva con el nuevo directorio
+    elseif value == "directory" then
+      local new_directory = directory .. "/" .. key
+      vim.fn.mkdir(new_directory)
+    else
+      local file = directory .. "/" .. key .. "." .. value
+      local file = io.open(file, "w")
+      file:write("New file")
+      file:close()
+    end
+  end
+
+  vim.cmd(":Neotree")
+  notification("Structure created", "info")
+end
+
+-- Define los archivos a crear y su Contenido
+
+vim.g.name_dockerfile_config = "dockerfile"
+vim.g.content_dockerfile_config = [[
+# Type the image that will use the container of your project
+FROM image
+
+# The work area will be the internal app folder.
+WORKDIR /app
+
+# Set the environment variables that you can use
+ARG PORT=3000
+
+# Time copy all project files to the work area.
+COPY . /app
+
+# Install the necessary requirements from the copied file.
+RUN install command
+
+# Specifies the port to expose.
+EXPOSE 3000
+
+# Execute the command to initialize the project.
+CMD ["command", "param"]
+]]
+
+vim.g.name_prettier_config = ".prettierrc"
+vim.g.content_prettier_config = [[
+{
+   "printWidth": 120,
+   "tabWidth": 2,
+   "useTabs": false,
+   "semi": true,
+   "singleQuote": true,
+   "quoteProps": "as-needed",
+   "jsxSingleQuote": false,
+   "trailingComma": "all",
+   "bracketSpacing": true,
+   "jsxBracketSameLine": false,
+   "arrowParens": "always",
+   "requirePragma": false,
+   "insertPragma": false,
+   "proseWrap": "preserve",
+   "vueIndentScriptAndStyle": false,
+   "htmlWhitespaceSensitivity": "strict",
+   "endOfLine": "lf",
+   "overrides": [
+      {
+         "files": "*.md",
+         "options": {
+            "proseWrap": "always"
+         }
+      },
+      {
+         "files": "*.yaml",
+         "options": {
+            "tadWidth": 2,
+            "printWidth": 40,
+            "singleQuote": true
+         }
+      }
+   ]
+}]]
+
+vim.g.name_editor_config = ".editorconfig"
+vim.g.content_editor_config = [[
 # top-most EditorConfig file
 root = true
 
@@ -65,46 +129,60 @@ max_line_length = off
 indent_size = 2
 indent_style = space]]
 
-  -- Busca en la raiz si el archivo existe.
-  -- Si no existe entonces crealo con el contenido predefinido
-  -- Muestra un mensaje si el archivo se a creado o si ya existe
-  if vim.fn.filereadable(editorconfig) == 0 then
-    local editorconfig_file = io.open(editorconfig, "w")
-    editorconfig_file:write(editorconfig_content)
-    editorconfig_file:close()
-    notification(editorconfig .. " created with default settings", "info")
-  else
-    notification(editorconfig .. " already exists", "warn")
-  end
-end
+vim.g.name_dockercompose = "docker-compose.yaml"
+vim.g.content_dockercompose = [[
+# Specify the version of Docker Compose being used
+version: '3'
 
---- Crea la estructura de proyecto para sass utilizando scss
-function Init_sass_estructure(directory)
-  -- Si no se proporciona un directorio, se usa el directorio actual.
-  if directory == nil then
-    directory = vim.fn.getcwd()
-  end
+# Define the services that will make up our application
+services:
+  # Configuration for the first service
+  servicio1:
+    # Specify the location of the Dockerfile to build the container
+    build: ./directory_of_service1
+    # Specify the ports that will be exposed in the container and on the host
+    ports:
+      - '8000:8000'
+    # Specify the command to initialize the service
+    command: initialization_command_for_service1
 
-  -- Crea el directorio 'sass'.
-  local sass_dir = directory .. "/sass"
-  vim.fn.mkdir(sass_dir)
+  # Configuration for the second service
+  servicio2:
+    # Specify the location of the Dockerfile to build the container
+    build: ./directory_of_service2
+    # Specify the ports that will be exposed in the container and on the host
+    ports:
+      - '8080:8080'
+    # Specify the command to initialize the service
+    command: initialization_command_for_service2
+]]
 
-  -- Crea las subcarpetas 'base', 'common', 'layouts', y 'utils'.
-  local subdirs = { "base", "common", "layouts", "utils" }
-  for _, subdir in ipairs(subdirs) do
-    local dir = sass_dir .. "/" .. subdir
-    vim.fn.mkdir(dir)
-  end
+-- Define las estructuras de archivos que vas a utilizar
 
-  -- Crea el archivo 'global.scss' dentro del directorio 'sass'.
-  local global_scss = sass_dir .. "/global.scss"
-  local file = io.open(global_scss, "w")
-  file:write("// Archivo global de estilos\n")
-  file:close()
+vim.g.sass_estructure = {
+  sass = {
+    base = "directory",
+    common = "directory",
+    layouts = "directory",
+    utils = "directory",
+    global = "scss"
+  }
+}
+vim.g.srcnode_estructure = {
+  src = {
+    controllers = "directory",
+    models = "directory",
+    routes = "directory",
+    services = "directory"
+  },
+  public = "directory",
+  tmp = "directory",
+  index = "js"
+}
 
-  notification("Sass file structure created", "info")
-end
-
-vim.cmd("command! InitPrettierConfig lua Init_prettier()")                         -- Crea el comando para crear un archivo prettierrc
-vim.cmd("command! InitEditorConfig lua Init_editor_config()")                      -- Crea el archivo inicial para editorconfig
-vim.cmd("command! -nargs=1 InitSassEstructure lua Init_sass_estructure(<f-args>)") -- Crea la estructura de archivos Sass
+vim.cmd("command! InitPrettierConfig lua create_file(vim.g.name_prettier_config, vim.g.content_prettier_config)") -- Crea el comando para crear un archivo prettierrc
+vim.cmd("command! InitEditorConfig lua create_file(vim.g.name_editor_config, vim.g.content_editor_config)")       -- Crea el archivo inicial para editorconfig
+vim.cmd("command! InitDockerfile lua create_file(vim.g.name_dockerfile_config, vim.g.content_dockerfile_config)") -- Crea el archivo inicial para dockerfile
+vim.cmd("command! InitDockerCompose lua create_file(vim.g.name_dockercompose, vim.g.content_dockercompose)")      -- Crea el archivo inicial para docker-compose
+vim.cmd("command! -nargs=1 InitSassEstructure lua create_folders_structure(vim.g.sass_estructure, <f-args>)")     -- Crea la estructura de archivos Sass
+vim.cmd("command! -nargs=1 InitNodeEstructure lua create_folders_structure(vim.g.srcnode_estructure, <f-args>)")  -- Crea la estructura de archivos NodeJS
