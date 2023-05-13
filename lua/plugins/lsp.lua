@@ -34,9 +34,10 @@ return {
     lspconfig.gopls.setup(opts)                        -- Go
     lspconfig.clangd.setup(opts)                       -- C++, C, Objective C
     lspconfig.tailwindcss.setup(opts)                  -- Tailwindcss
+    lspconfig.csharp_ls.setup(opts)                    -- C#
     lspconfig.dockerls.setup {}                        -- DOCKERFILE
     lspconfig.docker_compose_language_service.setup {} -- Docker-Compose
-
+    lspconfig.sqlls.setup(opts)                        -- SQL, MYSQL
     opts.filetypes = { "astro", "eruby", "html", "htmldjango", "javascriptreact", "pug", "svelte", "typescriptreact",
       "vue" }
     lspconfig.emmet_ls.setup(opts) -- HTML
@@ -53,18 +54,18 @@ return {
       update_in_insert = true
     })
 
-    --local sign = function(opts)
-    --  vim.fn.sign_define(opts.name, {
-    --    texthl = opts.name,
-    --    text = opts.text,
-    --    numhl = ''
-    --  })
-    --end
+    local sign = function(opts)
+      vim.fn.sign_define(opts.name, {
+        texthl = opts.name,
+        text = opts.text,
+        numhl = ''
+      })
+    end
 
-    --sign({ name = 'DiagnosticSignError', text = '✘' })
-    --sign({ name = 'DiagnosticSignWarn', text = '▲' })
-    --sign({ name = 'DiagnosticSignHint', text = '⚑' })
-    --sign({ name = 'DiagnosticSignInfo', text = '' })
+    sign({ name = 'DiagnosticSignError', text = '│E' })
+    sign({ name = 'DiagnosticSignWarn', text = '│W' })
+    sign({ name = 'DiagnosticSignHint', text = '│H' })
+    sign({ name = 'DiagnosticSignInfo', text = '│I' })
 
     -- Agrega configuraciónes de la ventana que usa lsp para mostrar la información de la sintaxis
     vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
@@ -76,33 +77,5 @@ return {
       vim.lsp.handlers.signature_help,
       { border = 'rounded' }
     )
-
-    -- Global mappings.
-    -- Este fragmento de código define un autocmd (comando automático) para cuando un servidor LSP (Language Server Protocol) se adjunta a un buffer en Neovim. El código establece una serie de opciones para el servidor LSP que se adjunta al buffer, como la habilitación de la función de autocompletado y la definición de mapeos de teclas para varias funciones proporcionadas por el servidor LSP, como ir a la definición o listar referencias.
-    -- vim.api.nvim_create_autocmd('LspAttach', {
-    -- group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-    -- callback = function(ev)
-    -- Enable completion triggered by <c-x><c-o>
-    -- vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
-
-    -- Buffer local mappings.
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    -- local opts = { buffer = ev.buf }
-    -- vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-    -- vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-    -- vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-    -- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-    -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-    -- vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
-    -- vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
-    -- vim.keymap.set('n', '<space>wl', function()
-    -- print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    -- end, opts)
-    -- vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-    -- vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-    -- vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
-    -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-    -- end,
-    -- })
   end
 }

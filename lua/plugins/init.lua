@@ -6,7 +6,12 @@ return {
   'p00f/nvim-ts-rainbow',
   'moll/vim-bbye',
   'romgrk/barbar.nvim',
-  'nvim-tree/nvim-web-devicons',
+  "sindrets/diffview.nvim",
+  'editorconfig/editorconfig-vim',
+  {
+    "iamcco/markdown-preview.nvim",
+    config = function() vim.fn["mkdp#util#install"]() end,
+  },
   {
     "norcalli/nvim-colorizer.lua",
     event = "VeryLazy",

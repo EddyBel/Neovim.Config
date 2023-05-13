@@ -1,4 +1,4 @@
-<h1 align="center" >Neovim configuración</h1>
+<h1 align="center" >Neovim configuration</h1>
 
 <p align="center">
  <img alt="banner_01" src="https://img.shields.io/github/last-commit/EddyBel/NeoVim-config?color=%23AED6F1&style=for-the-badge" />
@@ -8,7 +8,7 @@
  <img alt="banner_05" src="https://img.shields.io/github/languages/code-size/EddyBel/NeoVim-config?color=%23F1948A&style=for-the-badge" />
 </p>
 
-<p align="center" >Configuración de NeoVim</p>
+<p align="center" >Personal neovim configuration</p>
 
 ![Preview Proyect](./assets/capture_3.png)
 ![Preview proyect2](./assets/capture_4.png)
@@ -29,30 +29,38 @@ In order to be able to use the code editor correctly, it is necessary to have so
 
 - [Neovim](https://github.com/neovim/neovim)
 - [NodeJS](https://nodejs.org/en/)
-- [Scoop](https://scoop.sh/)
+- [Python](https://www.python.org/)
 - [Compiler C++](./docs/Instalar%20compilador%20de%20C%2B%2B.md)
 
 ## 🦉 Features
 
-- [x] Multi-language support.
+- [x] Support for multiple programming languages.
+  - [x] JavaScript
+  - [x] HTML
+  - [x] CSS
+  - [x] Python
+  - [x] Lua
+  - [x] Vim Script
+  - [x] JSON
+  - [x] C
+  - [x] C++
+  - [x] C#
+  - [x] SQL
+  - [x] Dockerfiles
+  - [x] YAML
+  - [x] Markdown
+  - [x] Rust
+  - [x] Typescript
+  - [x] Java
+- [x] Code formatting for multiple languages.
 - [x] Syntax coloring.
-- [x] Code auto-completion.
+- [x] Information related to the project git repository, git version management.
+- [x] Keyboard shortcuts similar to those of VSCode
+- [x] Code autocompletion and snippets.
 
-## 🧪 How to use
+## 🧪 How to install
 
-The first thing is to have neovim installed and have the necessary configuration folder like this one:
-
-### Windows
-
-```bash
- C:\Users\$USER\AppData\Local\nvim
-```
-
-### Linux
-
-```bash
-~/.config/nvim
-```
+The first thing is to have neovim installed and to have the necessary configuration folder to save the files, if your system is **Windows** you can find the folder in `C:\Users$USER\AppData\Local\Nvim` and if your system is **Linux** you can find the folder in `~/.config/nvim `
 
 Once everything is ready you can clone the github repository of the configuration and enter the repository folder.
 
@@ -65,11 +73,37 @@ The next step is to copy the configuration files **init.lua**, **lua** and **laz
 
 For the language servers there is the Mason Plugin, this plugin allows you to download with a simple command the servers for syntax autocompletion.
 
-The plugin comes preloaded with the most common languages to use, but you can add the ones you need in the mason-lspconfig.lua configuration files.
+The plugin comes preloaded with the most common languages to use, but you can add the ones you need in the [mason.lua](./lua/plugins/mason.lua) configuration files.
 
-You can install other programming languages you need as indicated in the [lsp-config](https://github.com/neovim/nvim-lspconfig) repository, the language configuration file is located inside the specific config folder [lsp-server-language.lua](./lua/config/lsp-server-language.lua), you can integrate there the language you need.
+You can install other programming languages you need as indicated in the [lsp-config](https://github.com/neovim/nvim-lspconfig) repository, the language configuration file is located inside the specific plugins folder [lsp.lua](./lua/plugins/lsp.lua), you can integrate there the language you need.
+
+The next step is to install the code formatters for each language, the ones that are configured are Prettier for html, javascript, css, autopep8 for python etc. You can see more information in the [Neoformat.lua](./lua/plugins/neoformat.lua) file.
+
+You can install them as follows:
+
+[Prettier](https://prettier.io/docs/en/install.html) (JAVASCRIPT, HTML, CSS, SCSS, JSON, JAVA, KOTLIN, LESS, MARKDOWN, PHP, RUBY, TYPESCRIPT, XML, YAML)
+
+```bash
+npm i -g prettier
+```
+
+[Autopep8](https://pypi.org/project/autopep8/) (Python)
+
+```bash
+pip install autopep8
+```
+
+[Clang-format](https://pypi.org/project/clang-format/#description) (C, C++, C#)
+
+```bash
+pip install clang-format
+```
 
 Finally, just run neovim and Lazy will install and download all the listed plugins.
+
+> ### Note
+>
+> Sometimes it is necessary to add to the terminal path of your system the necessary programs either python scripts or servers downloaded by Mason.
 
 ## 🎢 Project status
 

@@ -5,7 +5,6 @@ vim.opt.mouse = "a"                                   -- Habilita el uso del rat
 vim.opt.showcmd = true                                -- Muestra los comandos parciales en la última línea
 vim.opt.encoding = "utf-8"                            -- Establece la codificación de caracteres a UTF-8
 vim.opt.showmatch = true                              -- Resalta el paréntesis que corresponde al que está bajo el cursor
-vim.opt.relativenumber = true                         -- Activa los números de línea relativos al cursor
 vim.opt.autoindent = true                             -- Indenta automáticamente las nuevas líneas según la anterior
 vim.opt.splitbelow = true                             -- Abre las ventanas horizontales debajo de la actual
 vim.opt.splitright = true                             -- Abre las ventanas verticales a la derecha de la actual
@@ -14,10 +13,12 @@ vim.opt.showmode = false                              -- Oculta el modo actual e
 vim.opt.clipboard:append { 'unnamed', 'unnamedplus' } -- Establece que lo que se copie vaya al portapapeles
 vim.opt.fillchars = { eob = ' ' }                     -- Limpia los simbolos ~ del editor
 vim.o.termguicolors = true                            -- Configuracion que mejora los colores y diseños
-vim.opt.wrap = false                                  -- No crees un salto de linea automatico
+vim.opt.wrap = false                                  -- No ajustar al tamaño del monitor
+-- vim.opt.relativenumber = true                         -- Activa los números de línea relativos al cursor
+
 
 -- Formatear automáticamente al guardar :w
-vim.cmd([[ autocmd BufWritePre * lua vim.lsp.buf.format() ]])
+vim.cmd([[ autocmd BufWritePre * lua validates_the_code_formatting_type() ]])
 
 -- ----------------> Configuraciones de la tabulacion y espacios <----------------
 vim.opt.expandtab = true -- Usa espacios en vez de tabs
@@ -34,10 +35,4 @@ vim.opt.history = 1000 -- Marca el tamaño de historial que tendra
 
 -- ----------------> Configuraciones del tema del editor <----------------
 -- Define el tema a utilizar en el editor
--- catppuccin
--- tokyonight
--- kanagawa
--- rose-pine
--- onedark
--- bluloco
-vim.cmd("colorscheme rose-pine")
+vim.cmd("colorscheme kanagawa-wave")

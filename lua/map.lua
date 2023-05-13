@@ -4,21 +4,23 @@ vim.keymap.set('i', '<Esc>', '<Esc>:VMClear<CR>', { noremap = true }) -- Limpia 
 
 -- ATAJOS DE ARCHIVOS Y BUFFERS
 
-vim.keymap.set('n', '<C-Q>', ':q<CR>', { noremap = true })                  -- Cerrar el buffer
-vim.keymap.set('n', '<C-S>', ':w<CR>', { noremap = true })                  -- Guardar el buffer
-vim.keymap.set('i', '<C-S>', '<Esc>:w<CR>a', { noremap = true })            -- Guardar el buffer
-vim.keymap.set('n', '<leader>qq', ':q!<CR>', { noremap = true })            -- Forzar el cierre del buffer
-vim.keymap.set('n', '<C-h><C-h>', ':bprevious<CR>', { noremap = true })     -- Muevete al anterior buffer (left)
-vim.keymap.set('n', '<C-l><C-l>', ':bnext<CR>', { noremap = true })         -- Muevete al siguiente buffer (right)
-vim.keymap.set('n', '<C-q><C-q>', ':Bdelete<CR>', { noremap = true })       -- Cierra la pestaña o buffer en el que estes
-vim.keymap.set('n', '<leader>nr', ':botright vnew<CR>', { noremap = true }) -- Abre un nuevo espacio de trabajo (right)
-vim.keymap.set('n', '<leader>nb', ':botright new<CR>', { noremap = true })  -- Abre un nuevo espacio de trabajo (bottom)
-vim.keymap.set('n', '<C-B>', ':NeoTreeFocusToggle<CR>', { noremap = true }) -- Abre el arbol de archivos
+vim.keymap.set('n', '<C-Q>', ':q<CR>', { noremap = true })                          -- Cerrar el buffer
+vim.keymap.set('n', '<C-S>', ':w<CR>', { noremap = true })                          -- Guardar el buffer
+vim.keymap.set('i', '<C-S>', '<Esc>:w<CR>a', { noremap = true })                    -- Guardar el buffer
+vim.keymap.set('n', '<leader>qq', ':q!<CR>', { noremap = true })                    -- Forzar el cierre del buffer
+vim.keymap.set('n', '<C-h><C-h>', ':bprevious<CR>', { noremap = true })             -- Muevete al anterior buffer (left)
+vim.keymap.set('n', '<C-l><C-l>', ':bnext<CR>', { noremap = true })                 -- Muevete al siguiente buffer (right)
+vim.keymap.set('n', '<C-q><C-q>', ':Bdelete<CR>', { noremap = true })               -- Cierra la pestaña o buffer en el que estes
+vim.keymap.set('n', '<leader>nr', ':botright vnew<CR>', { noremap = true })         -- Abre un nuevo espacio de trabajo (right)
+vim.keymap.set('n', '<leader>nb', ':botright new<CR>', { noremap = true })          -- Abre un nuevo espacio de trabajo (bottom)
+vim.keymap.set('n', '<C-B>', ':NeoTreeFocusToggle<CR>', { noremap = true })         -- Abre el arbol de archivos
+vim.keymap.set('i', '<C-B>', '<Esc>:NeoTreeFocusToggle<CR>', { noremap = true })    -- Abre el arbol de archivos (Insertar)
+vim.keymap.set('n', '<leader>mp', ':MarkdownPreviewToggle<CR>', { noremap = true }) -- Abre el previsualizador de markdown
 
 -- ATAJOS DE MANIPULACIÓN DE TEXTO
 
 vim.keymap.set('v', '<C-c>', 'y', { noremap = true })                        -- Copiar en el documento
-vim.keymap.set('i', '<C-v>', 'p', { noremap = true })                        -- Pegar en el documento
+vim.keymap.set('i', '<C-v>', '<Esc>pi', { noremap = true })                  -- Pegar en el documento
 vim.keymap.set('v', '<C-x>', 'd', { noremap = true })                        -- Corta el texto
 vim.keymap.set('n', '<C-a>', 'gg0vG$', { noremap = true })                   -- Selecciona todo el texto del documento
 vim.keymap.set('v', '<C-a>', '<Esc>gg0vG$', { noremap = true })              -- Selecciona todo el texto del documento
@@ -55,10 +57,11 @@ vim.keymap.set('n', '<C-g>', ':Gitsigns toggle_current_line_blame<CR>', { norema
 
 -- ATAJOS DE LSP O ANALIZADOR DE SINTAXIS
 
-vim.keymap.set('n', '<C-f>', vim.lsp.buf.format, { noremap = true })      -- Formatea el documentos
-vim.keymap.set('n', '<Tab>', vim.lsp.buf.hover, { noremap = true })       -- Muestra inforamcion del código
-vim.keymap.set('n', '<C-d>', vim.lsp.buf.definition, { noremap = true })  -- Dirigete a la definición del metodo
-vim.keymap.set('n', '<C-k>', vim.lsp.buf.code_action, { noremap = true }) --
+vim.keymap.set('n', '<C-f>', ":lua validates_the_code_formatting_type()<CR>", { noremap = true }) -- Usa neoformat para formatear el código
+vim.keymap.set('n', '<C-f><C-f>', vim.lsp.buf.format, { noremap = true })                         -- Formatea el documentos
+vim.keymap.set('n', '<Tab>', vim.lsp.buf.hover, { noremap = true })                               -- Muestra inforamcion del código
+vim.keymap.set('n', '<C-d>', vim.lsp.buf.definition, { noremap = true })                          -- Dirigete a la definición del metodo
+vim.keymap.set('n', '<C-k>', vim.lsp.buf.code_action, { noremap = true })                         --
 vim.keymap.set('n', '<C-e>', function()
   vim.diagnostic.open_float(0, { scope = "line", border = "rounded" })
 end, { noremap = true }) -- Habre en una ventana flotante los diagnosticos de error
