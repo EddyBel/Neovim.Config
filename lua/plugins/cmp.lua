@@ -80,8 +80,6 @@ return {
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
         ["<Down>"] = cmp.mapping(cmp_utils.go_up_in_menu, { "i", "s" }),
         ["<Up>"] = cmp.mapping(cmp_utils.go_down_in_menu, { "i", "s" }),
-        ["<Tab>"] = cmp.mapping(cmp_utils.go_up_in_menu, { "i", "s" }),
-        ["<S-Tab>"] = cmp.mapping(cmp_utils.go_down_in_menu, { "i", "s" }),
         ["<C-c>"] = cmp.mapping(cmp_utils.go_close_menu, { "i", "s" }),
         ["<Enter>"] = cmp.mapping.confirm {
           behavior = cmp.ConfirmBehavior.Insert,
