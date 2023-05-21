@@ -1,44 +1,44 @@
----Esta función crea un archivo en el directorio de trabajo actual
----Valida si el archivo a crear existe en el directorio
----Envia un mensaje o notificación de que el archivo se a creado o no se puede crear
----@param name_file string Nombre del archivo a crear
----@param content_file string Contenido del archivo que se creara
+---This function creates a file in the current working directory.
+---Checks if the file to create exists in the directory
+---Sends a message or notification that the file has been created or can not be created
+---@param name_file string Name of the file to be created
+---@param content_file string Content of the file to be created
 function create_file(name_file, content_file)
-  if vim.fn.filereadable(name_file) == 0 then
-    local file = io.open(name_file, "w")
-    file:write(content_file)
-    file:close()
-    vim.cmd(":Neotree")
-    notification(name_file .. " created with default settings", "info")
-  else
-    notification(name_file .. " already exists", "warn")
-  end
+    if vim.fn.filereadable(name_file) == 0 then
+        local file = io.open(name_file, "w")
+        file:write(content_file)
+        file:close()
+        vim.cmd(":Neotree")
+        notification(name_file .. " created with default settings", "info")
+    else
+        notification(name_file .. " already exists", "warn")
+    end
 end
 
----Crea un arbol de direcotiorios segun las instrucciones de una tabla
----@param structure table Tabla que denife la estructura de archivos
----@param directory string Directorio donde se creara la estructura
+---Creates a directory tree according to the instructions of a table
+---@param structure table Table denoting file structure
+---@param directory string Directory where the structure will be created
 function create_folders_structure(structure, directory)
-  if directory == nil then directory = vim.fn.getcwd() end -- Obtener el directorio base si no se proporciona ningun directorio
+    if directory == nil then directory = vim.fn.getcwd() end -- Obtener el directorio base si no se proporciona ningun directorio
 
-  for key, value in pairs(structure) do
-    if type(value) == "table" then
-      local new_directory = directory .. "/" .. key
-      vim.fn.mkdir(new_directory)
-      create_folders_structure(value, new_directory) -- llamada recursiva con el nuevo directorio
-    elseif value == "directory" then
-      local new_directory = directory .. "/" .. key
-      vim.fn.mkdir(new_directory)
-    else
-      local file = directory .. "/" .. key .. "." .. value
-      local file = io.open(file, "w")
-      file:write("New file")
-      file:close()
+    for key, value in pairs(structure) do
+        if type(value) == "table" then
+            local new_directory = directory .. "/" .. key
+            vim.fn.mkdir(new_directory)
+            create_folders_structure(value, new_directory) -- llamada recursiva con el nuevo directorio
+        elseif value == "directory" then
+            local new_directory = directory .. "/" .. key
+            vim.fn.mkdir(new_directory)
+        else
+            local file = directory .. "/" .. key .. "." .. value
+            local file = io.open(file, "w")
+            file:write("New file")
+            file:close()
+        end
     end
-  end
 
-  vim.cmd(":Neotree")
-  notification("Structure created", "info")
+    vim.cmd(":Neotree")
+    notification("Structure created", "info")
 end
 
 -- Define los archivos a crear y su Contenido
@@ -160,24 +160,24 @@ services:
 -- Define las estructuras de archivos que vas a utilizar
 
 vim.g.sass_estructure = {
-  sass = {
-    base = "directory",
-    common = "directory",
-    layouts = "directory",
-    utils = "directory",
-    global = "scss"
-  }
+    sass = {
+        base = "directory",
+        common = "directory",
+        layouts = "directory",
+        utils = "directory",
+        global = "scss"
+    }
 }
 vim.g.srcnode_estructure = {
-  src = {
-    controllers = "directory",
-    models = "directory",
-    routes = "directory",
-    services = "directory"
-  },
-  public = "directory",
-  tmp = "directory",
-  index = "js"
+    src = {
+        controllers = "directory",
+        models = "directory",
+        routes = "directory",
+        services = "directory"
+    },
+    public = "directory",
+    tmp = "directory",
+    index = "js"
 }
 
 vim.cmd("command! InitPrettierConfig lua create_file(vim.g.name_prettier_config, vim.g.content_prettier_config)") -- Crea el comando para crear un archivo prettierrc

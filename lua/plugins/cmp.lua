@@ -1,252 +1,277 @@
 return {
-  "hrsh7th/nvim-cmp",
-  dependencies = {
-    "hrsh7th/cmp-buffer",
-    "hrsh7th/cmp-path",
-    "hrsh7th/cmp-nvim-lua",
-    "hrsh7th/cmp-nvim-lsp",
-    "hrsh7th/cmp-cmdline",
-    "hrsh7th/cmp-git",
-    'dcampos/cmp-snippy',
-    "dcampos/nvim-snippy",
-    "saadparwaiz1/cmp_luasnip",
-    "onsails/lspkind-nvim",
-    "windwp/nvim-autopairs",
-    "hrsh7th/cmp-nvim-lsp-signature-help",
-    "honza/vim-snippets",
-    'hrsh7th/cmp-vsnip',
-    'hrsh7th/vim-vsnip',
-    { "L3MON4D3/LuaSnip", version = "v1.*" },
-  },
-  event = "VeryLazy",
-  config = function()
-    local cmp = require "cmp"                                     -- Importa la biblioteca de autocompletado "cmp"
-    local lspkind = require "lspkind"                             -- Importa la biblioteca "lspkind" para formatear la información del autocompletado
-    local cmp_autopairs = require "nvim-autopairs.completion.cmp" -- Importa la biblioteca "nvim-autopairs" para la inserción automática de pares de caracteres
-    local compare = require "cmp.config.compare"                  -- Importa la biblioteca "cmp.config.compare" para la comparación de los elementos del autocompletado
-    local cmp_utils = require "utils.cmp"                         -- Importa las funciones ya creadas para desplasace en un menu de cmp
+    "hrsh7th/nvim-cmp",
+    dependencies = {
+        "hrsh7th/cmp-buffer",
+        "hrsh7th/cmp-path",
+        "hrsh7th/cmp-nvim-lua",
+        "hrsh7th/cmp-nvim-lsp",
+        "hrsh7th/cmp-cmdline",
+        "hrsh7th/cmp-git",
+        'dcampos/cmp-snippy',
+        "dcampos/nvim-snippy",
+        "saadparwaiz1/cmp_luasnip",
+        "onsails/lspkind-nvim",
+        "windwp/nvim-autopairs",
+        "hrsh7th/cmp-nvim-lsp-signature-help",
+        "honza/vim-snippets",
+        'hrsh7th/cmp-vsnip',
+        'hrsh7th/vim-vsnip',
+        "L3MON4D3/LuaSnip",
+    },
+    event = "VeryLazy",
+    config = function()
+        local cmp = require "cmp"
+        local luasnip = require "luasnip"
+        local lspkind = require "lspkind"
+        local cmp_autopairs = require "nvim-autopairs.completion.cmp"
+        local compare = require "cmp.config.compare"
 
-    -- Configura la inserción automática de pares de caracteres
-    require("nvim-autopairs").setup()
-    cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done { map_char = { tex = "" } })
-
-    ---Opciones de diseño de la ventana de cmp
-    ---@table WindowOptions
-    ---@field border string @ el tipo de borde de la ventana, por defecto es "rounded"
-    ---@field winhighlight string @ las opciones de resaltado de la ventana, por defecto es "Normal:Normal,FloatBorder:Normal,CursorLine:Visual,Search:None"
-    ---@field zindex number @ la posición de la ventana en el orden z, por defecto es 1001
-    ---@field scrolloff number @ el desplazamiento vertical que se mantiene fuera de la vista, por defecto es 0
-    ---@field col_offset number @ el desplazamiento horizontal de la ventana, por defecto es 0
-    ---@field side_padding number @ el espacio de relleno en los lados de la ventana, por defecto es 1
-    ---@field scrollbar boolean @ si se muestra una barra de desplazamiento, por defecto es verdadero
-
-    ---@example
-    --- Ejemplo de opciones de diseño de ventana:
-    --- ```
-    --- local window_opts = {
-    ---   border = 'solid',
-    ---   winhighlight = 'Normal:Normal,FloatBorder:Normal,CursorLine:Visual,Search:None',
-    ---   zindex = 999,
-    ---   scrolloff = 5,
-    ---   col_offset = 2,
-    ---   side_padding = 2,
-    ---   scrollbar = false
-    --- }
-    --- ```
-    ui_window = cmp.config.window.bordered()
-
-    cmp.setup {
-
-      -- Diseño de la ventana flotante de cmp
-      window = {
-        completion = ui_window,
-        documentation = ui_window
-      },
+        -- Configures the automatic insertion of character pairs
+        -- Indicates how to concatenate code hints
+        require("nvim-autopairs").setup()
+        cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done { map_char = { tex = "" } })
 
 
-      -- Define donde iniciara la seleccion por defecto
-      initial_select = cmp.SelectFirst,
+        ---Scroll up in a drop-down menu, or select the next option in an autocomplete.
+        ---If a drop-down menu is visible, select the previous option.
+        ---If an autocomplete is active, select the next option.
+        ---If neither drop-down menu nor autocomplete is active, call the fallback function.
+        ---@param fallback function The function that is called if neither drop-down menu nor auto-completion is active.
+        local function go_up_in_menu(fallback)
+            if cmp.visible() then
+                cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+                luasnip.jump(-1)
+            else
+                fallback()
+            end
+        end
 
-      -- Configura las teclas que se utilizaran para manejar el menu
-      -- Ctrl + d Desplaza hacia arriba 4 elementos los documentos de la ayuda
-      -- Ctrl + f Desplaza hacia abajo 4 elementos los documentos de la ayuda
-      -- Tab o Down Recorre las opciones hacia abajo
-      -- Shift + Tab o Up Recorre las opciones hacia arriba
-      -- Enter para confirmar la selección del autocompletado
-      -- Ctrl + space para completar el autocompletado
+        ---Scroll down a drop-down menu, or select the previous option in an autocomplete.
+        ---If a drop-down menu is visible, select the next option.
+        ---If an autocomplete is active, select the previous option.
+        ---If neither drop-down menu nor autocomplete is active, call the fallback function.
+        ---@param fallback function function is called if neither drop-down menu nor auto-completion is active.
+        local function go_down_in_menu(fallback)
+            if cmp.visible() then
+                cmp.select_next_item()
+            elseif luasnip.choice_active() then
+                luasnip.change_choice(1)
+            else
+                fallback()
+            end
+        end
 
-      mapping = {
-        ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<Down>"] = cmp.mapping(cmp_utils.go_up_in_menu, { "i", "s" }),
-        ["<Up>"] = cmp.mapping(cmp_utils.go_down_in_menu, { "i", "s" }),
-        ["<C-c>"] = cmp.mapping(cmp_utils.go_close_menu, { "i", "s" }),
-        ["<Enter>"] = cmp.mapping.confirm {
-          behavior = cmp.ConfirmBehavior.Insert,
-          select = true, },
-        ["<C-Space>"] = cmp.mapping.complete(),
-        ["<C-n>"] = cmp.mapping.complete()
-      },
+        ---Closes a drop-down menu, or expands or jumps to a code fragment in an autocomplete.
+        ---If a drop-down menu is visible, closes it.
+        ---If an autocomplete is active and the current snippet has empty fields, completes them.
+        ---If an autocomplete is active and the current fragment has no empty fields, it jumps to the next field.
+        ---If neither drop-down menu nor autocomplete is active, calls the fallback function.
+        ---@param fallback function function is called if neither drop-down menu nor auto-completion is active.
+        local function go_close_menu(fallback)
+            if cmp.visible() then
+                cmp.close()
+            elseif luasnip.expand_or_jumpable() then
+                luasnip.expand_or_jump()
+            else
+                fallback()
+            end
+        end
 
-      -- Deifne las fuentes que utilizara para mostrar información del autocompletado.
-      -- nvim_lua -> Utiliza la API de Lua de Neovim para autocompletado. Esto permite autocompletar funciones, variables y otros elementos en archivos Lua que estén abiertos en Neovim.
-      -- nvim_lsp ->  Utiliza el protocolo LSP (Language Server Protocol) para autocompletar elementos en cualquier idioma que tenga un servidor LSP disponible. Este servidor proporciona información como la documentación y los tipos de los elementos que se autocompletan.
-      -- path -> Utiliza los nombres de los archivos y directorios del sistema de archivos como fuentes para autocompletar en los comandos de Neovim que requieren una ruta de archivo.
-      -- luasnip -> Utiliza la biblioteca de snippets "luasnip" para proporcionar autocompletado de snippets de código. Estos son fragmentos de código predefinidos que se pueden insertar en un archivo con solo escribir una abreviatura.
-      -- nvim_lsp_signature_help -> Utiliza el protocolo LSP para mostrar información de ayuda en la firma de una función o método mientras se está escribiendo en un archivo.
-      -- buffer -> Utiliza el contenido del búfer actual para autocompletar. Esta fuente es útil cuando se están trabajando con archivos que no tienen soporte para autocompletado en Neovim, como archivos de configuración o archivos de texto plano.
-      sources = {
-        { name = "nvim_lua" },
-        { name = "nvim_lsp" },
-        { name = "path" },
-        { name = "luasnip" },
-        { name = 'vsnip' },
-        { name = 'snippy' },
-        { name = "nvim_lsp_signature_help" },
-        {
-          name = "buffer",
-          keyword_length = 4,
-          option = {
-            get_bufnrs = function()
-              local bufs = {}
-              for _, win in ipairs(vim.api.nvim_list_wins()) do
-                local bufnr = vim.api.nvim_win_get_buf(win)
-                if vim.api.nvim_buf_get_option(bufnr, 'buftype') ~= 'terminal' then bufs[bufnr] = true end
-              end
-              return vim.tbl_keys(bufs)
-            end,
-          },
+
+        ---Design options for the neovim cmp window
+        ui_window = cmp.config.window.bordered()
+
+        cmp.setup {
+            -- Defines that the selection is made by default on the first element
+            initial_select = cmp.SelectFirst,
+
+            -- Design of cmp floating windows
+            window = {
+                completion = ui_window,
+                documentation = ui_window
+            },
+
+            -- Configures the keys to be used to operate the menu
+            -- Ctrl + d Shift up 4 elements of the help documents
+            -- Ctrl + f Scrolls down 4 elements of the help documents
+            -- Down Scrolls down the options
+            -- Up Scrolls the options upwards
+            -- Enter to confirm autocomplete selection -- Ctrl + space to complete the autocomplete selection
+            -- Ctrl + space to complete the autocompletion
+            mapping = {
+                ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+                ["<C-f>"] = cmp.mapping.scroll_docs(4),
+                ["<Down>"] = cmp.mapping(go_down_in_menu, { "i", "s" }),
+                ["<Up>"] = cmp.mapping(go_up_in_menu, { "i", "s" }),
+                ["<C-c>"] = cmp.mapping(go_close_menu, { "i", "s" }),
+                ["<Enter>"] = cmp.mapping.confirm {
+                    behavior = cmp.ConfirmBehavior.Insert,
+                    select = true, },
+                ["<C-Space>"] = cmp.mapping.complete(),
+                ["<C-n>"] = cmp.mapping.complete()
+            },
+
+            -- Define the sources to use to display autocomplete information.
+            -- nvim_lua -> Uses the Neovim Lua API for autocompletion. This allows to autocomplete functions, variables and other items in Lua files that are open in Neovim.
+            -- nvim_lsp -> Uses the LSP (Language Server Protocol) to autocomplete items in any language that has an LSP server available. This server provides information such as documentation and types of the elements that are autocompleted.
+            -- path -> Uses the names of files and directories in the file system as sources for auto-completion in Neovim commands that require a file path.
+            -- luasnip -> Uses the "luasnip" snippet library to provide auto-completion of code snippets. These are predefined code snippets that can be inserted into a file by just typing an abbreviation.
+            -- nvim_lsp_signature_help -> Uses the LSP protocol to display help information in the signature of a function or method while writing to a file.
+            -- buffer -> Uses the contents of the current buffer for auto-completion. This source is useful when working with files that do not have auto-completion support in Neovim, such as configuration files or plain text files.
+            sources = {
+                { name = "nvim_lua" },
+                { name = "nvim_lsp" },
+                { name = "path" },
+                { name = "luasnip" },
+                { name = 'vsnip' },
+                { name = 'snippy' },
+                { name = "nvim_lsp_signature_help" },
+                {
+                    name = "buffer",
+                    keyword_length = 4,
+                    option = {
+                        get_bufnrs = function()
+                            local bufs = {}
+                            for _, win in ipairs(vim.api.nvim_list_wins()) do
+                                local bufnr = vim.api.nvim_win_get_buf(win)
+                                if vim.api.nvim_buf_get_option(bufnr, 'buftype') ~= 'terminal' then bufs[bufnr] = true end
+                            end
+                            return vim.tbl_keys(bufs)
+                        end,
+                    },
+                }
+            },
+
+            ---```formatting`` is a table that allows you to customize the appearance of autocomplete items in `cmp`.
+            ---``format` is a function that takes an autocomplete entry `cmp.Entry` and an object `cmp.VimItem` and returns
+            ---`a string representing how the item should be displayed.
+            ---`with_text` is a boolean indicating whether to display the full text of the autocomplete entry.
+            ---``menu` is a table that maps autocomplete source names to custom tags to be
+            ---will be displayed in the autocomplete menu. Common source names are "nvim_lsp", "buffer", "nvim_lua",
+            --- "path", "luasnip" and "vim-dadbod-completion".
+            formatting = {
+                fields = { 'menu', 'abbr', 'kind' },
+                format = lspkind.cmp_format {
+                    with_text = true,
+                    menu = {
+                        nvim_lsp = ICONS.lsp .. " ",
+                        buffer = ICONS.cmp_buffer .. " ",
+                        nvim_lua = ICONS.cmp_lua .. " ",
+                        path = ICONS.cmp_path .. " ",
+                        snippy = ICONS.cmp_snippets .. " ",
+                        vsnip = ICONS.cmp_vsnip .. " ",
+                        luasnip = ICONS.cmp_luasnip .. " ",
+                        ["vim-dadbod-completion"] = ICONS.cmp_db .. " ",
+                    },
+                },
+            },
+
+
+            -- La sección snippet define una función anónima expand que se utilizará para expandir los snippets. Dentro de la función, se llama a la función lsp_expand de la biblioteca luasnip
+            snippet = {
+                expand = function(args)
+                    require("luasnip").lsp_expand(args.body)
+                    -- require("snippy").expand_snippet(args.body)
+                end,
+            },
+
+            ---`sorting` is a table that allows you to customize how autocomplete entries are sorted in `cmp`.
+            ---`priority_weight` is a number used to determine the relative importance of the priority of an autocomplete entry.
+            ---autocomplete entry. Autocomplete entries with higher priorities will be placed before lower priority entries.
+            ---entries with lower priorities.
+            ---`comparators` is a table of functions that are used to compare autocomplete entries.
+            ---functions must take two arguments `lhs` and `rhs`, which are the two entries to be compared, and
+            ---they must return a boolean value indicating whether `lhs` is greater than `rhs`. The functions are applied in the
+            ---order in which they appear in the table. In the example provided, the entries are sorted first by type
+            ---(`kind`) and then by their sort text (`sort_text`).
+            sorting = {
+                priority_weight = 2,
+                comparators = {
+                    compare.kind,
+                    compare.sort_text,
+                },
+            },
+
+            ---`experimental` section is a table that allows to enable experimental functions in `cmp`.
+            ---`native_menu` is a boolean option that allows you to enable the native menu functionality of the `cmp`.
+            ---platform's native menu functionality. This can provide a more consistent user experience, but it may have
+            ---compatibility issues with some environments. The default is `false`.
+            ---`ghost_text` is a boolean option that allows ghost text to be enabled for entries from
+            ---autocomplete. The default value is `false`.
+            experimental = {
+                native_menu = false,
+                ghost_text = false,
+            },
         }
-      },
 
-      ---`formatting` es una tabla que permite personalizar la apariencia de los elementos de autocompletado en `cmp`.
-      ---`format` es una función que toma una entrada de autocompletado `cmp.Entry` y un objeto `cmp.VimItem` y devuelve
-      ---una cadena que representa cómo se debe mostrar el elemento.
-      ---`with_text` es un booleano que indica si se debe mostrar el texto completo de la entrada de autocompletado.
-      ---`menu` es una tabla que mapea nombres de origen de autocompletado a etiquetas personalizadas que se
-      ---mostrarán en el menú de autocompletado. Los nombres de origen comunes son "nvim_lsp", "buffer", "nvim_lua",
-      ---"path", "luasnip" y "vim-dadbod-completion".
-      formatting = {
-        fields = { 'menu', 'abbr', 'kind' },
-        format = lspkind.cmp_format {
-          with_text = true,
-          menu = {
-            nvim_lsp = " ",
-            buffer = " ",
-            nvim_lua = " ",
-            path = " ",
-            snippy = " ",
-            vsnip = " ",
-            luasnip = " ",
-            ["vim-dadbod-completion"] = " ",
-          },
-        },
-      },
+        --- `gitcommit` autocomplete settings
+        ---@param ft string The file type for which the autocompletion is to be configured.
+        ---@param opts table A table containing configuration options for `cmp`.
+        ---@field sources table A table of sources to be used for autocompletion.
+        --- Each source is a table that must include at least one `name` field with the name of the source.
+        --- The sources are provided in order of priority, and the highest priority sources will be displayed first in the autocompletion menu.
+        --- the auto-completion menu.
+        --- The provided code configures `cmp` for the `gitcommit` file type with specific configuration options.
+        --- specific. The `sources` table is used to configure the autocomplete sources to be used --- for this file type.
+        --- for this file type. In this case, the `cmp_git` source is placed first, followed by the `buffer` source.
+        --- `buffer`.
+        cmp.setup.filetype("gitcommit", {
+            sources = cmp.config.sources({
+                { name = "cmp_git" },
+            }, {
+                { name = "buffer" },
+            }),
+        })
 
 
-      -- La sección snippet define una función anónima expand que se utilizará para expandir los snippets. Dentro de la función, se llama a la función lsp_expand de la biblioteca luasnip
-      snippet = {
-        expand = function(args)
-          require("luasnip").lsp_expand(args.body)
-          -- require("snippy").expand_snippet(args.body)
-        end,
-      },
-
-      ---`sorting` es una tabla que permite personalizar cómo se ordenan las entradas de autocompletado en `cmp`.
-      ---`priority_weight` es un número que se utiliza para determinar la importancia relativa de la prioridad de una
-      ---entrada de autocompletado. Las entradas de autocompletado con prioridades más altas se colocarán antes que
-      ---las entradas con prioridades más bajas.
-      ---`comparators` es una tabla de funciones que se utilizan para comparar las entradas de autocompletado.
-      ---Las funciones deben tomar dos argumentos `lhs` y `rhs`, que son las dos entradas que se van a comparar, y
-      ---deben devolver un valor booleano que indique si `lhs` es mayor que `rhs`. Las funciones se aplican en el
-      ---orden en que aparecen en la tabla. En el ejemplo proporcionado, las entradas se ordenan primero por su tipo
-      ---(`kind`) y luego por su texto de ordenación (`sort_text`).
-      sorting = {
-        priority_weight = 2,
-        comparators = {
-          compare.kind,
-          compare.sort_text,
-        },
-      },
-
-      ---La sección `experimental` es una tabla que permite activar funciones experimentales en `cmp`.
-      ---`native_menu` es una opción booleana que permite habilitar la funcionalidad de menú nativo de la
-      ---plataforma. Esto puede proporcionar una experiencia de usuario más consistente, pero puede tener
-      ---problemas de compatibilidad con algunos entornos. El valor predeterminado es `false`.
-      ---`ghost_text` es una opción booleana que permite habilitar el texto fantasma para las entradas de
-      ---autocompletado. El valor predeterminado es `false`.
-      experimental = {
-        native_menu = false,
-        ghost_text = false,
-      },
-    }
-
-    --- Configuración de autocompletado de `gitcommit`
-    ---@param ft string El tipo de archivo para el que se va a configurar el autocompletado.
-    ---@param opts table Tabla que contiene opciones de configuración para `cmp`.
-    ---@field sources table Una tabla de fuentes que se usarán para el autocompletado.
-    --- Cada fuente es una tabla que debe incluir al menos un campo `name` con el nombre de la fuente.
-    --- Las fuentes se proporcionan en orden de prioridad, y las fuentes más prioritarias se mostrarán primero en
-    --- el menú de autocompletado.
-    --- El código proporcionado configura `cmp` para el tipo de archivo `gitcommit` con opciones de configuración
-    --- específicas. La tabla `sources` se usa para configurar las fuentes de autocompletado que se utilizarán
-    --- para este tipo de archivo. En este caso, la fuente `cmp_git` se coloca en primer lugar, seguida de la fuente
-    --- `buffer`.
-    cmp.setup.filetype("gitcommit", {
-      sources = cmp.config.sources({
-        { name = "cmp_git" },
-      }, {
-        { name = "buffer" },
-      }),
-    })
-
-    --- Configuración de autocompletado de línea de comandos para la búsqueda en buffer
-    ---@param trigger string El carácter que se usará para activar el autocompletado de línea de comandos.
-    ---@param opts table Tabla que contiene opciones de configuración para `cmp`.
-    ---@field mapping table Una tabla que contiene asignaciones de teclas personalizadas para el autocompletado.
-    --- Si no se proporciona, se utilizará la asignación de teclas predeterminada para la línea de comandos.
-    ---@field sources table Una tabla de fuentes que se usarán para el autocompletado.
-    --- Cada fuente es una tabla que debe incluir al menos un campo `name` con el nombre de la fuente.
-    --- Las fuentes se proporcionan en orden de prioridad, y las fuentes más prioritarias se mostrarán primero en
-    --- el menú de autocompletado.
-
-    --- El código proporcionado configura `cmp` para la línea de comandos de búsqueda en buffer con opciones de
-    --- configuración específicas. El carácter `/` se usa para activar el autocompletado de línea de comandos y la
-    --- asignación de teclas predeterminada se utiliza para el autocompletado. La tabla `sources` se usa para
-    --- configurar las fuentes de autocompletado que se utilizarán. En este caso, la fuente `buffer` se usa
-    --- exclusivamente para la búsqueda en buffer.
-    cmp.setup.cmdline("/", {
-      mapping = cmp.mapping.preset.cmdline(),
-      sources = {
-        { name = "buffer" },
-      },
-    })
-
-    ---Configura la línea de comandos de la extensión `cmp`.
-    ---@param prefix El prefijo que se utilizará para invocar la línea de comandos.
-    ---@param config Una tabla que contiene la configuración de `cmp` para la línea de comandos.
-    ---@field mapping Una tabla que contiene los mapeos de teclas para la línea de comandos.
-    ---@field sources Una tabla que contiene las fuentes de datos para la línea de comandos.
-    cmp.setup.cmdline(":", {
-      mapping = cmp.mapping.preset.cmdline(),
-      sources = cmp.config.sources({
-        { name = "path" },
-      }, {
-        { name = "cmdline" },
-      }),
-    })
+        --- Command line autocomplete setting for buffered search
+        ---@param trigger string The character to be used to trigger command line auto-completion.
+        ---@param opts table A table containing configuration options for `cmp`.
+        ---@field mapping table A table containing custom key mappings for the autocompletion.
+        --- If not provided, the default key mapping for the command line will be used.
+        ---@field sources table A table of sources to be used for auto-completion.
+        --- Each source is a table that must include at least one `name` field with the name of the source.
+        --- The sources are provided in order of priority, and the highest priority sources will be displayed first in the autocompletion menu.
+        --- the auto-completion menu.
+        --- The provided code configures `cmp` for the buffered search command line with specific configuration options.
+        --- specific configuration options. The `/` character is used to activate the command line auto-completion and the default key mapping is used to --- activate the command line auto-completion.
+        --- default key mapping is used for auto-completion. The `sources` table is used to
+        --- configure the auto-completion sources to be used. In this case, the `buffer` font is used
+        --- exclusively for the buffered search.
+        cmp.setup.cmdline("/", {
+            mapping = cmp.mapping.preset.cmdline(),
+            sources = {
+                { name = "buffer" },
+            },
+        })
 
 
-    ---Configura `cmp` para los tipos de archivo SQL, MySQL y PL/SQL.
-    ---@param filetypes Una tabla que contiene los tipos de archivo para los que se configurará `cmp`.
-    ---@param config Una tabla que contiene la configuración de `cmp` para los tipos de archivo.
-    ---@field sources Una tabla que contiene las fuentes de datos para los tipos de archivo.
-    cmp.setup.filetype({ "sql", "mysql", "plsql" }, {
-      sources = cmp.config.sources({
-        { name = "vim-dadbod-completion" },
-      }, {
-        { name = "buffer" },
-      }),
-    })
-  end,
+        ---Set the command line `cmp` extension.
+        ---@param prefix string The prefix to be used to invoke the command line.
+        ---@param config table A table containing the `cmp` configuration for the command line.
+        ---@field mapping function A table containing the key mappings for the command line.
+        ---@field sources function A table containing the data sources for the command line.
+        cmp.setup.cmdline(":", {
+            mapping = cmp.mapping.preset.cmdline(),
+            sources = cmp.config.sources({
+                { name = "path" },
+            }, {
+                { name = "cmdline" },
+            }),
+        })
+
+
+        ---Configures `cmp` for SQL, MySQL and PL/SQL file types.
+        ---@param filetypes table table containing the file types for which `cmp` will be configured.
+        ---@param config table table containing the `cmp` configuration for the filetypes.
+        ---@field sources function table containing the data sources for the file types.
+        cmp.setup.filetype({ "sql", "mysql", "plsql" }, {
+            sources = cmp.config.sources({
+                { name = "vim-dadbod-completion" },
+            }, {
+                { name = "buffer" },
+            }),
+        })
+    end,
 }

@@ -1,0 +1,170 @@
+---This variable contains the name of the theme to be used
+---
+---It is important to note that to place any custom theme
+---you must install it in the editor, the configuration and
+---installation of the theme can be done in the "themes.lua"
+---file in the "plugins" folder "./plugins/themes.lua".
+---
+---Available topics
+---1. kanagawa-wave, kanagawa-dragon, kanagawa-lotus
+---2. catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
+---3. rose-pine, rose-pine-moon, rose-pine-dawn
+---4. onedark
+---5. gruvbox
+---6. carbonfox, terafox, nordfox, duskfox, dawnfox, dayfox, nightfox
+---7. oxocarbon
+_G.COLOR_THEME = "rose-pine"
+
+---This variable stores the name of the theme to be used for the status bar of the lualine plugin.
+---
+---You can learn more about the available themes in the plugin documentation:
+---https://github.com/nvim-lualine/lualine.nvim/blob/master/THEMES.md
+_G.COLOR_THEME_STATUSBAR = "ayu_dark"
+
+---This variable stores the front drawing ASCII that can be displayed when neovim is started.
+---It is imported from the drawing file saved in the neovim configuration.
+_G.ALPHA = require("utils.drawings").min_hydra
+
+---This table stores the colors to be used by the modicator plugin.
+---highlighting the line number in which it is located for each mode.
+_G.COLOR_LINE = {
+    normal = "#BB8FCE",
+    insert = "#85C1E9",
+    visual = "#F7DC6F",
+    select = "#F7F9F9",
+    replacement = "#EC7063",
+    command = "#58D68D",
+    visual_line = "#F9E79F",
+    insert_code = "#2E86C1",
+    select_line = "#D7DBDD"
+}
+
+---This variable defines the search pattern to search ALL in the code.
+---
+---Patterns
+---1. [[.*(KEYWORDS).*]] => TODO
+---2. [[.*<(KEYWORDS)\s*:]] => <TODO:
+---3. [[.*\s(KEYWORDS)\s*]] =>  TODO (TODO with a space before)
+---4. [[.*(KEYWORDS)*:]] => TODO:
+_G.TODO_PATTERN = [[.*(KEYWORDS).*]]
+
+---This object defines the icons that will be used by the comments throughout the code.
+---The sings property defines whether to use icons at the side of the comment.
+_G.TODO_ICONS = {
+    signs = true, -- Defines whether icons will be used
+    type = "fg",  -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty. (wide and wide_bg is the same as bg, but will also highlight surrounding characters, wide_fg acts accordingly but with fg)
+    fix = "",
+    todo = "",
+    hack = "󰈸",
+    warn = "",
+    perf = "󰎓",
+    note = "",
+    test = "󰳪",
+    exam = ""
+}
+
+---
+-- _G.COMPILERS_EXECUTABLES is a dictionary that stores a series of executable compilers for different programming languages.
+-- for different programming languages. Each key in the dictionary represents the name of the
+-- language and its associated value is a text string that specifies the command needed to
+-- execute the corresponding compiler.
+--
+-- INPUT and OUTPUT represent the input and output file names needed to compile,
+-- these are replaced later in the function that calls the compilers.
+---
+_G.COMPILERS_EXECUTABLES = {
+    python = "python INPUT",
+    javascript = "node INPUT",
+    typescript = "tsc INPUT",
+    sass = "sass INPUT OUTPUT.css",
+    cpp = "g++ INPUT -o OUTPUT",
+    c = "gcc INPUT -o OUTPUT",
+    go = "go build INPUT"
+}
+
+---
+-- _G.ICONS is a dictionary containing several icons used in some specific context.
+-- Each key in the dictionary represents a symbolic name associated with a specific
+-- icon and the associated value is the character or set of characters representing
+-- that icon.
+-- Associated value is the character or set of characters represented by that icon.
+---
+_G.ICONS = {
+    prefix = "",                                                      -- Prefix displayed in the virtual text
+    error = '',                                                       -- Error icon
+    warn = '',                                                        -- Warning icon
+    info = '󰅺',                                                       -- Info icon
+    hint = '',                                                        -- Hint icon
+    time = '󱑃',                                                       --  Icon representing each operating system
+    formatter = "",                                                   -- Icon representing code formatter
+    lsp = "",                                                         -- Icon representing LSP clients
+    cmp_buffer = "",                                                  -- Icon representing Buffer suggestions
+    cmp_lua = "",                                                     -- Icon that represents the suggestions of lua
+    cmp_path = "",                                                    -- Icon representing route suggestions
+    cmp_snippets = "",                                                -- Icon representing snippet suggestions (snippy)
+    cmp_vsnip = "󰨞",                                                  -- Icon representing vsnip suggestions
+    cmp_luasnip = "",                                                 -- Icon representing lua snippet suggestions
+    cmp_db = "",                                                      -- Icon representing database suggestions
+    spinner = { "⠿", "⠞", "⠇", "⠑", "⠝", "⠞", "⠎", "⠕", "⠍", "⠑", "⠋" }, -- Icons representing the loading animation
+    os = {
+        ["Windows"] = "󰍲",
+        ["Darwin"]  = "",
+        ["Ubuntu"]  = "",
+        ["Kali"]    = "",
+        ["Arch"]    = "",
+        ["Debian"]  = "",
+        ["Fedora"]  = "",
+        ["Parrot"]  = "",
+        ["Linux"]   = "",
+        ["Default"] = ""
+    } --  Icons representing each operating system
+}
+
+---G.GIT is a dictionary containing different icons used in a context
+---related to Git version control. Each key in the dictionary represents
+---a symbolic name associated with a specific icon, and the associated
+---value is the character representing that icon.
+_G.GIT_SYMBOLS = {
+    add          = '│',
+    change       = '│',
+    delete       = '_',
+    topdelete    = '‾',
+    changedelete = '~',
+    untracked    = '┆',
+}
+
+---G.TREE_SYMBOLS is a dictionary containing various symbols used in a context
+---related to the visual representation of a hierarchical structure, such as a
+---directory tree. Each key in the dictionary represents a symbolic name associated
+---with a specific symbol, and the associated value is the character or set of
+---characters represented by that symbol.
+_G.TREE_SYMBOLS = {
+    -- Change type
+    added              = "+", -- or "✚", but this is redundant info if you use git_status_colors on the name
+    modified           = "", -- or "", but this is redundant info if you use git_status_colors on the name
+    deleted            = "x", -- this can only be used in the git_status source
+    renamed            = "", -- this can only be used in the git_status source
+    -- Status type
+    untracked          = "",
+    ignored            = "",
+    unstaged           = "",
+    staged             = "",
+    conflict           = "",
+    -- Icons
+    folder_closed      = "",
+    folder_open        = "",
+    folder_empty       = "",
+    modified_symbol    = "[+]",
+    indent_marker      = "│",
+    last_indent_marker = "└",
+    expander_collapsed = "",
+    expander_expanded  = "",
+}
+
+---This variable stores the size of the file manager window.
+_G.TREE_WIDTH = 35
+
+---Address of the file tree window.
+---1. left
+---2. right
+_G.TREE_DIRECTION = "left"

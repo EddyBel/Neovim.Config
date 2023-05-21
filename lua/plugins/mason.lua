@@ -33,6 +33,8 @@ return {
           "dockerls",
           "sqlls",
           -- "csharp_ls",
+          "gopls",
+          "jdtls",
           "docker_compose_language_service"
         },
       })

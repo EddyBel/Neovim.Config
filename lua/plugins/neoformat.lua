@@ -2,6 +2,7 @@ return {
   'sbdchd/neoformat',
   config = function()
     vim.g.neoformat_prefer_local_cfg = 1
+
     -- Comando para ejecutar clang-format
     vim.g.neoformat_cpp_clangformat = {
       exe = "clang-format",
@@ -15,7 +16,6 @@ return {
       exe = "clang-format",
       args = { "--style=file" }
     }
-
 
     vim.g.neoformat_enabled_javascript = { 'prettier' }
     vim.g.neoformat_enabled_html = { 'prettier' }
@@ -37,6 +37,7 @@ return {
     vim.g.neoformat_enabled_cpp = { 'clangformat' }
     vim.g.neoformat_enabled_c = { 'clangformat' }
     vim.g.neoformat_enabled_csharp = { 'clangformat' }
-    vim.g.neoformat_enabled_python = { 'autopep8' }
+    vim.g.neoformat_enabled_go = { 'gofmt' }
+    vim.g.neoformat_enabled_python = { 'black' }
   end
 }

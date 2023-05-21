@@ -1,4 +1,8 @@
--- Pagina donde hay mas dibujos ASCII https://www.twitchquotes.com/copypastas/ascii-art
+-- Page with more ASCII drawings https://www.twitchquotes.com/copypastas/ascii-art
+-- This file contains a collection of ASCII drawings stored in an object for easy later use.
+-- The object in this file is designed for easy access and manipulation of these ASCII drawings. It may contain.
+-- a variety of methods and properties that allow you to add, delete or modify drawings, as well as functions for
+-- display them in a user interface or export them to other formats.
 
 local draws = {}
 
@@ -18,7 +22,7 @@ draws.min_hydra = [[
 ⠀⠀⠀⠀⠀⠀⢸⣿⣿⣷⡀⠀⠀⠀⠈⠛⢿⣿⣿⣿⣷⣼⣿⣿⣿⣿⣿⣿⡏⠀⢟⢿⣿⣧⠀⠀⠀⠈⠋⠀
 ⠀⠀⠀⠀⠀⠀⠀⢻⣿⣿⣿⣶⣤⣤⣀⣀⣠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⣸⣿⣿⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠘⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣥⣤⣴⣾⣿⡿⠃⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⢀⣴⣶⣦⣀⣐⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣽⢂⣀⡀⠀⠀⡀⠀⡀
+⠀⠀⠀⠀⢀⣴⣶⣦⣀⣐⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢂⣀⡀⠀⠀⡀⠀⡀
 ⠦⠠⠴⠶⠶⠾⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠷⠶⠯⠴⠿
 ]]
 

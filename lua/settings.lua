@@ -1,38 +1,34 @@
--- ----------------> Configuraciones nativas <----------------
+--------------------------------> NATIVE NEOVIM CONFIGURATIONS <--------------------------------------
 
-vim.opt.number = true                                 -- Activa los números de línea
-vim.opt.mouse = "a"                                   -- Habilita el uso del ratón en todos los modos
-vim.opt.showcmd = true                                -- Muestra los comandos parciales en la última línea
-vim.opt.encoding = "utf-8"                            -- Establece la codificación de caracteres a UTF-8
-vim.opt.showmatch = true                              -- Resalta el paréntesis que corresponde al que está bajo el cursor
-vim.opt.autoindent = true                             -- Indenta automáticamente las nuevas líneas según la anterior
-vim.opt.splitbelow = true                             -- Abre las ventanas horizontales debajo de la actual
-vim.opt.splitright = true                             -- Abre las ventanas verticales a la derecha de la actual
-vim.opt.laststatus = 2                                -- Muestra la barra de estado en todas las ventanas
-vim.opt.showmode = false                              -- Oculta el modo actual en la última línea
-vim.opt.clipboard:append { 'unnamed', 'unnamedplus' } -- Establece que lo que se copie vaya al portapapeles
-vim.opt.fillchars = { eob = ' ' }                     -- Limpia los simbolos ~ del editor
-vim.o.termguicolors = true                            -- Configuracion que mejora los colores y diseños
-vim.opt.wrap = false                                  -- No ajustar al tamaño del monitor
--- vim.opt.relativenumber = true                         -- Activa los números de línea relativos al cursor
+vim.opt.number = true                                 -- Enable line numbers
+vim.opt.mouse = "a"                                   -- Enable mouse use in all modes
+vim.opt.showcmd = true                                -- Displays partial commands on last line
+vim.opt.encoding = "utf-8"                            -- Sets character encoding to UTF-8
+vim.opt.showmatch = true                              -- Highlight the parenthesis that corresponds to the one under the cursor
+vim.opt.autoindent = true                             -- Automatically indent new lines according to the previous one
+vim.opt.splitbelow = true                             -- Opens the horizontal windows below the current window
+vim.opt.splitright = true                             -- Opens the vertical windows to the right of the current window
+vim.opt.laststatus = 2                                -- Displays the status bar in all windows
+vim.opt.showmode = false                              -- Hides the current mode on the last line
+vim.opt.clipboard:append { 'unnamed', 'unnamedplus' } -- Set whatever is copied to go to the clipboard
+vim.opt.fillchars = { eob = ' ' }                     -- Clears the ~ symbols from the editor
+vim.o.termguicolors = true                            -- Setting that enhances colors and layouts
+vim.opt.wrap = false                                  -- Do not wrap to monitor size
+vim.opt.history = 1000                                -- Set the size of the history that will be displayed
+-- vim.opt.relativenumber = true                      -- Enable line numbers relative to the cursor
+-- vim.opt.opt.t_ut = ''                              -- In case of background failures
 
 
--- Formatear automáticamente al guardar :w
+-------------------------------> TAB AND SPACE SETTINGS <----------------------------------------------
+
+vim.opt.expandtab = true -- Use spaces instead of tabs
+vim.opt.shiftwidth = 4
+vim.opt.softtabstop = 4
+
+------------------------------> EDITOR THEME SETTINGS <------------------------------------------------
+
+vim.cmd("colorscheme " .. COLOR_THEME)
+
+------------------------------> CONFIGURES BASIC AUTOMATIC FUNCTIONS <---------------------------------
+
 vim.cmd([[ autocmd BufWritePre * lua validates_the_code_formatting_type() ]])
-
--- ----------------> Configuraciones de la tabulacion y espacios <----------------
-vim.opt.expandtab = true -- Usa espacios en vez de tabs
--- Configura la cantidad de espacios que utilizara al precionar tab
-vim.opt.shiftwidth = 2
-vim.opt.softtabstop = 2
-
-vim.opt.history = 1000 -- Marca el tamaño de historial que tendra
--- vim.opt.t_ut = '' -- En caso de fallos con el fondo
-
-
--- Gestor de archivos NERD
--- vim.g.NERDTreeQuitOnOpen = 1
-
--- ----------------> Configuraciones del tema del editor <----------------
--- Define el tema a utilizar en el editor
-vim.cmd("colorscheme kanagawa-wave")

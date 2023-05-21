@@ -122,6 +122,12 @@ return {
         cterm_color = '220',
         name = 'TestJavascript',
       },
+      ['test.ts'] = {
+        icon = '',
+        color = '#85C1E9',
+        cterm_color = '220',
+        name = 'TestJavascript',
+      },
       ['test.py'] = {
         icon = '',
         color = '#85C1E9',

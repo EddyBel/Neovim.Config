@@ -1,30 +1,34 @@
-vim.g.mapleader = " "      -- Define la tecla leader de neovim
-vim.o.termguicolors = true -- Habilita el uso de colores en la terminal
+------------------------------------------------> BASIC GLOBAL SETTINGS <-------------------------------------------
 
--- Concatena la ruta a la carpeta "lazy" dentro de la carpeta "data" de neovim
+require("globals")
+vim.g.mapleader = " "      -- Defines the leader key of neovim
+vim.o.termguicolors = true -- Enables the use of colors in the terminal
+
+
+--------------------> VERIFY THAT THE LAZY PACKAGE MANAGER IS INSTALLED CORRECTLY <---------------------------------
+
+-- Concatenates the path to the "lazy" folder inside the "data" folder of neovim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-
--- Si no existe la carpeta "lazy" en la ruta anterior, clona el repositorio de "lazy.nvim" dentro de ella
+-- If the "lazy" folder does not exist in the above path, clone the "lazy.nvim" repository inside it
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
 end
-
--- Agrega la ruta de "lazy.nvim" al inicio de las rutas de plugins de neovim
+-- Add the "lazy.nvim" path to the beginning of the neovim plugin paths.
 vim.opt.rtp:prepend(lazypath)
 
--- Carga el módulo "lazy" y le pasa la cadena "plugins" como argumento para configurar los plugins
-local lazy = require("lazy")
-lazy.setup("plugins")
 
--- Carga los módulos "map" y "settings" que se encuentran en la misma ruta del archivo actual
-require("map")
+----------------------------------------> LOADS ALL PLUGINS AND EXTRA SETTINGS <------------------------------------
+
+require("lazy").setup("plugins")
+require("utils.run")
 require("utils.files")
 require("utils.utils")
 require("settings")
+require("map")
