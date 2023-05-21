@@ -25,6 +25,7 @@ This repository was created to share my custom configuration of Neovim, an advan
 In order to be able to use the code editor correctly, it is necessary to have some programs previously installed.
 
 - [Neovim >= 0.5.0](https://github.com/neovim/neovim)
+- [NerdFonts (Recommended source: FiraCode Nerd Font)](https://www.nerdfonts.com/)
 - [NodeJS](https://nodejs.org/en/)
 - [Python](https://www.python.org/)
 - [Go](https://go.dev/)
@@ -92,31 +93,51 @@ The editor has some settings that can be useful and quick to configure, these ar
 | TREE_WIDTH            | Integer | This variable stores the width of the file manager.                                                                                                                                                                                                            |
 | TREE_DIRECTION        | String  | This variable stores from which point the file manager will open, left or right.                                                                                                                                                                               |
 
+## 📦 Additional functions
+
+The editor has some additional commands for different proportions, here is a list of the available commands.
+
+| COMMAND                      | FUNCTION                                                                                                                                        |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `:InitPrettierConfig`        | The command creates a `.pretierrc` file in your project's root path.                                                                            |
+| `:InitEditorConfig`          | The command creates a `.editorconfig` file in your project root path                                                                            |
+| `:InitDockerfile`            | The command creates a `dockerfile` file in your project root path                                                                               |
+| `:InitDockerCompose`         | The command creates a `docker-compose.yaml` file in your project root path                                                                      |
+| `:InitSassEstructure <path>` | The command creates a default file structure for sass, the command receives as a parameter the path where the folders are to be created         |
+| `:InitNodeEstructure <path>` | The command creates a default file structure for node project, the command receives as a parameter the path where the folders are to be created |
+| `:RunPython`                 | The command executes the python file at the side of the editor.                                                                                 |
+| `:RunJavaScript`             | The command executes the javascript file at the side of the editor                                                                              |
+| `:RunTypeScript`             | The command compiles the typescript file, and then executes the resulting javascript file next to the editor.                                   |
+| `:RunScss`                   | The command compiles the current scss file                                                                                                      |
+| `:RunGo`                     | The command compiles the open go file and then executes the resulting binary at the side of the editor.                                         |
+| `:RunCPP`                    | The command compiles the open c++ file and then executes the resulting binary at the side of the editor.                                        |
+| `:RunC`                      | The command compiles the open c file and then executes the resulting binary at the side of the editor.                                          |
+
 ## 🧪 How to install
 
 Once you have fulfilled the necessary requirements for the correct functioning of the configuration, you can proceed to the installation of this configuration.
 
 1. The first thing is to clone the configuration repository this can be done with git or download it directly from github. to clone it with git you can use this command:
 
-```bash
-git clone https://github.com/EddyBel/Neovim.Config.git
-```
+   ```bash
+   git clone https://github.com/EddyBel/Neovim.Config.git
+   ```
 
 2. Next is to move to the cloned repository folder once there you must copy the files `init.lua`, `lazy-lock.json` and finally the `lua` folder, these must go in your neovim configuration folder, for Linux systems you can use `~/.config/nvim`, for Windows you can use `C:\Users\Username\AppData\Local\nvim` or wherever neovim defines the configuration path.
 
-_Linux_
+   _Linux_
 
-```bash
-cd Neovim.Config
-cp init.lua lazy-lock.json lua ~/.config/nvim
-```
+   ```bash
+   cd Neovim.Config
+   cp init.lua lazy-lock.json lua ~/.config/nvim
+   ```
 
-_Windows_
+   _Windows_
 
-```sh
-cd Neovim.Config
-xcopy init.lua lazy-lock.json lua C:\Users\Username\AppData\Local\nvim /s /e /i
-```
+   ```sh
+   cd Neovim.Config
+   xcopy init.lua lazy-lock.json lua C:\Users\Username\AppData\Local\nvim /s /e /i
+   ```
 
 3. Before opening neovim it is important to install the code formatters, these will allow your code to maintain a good structure and design, for this we use the [Neoformat](https://github.com/sbdchd/neoformat) plugin to manage the formatters but we must install them separately with the following commands:
 
