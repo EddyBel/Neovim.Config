@@ -1,9 +1,12 @@
 return {
-    'alvan/vim-closetag',
     'christoomey/vim-tmux-navigator',
     'moll/vim-bbye',
     'xiyaowong/transparent.nvim',
     'editorconfig/editorconfig-vim',
+    {
+        'alvan/vim-closetag',
+        ft = { "html", "javascriptreact", "typescriptreact" }
+    },
     {
         'mattn/emmet-vim',
         ft = "html"
@@ -24,7 +27,6 @@ return {
     {
         "iamcco/markdown-preview.nvim",
         ft = "markdown",
-        -- keys = { { "<leader>mp", "<cmd>MarkdownPreviewToggle<CR>", mode = "n", desc = "MarkdownPreview" } },
         config = function() vim.fn["mkdp#util#install"]() end,
     },
     {

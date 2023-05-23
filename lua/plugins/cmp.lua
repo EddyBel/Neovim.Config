@@ -189,6 +189,7 @@ return {
                 priority_weight = 2,
                 comparators = {
                     compare.kind,
+                    -- compare.score,
                     compare.sort_text,
                 },
             },
@@ -201,7 +202,7 @@ return {
             ---autocomplete. The default value is `false`.
             experimental = {
                 native_menu = false,
-                ghost_text = false,
+                ghost_text = CMP_GHOST_TEXT,
             },
         }
 

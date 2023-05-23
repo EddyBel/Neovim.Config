@@ -115,6 +115,26 @@ The editor has some additional commands for different proportions, here is a lis
 
 ## 🧪 How to install
 
+### Fast installation
+
+1. The first thing is to have all the code formatters you like installed on your system such as `Prettier`, `Black`, `Clang-format`, etc.
+
+2. Then you can install the configuration using the following command depending on your environment.
+
+   _Windows_
+
+   ```sh
+   git clone https://github.com/EddyBel/Neovim.Config.git $HOME\AppData\Local\nvim --depth 1 && nvim
+   ```
+
+   _Linux_ / _Macos_
+
+   ```bash
+   git clone https://github.com/EddyBel/Neovim.Config.git ~/.config/nvim --depth 1 && nvim
+   ```
+
+### Step by step installation
+
 Once you have fulfilled the necessary requirements for the correct functioning of the configuration, you can proceed to the installation of this configuration.
 
 1. The first thing is to clone the configuration repository this can be done with git or download it directly from github. to clone it with git you can use this command:
@@ -125,18 +145,18 @@ Once you have fulfilled the necessary requirements for the correct functioning o
 
 2. Next is to move to the cloned repository folder once there you must copy the files `init.lua`, `lazy-lock.json` and finally the `lua` folder, these must go in your neovim configuration folder, for Linux systems you can use `~/.config/nvim`, for Windows you can use `C:\Users\Username\AppData\Local\nvim` or wherever neovim defines the configuration path.
 
-   _Linux_
-
-   ```bash
-   cd Neovim.Config
-   cp init.lua lazy-lock.json lua ~/.config/nvim
-   ```
-
    _Windows_
 
    ```sh
    cd Neovim.Config
    xcopy init.lua lazy-lock.json lua C:\Users\Username\AppData\Local\nvim /s /e /i
+   ```
+
+   _Linux_ / _Macos_
+
+   ```bash
+   cd Neovim.Config
+   cp init.lua lazy-lock.json lua ~/.config/nvim
    ```
 
 3. Before opening neovim it is important to install the code formatters, these will allow your code to maintain a good structure and design, for this we use the [Neoformat](https://github.com/sbdchd/neoformat) plugin to manage the formatters but we must install them separately with the following commands:

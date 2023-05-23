@@ -82,6 +82,7 @@ _G.COMPILERS_EXECUTABLES = {
     go = "go build INPUT"
 }
 
+
 ---
 -- _G.ICONS is a dictionary containing several icons used in some specific context.
 -- Each key in the dictionary represents a symbolic name associated with a specific
@@ -168,3 +169,58 @@ _G.TREE_WIDTH = 35
 ---1. left
 ---2. right
 _G.TREE_DIRECTION = "left"
+
+---This variable indicates whether there will be a virtual text in the code hints.
+_G.CMP_GHOST_TEXT = false
+
+---This variable indicates the order of the code formats to be used for each language.
+---In this table you can easily configure the formatter.
+---You can search the neoformat documentation: https://github.com/sbdchd/neoformat to find out which formatters are supported.
+_G.CODE_FORMATTERS = {
+    python = { 'black' },
+    javascript = { 'prettier' },
+    typescript = { 'prettier' },
+    html = { 'prettier' },
+    css = { 'prettier' },
+    scss = { 'prettier' },
+    javascriptreact = { 'prettier' },
+    typescriptreact = { 'prettier' },
+    json = { 'prettier' },
+    markdown = { 'prettier' },
+    xml = { 'prettier' },
+    yaml = { 'prettier' },
+    java = { 'prettier' },
+    kotlin = { 'prettier' },
+    less = { 'prettier' },
+    php = { 'prettier' },
+    astro = { 'prettier' },
+    ruby = { 'prettier' },
+    lua = { 'luaformatter' },
+    cpp = { 'clangformat' },
+    c = { 'clangformat' },
+    csharp = { 'clangformat' },
+    arduino = { 'clangformat' },
+    objc = { 'clangformat' },
+    go = { 'gofmt' },
+    assembly = { 'asmfmt' },
+    bazel = { 'buildifier' },
+    cmake = { 'cmake_format' },
+    csv = { 'prettydiff' },
+    dart = { 'dartfmt' },
+    erlang = { 'erlfmt' },
+    graphql = { 'prettier' },
+    toml = { 'taplo' },
+    htmldjango = { 'djlint' },
+    vue = { 'prettier' },
+    swift = { 'Swiftformat' },
+    sql = { 'sqlfmt' },
+    rust = { 'rustfmt' },
+    sass = { 'stylelint' },
+    pug = { 'pug-beautifier' },
+    zsh = { 'shfmt' },
+    svelte = { 'prettierd' },
+    ps1 = { 'PSScriptAnalyzer' },
+    prisma = { 'prettier' },
+    jsonc = { 'prettier' },
+    blade = { 'blade-formatter' }
+}

@@ -208,33 +208,11 @@ return {
         ---
         function get_neoformat_formatter()
             local filetype = vim.bo.filetype
+            local formatters = CODE_FORMATTERS
+            local formatter_by_file = formatters[filetype]
+            local formatter_by_file_string = table.concat(formatter_by_file, " ")
 
-            local formats = {
-                javascript = vim.g.neoformat_enabled_javascript,
-                html = vim.g.neoformat_enabled_html,
-                css = vim.g.neoformat_enabled_css,
-                scss = vim.g.neoformat_enabled_scss,
-                typescriptreact = vim.g.neoformat_enabled_typescriptreact,
-                javascriptreact = vim.g.neoformat_enabled_javascriptreact,
-                json = vim.g.neoformat_enabled_json,
-                java = vim.g.neoformat_enabled_java,
-                kotlin = vim.g.neoformat_enabled_kotlin,
-                less = vim.g.neoformat_enabled_less,
-                markdown = vim.g.neoformat_enabled_markdown,
-                php = vim.g.neoformat_enabled_php,
-                ruby = vim.g.neoformat_enabled_ruby,
-                typescript = vim.g.neoformat_enabled_typescript,
-                xml = vim.g.neoformat_enabled_xml,
-                yaml = vim.g.neoformat_enabled_yaml,
-                lua = vim.g.neoformat_enabled_lua,
-                cpp = vim.g.neoformat_enabled_cpp,
-                c = vim.g.neoformat_enabled_c,
-                csharp = vim.g.neoformat_enabled_csharp,
-                python = vim.g.neoformat_enabled_python,
-                go = vim.g.neoformat_enabled_go
-            }
-
-            return ICONS.formatter .. " " .. table.concat(formats[filetype], " ")
+            return ICONS.formatter .. " " .. formatter_by_file_string
         end
 
         require("lualine").setup({
