@@ -1,6 +1,7 @@
 --------------------------------------> KEYBOARD SHORTCUTS <---------------------------------------------------
 
-vim.keymap.set('i', '<Esc>', '<Esc>:VMClear<CR>', { noremap = true }) -- Clears whatever the Visial-vim plugin does.
+vim.keymap.set('i', '<Esc>', '<Esc>:VMClear <BAR> :nohl <CR>', { noremap = true }) -- Clears whatever the Visial-vim plugin does (insert).
+vim.keymap.set('n', '<Esc>', ':VMClear <BAR> :nohl <CR>', { noremap = true })      -- Clears whatever the Visial-vim plugin does.
 
 ------------------------------> KEYBOARD SHORTCUTS FOR FILES AND BUFFERS <-----------------------------------------------
 
@@ -16,6 +17,7 @@ vim.keymap.set('n', '<leader>nb', ':botright new<CR>', { noremap = true })      
 vim.keymap.set('n', '<C-B>', ':NeoTreeFocusToggle<CR>', { noremap = true })         -- Opens file tree
 vim.keymap.set('i', '<C-B>', '<Esc>:NeoTreeFocusToggle<CR>', { noremap = true })    -- Open file tree (Insert)
 vim.keymap.set('n', '<leader>mp', ':MarkdownPreviewToggle<CR>', { noremap = true }) -- Opens the markdown previewer
+vim.keymap.set('n', '<C-f>', '/', { noremap = true })                               -- Searches for a word in the buffer
 
 
 ------------------------------> KEYBOARD SHORTCUTS FOR TEXT MANIPULATION <-----------------------------------------------
@@ -74,11 +76,12 @@ vim.keymap.set('n', '<leader>rgo', ':RunGo<CR>', { noremap = true })         -- 
 
 -------------------------> KEYBOARD SHORTCUTS FOR LSP CLIENTS <---------------------------------------------------
 
-vim.keymap.set('n', '<C-f>', ":lua validates_the_code_formatting_type()<CR>", { noremap = true }) -- Uses neoformat to format the code
-vim.keymap.set('n', '<C-f><C-f>', vim.lsp.buf.format, { noremap = true })                         -- Format the documents
-vim.keymap.set('n', '<Tab>', vim.lsp.buf.hover, { noremap = true })                               -- Show code information
-vim.keymap.set('n', '<C-d>', vim.lsp.buf.definition, { noremap = true })                          -- Go to method definition
-vim.keymap.set('n', '<C-k>', vim.lsp.buf.code_action, { noremap = true })                         -- Go to code action
+vim.keymap.set('n', '<S-A-f>', ":lua validates_the_code_formatting_type()<CR>", { noremap = true }) -- Uses neoformat to format the code
+vim.keymap.set('n', '<S-A-f>f', vim.lsp.buf.format, { noremap = true })                             -- Format the documents
+vim.keymap.set('n', '<Tab>', vim.lsp.buf.hover, { noremap = true })                                 -- Show code information
+vim.keymap.set('n', '<C-d>', vim.lsp.buf.definition, { noremap = true })                            -- Go to method definition
+vim.keymap.set('n', '<C-RightMouse>', vim.lsp.buf.definition, { noremap = true })                   -- Go to method definition
+vim.keymap.set('n', '<C-k>', vim.lsp.buf.code_action, { noremap = true })                           -- Go to code action
 vim.keymap.set('n', '<C-e>', function()
     vim.diagnostic.open_float(0, { scope = "line", border = "rounded" })
 end, { noremap = true }) -- open in a floating window the error diagnostics

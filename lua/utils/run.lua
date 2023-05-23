@@ -321,6 +321,34 @@ function exectGoFile()
     run_in_terminal(appendExeExtension(outputFile))
 end
 
+function OpenHTMLInBrowser()
+    -- Obtén el nombre del archivo actual
+    local current_file = vim.fn.expand('%:p')
+
+    -- Verifica si el archivo es un archivo HTML
+    local validation = validateExtension(current_file, ".html")
+    if not validation then return end
+
+    -- Construye el comando de apertura del navegador según el sistema operativo
+    local cmd = ""
+
+    if vim.fn.has("mac") == 1 then
+        cmd = "open"
+    elseif vim.fn.has("unix") == 1 then
+        cmd = "xdg-open"
+    elseif vim.fn.has("win32") == 1 then
+        cmd = "start"
+    else
+        notification("Cannot determine the command to open the browser on this operating system.", "warn")
+        return
+    end
+
+    -- Ejecuta el comando para abrir el archivo HTML en el navegador
+    local open_cmd = cmd .. " " .. current_file
+    vim.fn.jobstart(open_cmd, { detach = true })
+    notification("HTML file opened correctly.", "info")
+end
+
 -------------------------------------> ASSIGNS COMMANDS TO EXECUTE THE FUNCTIONS <--------------------------------------------------------
 
 vim.cmd("command! RunCPP lua exectCPPFile()")
@@ -330,3 +358,4 @@ vim.cmd("command! RunJavaScript lua exectJavaScriptFile()")
 vim.cmd("command! RunTypeScript lua exectTypeScriptFile()")
 vim.cmd("command! RunScss lua exectScssFile()")
 vim.cmd("command! RunGo lua exectGoFile()")
+vim.cmd("command! OpenHTML lua OpenHTMLInBrowser()")
