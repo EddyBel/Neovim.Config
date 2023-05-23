@@ -100,8 +100,8 @@ return {
             -- Enter to confirm autocomplete selection -- Ctrl + space to complete the autocomplete selection
             -- Ctrl + space to complete the autocompletion
             mapping = {
-                ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-                ["<C-f>"] = cmp.mapping.scroll_docs(4),
+                ["<C-j>"] = cmp.mapping.scroll_docs(-4),
+                ["<C-k>"] = cmp.mapping.scroll_docs(4),
                 ["<Down>"] = cmp.mapping(go_down_in_menu, { "i", "s" }),
                 ["<Up>"] = cmp.mapping(go_up_in_menu, { "i", "s" }),
                 ["<C-c>"] = cmp.mapping(go_close_menu, { "i", "s" }),

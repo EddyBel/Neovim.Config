@@ -38,7 +38,7 @@ In order to be able to use the code editor correctly, it is necessary to have so
 - [x] Commands to quickly execute and compile code.
 - [x] Visually pleasing and developer friendly interface.
 - [x] Useful information for the status bar.
-- [x] Convenient keyboard shortcuts based on the standard of other IDEs like VSCode.
+- [x] Convenient [keyboard shortcuts](./docs/KeyboardShortcuts.md) based on the standard of other IDEs like VSCode.
 
 ## 🔬 Supported languages
 

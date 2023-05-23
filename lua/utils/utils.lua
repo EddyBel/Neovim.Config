@@ -10,7 +10,7 @@
 -- Validates the code formatting type and performs the corresponding action.
 ---
 function validates_the_code_formatting_type()
-    local filetypes = { "lua", "vim", "vimscript" }
+    local filetypes = EXCLUDE_FORMATTERS_FILES
     local is_filetype_special = vim.tbl_contains(filetypes, vim.bo.filetype)
 
     if is_filetype_special then

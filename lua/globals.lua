@@ -173,6 +173,9 @@ _G.TREE_DIRECTION = "left"
 ---This variable indicates whether there will be a virtual text in the code hints.
 _G.CMP_GHOST_TEXT = false
 
+---This variable indicates which file types will be excluded from being formatted with neoformat and the default LSP formatting will be used.
+_G.EXCLUDE_FORMATTERS_FILES = { "lua", "vim", "vimscript" }
+
 ---This variable indicates the order of the code formats to be used for each language.
 ---In this table you can easily configure the formatter.
 ---You can search the neoformat documentation: https://github.com/sbdchd/neoformat to find out which formatters are supported.
