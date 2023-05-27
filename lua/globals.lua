@@ -15,11 +15,23 @@
 ---7. oxocarbon
 _G.COLOR_THEME = "rose-pine"
 
+---This variable defines whether you want a transparent background in the editor.
+_G.BACKGROUND_TRANSPARENT = false
+
 ---This variable stores the name of the theme to be used for the status bar of the lualine plugin.
 ---
 ---You can learn more about the available themes in the plugin documentation:
 ---https://github.com/nvim-lualine/lualine.nvim/blob/master/THEMES.md
 _G.COLOR_THEME_STATUSBAR = "ayu_dark"
+
+---Indicates which will be the separator for each statusbar item.
+_G.DECORATION_SEPARATOR_STATUSBAR = { left = '', right = '' }
+
+---Indicate which will be the decorative separator for each special section of the statusbar.
+_G.DECORATION_END_STATUSBAR = { left = '', right = '' }
+
+---Indicates which is the separator for the buffers opened in the tab
+_G.DECORATION_SEPARATOR_TABBAR = { left = '▎', right = ' ' }
 
 ---This variable stores the front drawing ASCII that can be displayed when neovim is started.
 ---It is imported from the drawing file saved in the neovim configuration.
@@ -91,21 +103,31 @@ _G.COMPILERS_EXECUTABLES = {
 -- Associated value is the character or set of characters represented by that icon.
 ---
 _G.ICONS = {
-    prefix = "",                                                      -- Prefix displayed in the virtual text
-    error = '',                                                       -- Error icon
-    warn = '',                                                        -- Warning icon
-    info = '󰅺',                                                       -- Info icon
-    hint = '',                                                        -- Hint icon
-    time = '󱑃',                                                       --  Icon representing each operating system
-    formatter = "",                                                   -- Icon representing code formatter
-    lsp = "",                                                         -- Icon representing LSP clients
-    cmp_buffer = "",                                                  -- Icon representing Buffer suggestions
-    cmp_lua = "",                                                     -- Icon that represents the suggestions of lua
-    cmp_path = "",                                                    -- Icon representing route suggestions
-    cmp_snippets = "",                                                -- Icon representing snippet suggestions (snippy)
-    cmp_vsnip = "󰨞",                                                  -- Icon representing vsnip suggestions
-    cmp_luasnip = "",                                                 -- Icon representing lua snippet suggestions
-    cmp_db = "",                                                      -- Icon representing database suggestions
+    prefix = "",     -- Prefix displayed in the virtual text
+    error = '',      -- Error icon
+    warn = '',       -- Warning icon
+    info = '󰅺',      -- Info icon
+    hint = '',       -- Hint icon
+    time = '󱑃',      --  Icon representing each operating system
+    formatter = "",  -- Icon representing code formatter
+    lsp = "",        -- Icon representing LSP clients
+    cmp_buffer = "", -- Icon representing Buffer suggestions
+    cmp_lua = "",    -- Icon that represents the suggestions of lua
+    cmp_path = "",   -- Icon representing route suggestions
+    cmp_snippets = "", -- Icon representing snippet suggestions (snippy)
+    cmp_vsnip = "󰨞", -- Icon representing vsnip suggestions
+    cmp_luasnip = "", -- Icon representing lua snippet suggestions
+    cmp_db = "",     -- Icon representing database suggestions
+    copilot = {
+        enable = "",
+        disable = "",
+        warning = "",
+    },
+    git = {
+        add = "",
+        removed = "",
+        modified = ""
+    },
     spinner = { "⠿", "⠞", "⠇", "⠑", "⠝", "⠞", "⠎", "⠕", "⠍", "⠑", "⠋" }, -- Icons representing the loading animation
     os = {
         ["Windows"] = "󰍲",

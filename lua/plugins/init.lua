@@ -1,8 +1,17 @@
 return {
     'christoomey/vim-tmux-navigator',
     'moll/vim-bbye',
-    'xiyaowong/transparent.nvim',
     'editorconfig/editorconfig-vim',
+    {
+        'xiyaowong/transparent.nvim',
+        config = function()
+            if BACKGROUND_TRANSPARENT then
+                vim.cmd("TransparentEnable")
+            else
+                vim.cmd("TransparentDisable")
+            end
+        end
+    },
     {
         'alvan/vim-closetag',
         ft = { "html", "javascriptreact", "typescriptreact" }

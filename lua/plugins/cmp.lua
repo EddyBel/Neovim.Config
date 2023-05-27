@@ -80,7 +80,7 @@ return {
 
 
         ---Design options for the neovim cmp window
-        ui_window = cmp.config.window.bordered()
+        local ui_window = cmp.config.window.bordered()
 
         cmp.setup {
             -- Defines that the selection is made by default on the first element
@@ -108,6 +108,10 @@ return {
                 ["<Enter>"] = cmp.mapping.confirm {
                     behavior = cmp.ConfirmBehavior.Insert,
                     select = true, },
+                ["<Tab>"] = cmp.mapping.confirm {
+                    behavior = cmp.ConfirmBehavior.Insert,
+                    select = true
+                },
                 ["<C-Space>"] = cmp.mapping.complete(),
                 ["<C-n>"] = cmp.mapping.complete()
             },

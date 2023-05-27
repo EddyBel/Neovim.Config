@@ -127,7 +127,6 @@ return {
             local buf_ft = vim.api.nvim_buf_get_option(bufnr, 'filetype')
             local active_clients = vim.lsp.get_active_clients()
             local separator = " "
-            local default_message = "LSP"
 
             if #active_clients == 0 then return "" end
 
@@ -137,8 +136,6 @@ return {
                     table.insert(client_names, client.name)
                 end
             end
-
-            if #client_names == 0 then return icon .. " " .. default_message end
 
             return ICONS.lsp .. " " .. table.concat(client_names, separator)
         end
@@ -162,7 +159,8 @@ return {
         ---
         local function lsp_status()
             local loading_chars = ICONS.spinner
-            local message_text = "Waiting for LSP"
+            -- local message_text = "Waiting for LSP"
+            local message_text = "LSP"
             local lsp_status = vim.lsp.buf_get_clients()
 
             if next(lsp_status) == nil then
@@ -215,13 +213,19 @@ return {
             return ICONS.formatter .. " " .. formatter_by_file_string
         end
 
+        local function current_root_path(fname)
+            local current_directory = vim.fn.getcwd()
+            local root_folder_name = vim.fn.fnamemodify(current_directory, ":t")
+            return ICONS.cmp_path .. " " .. root_folder_name
+        end
+
         require("lualine").setup({
             options = {
                 icons_enabled = true,
                 theme = COLOR_THEME_STATUSBAR,
 
-                component_separators = { left = '', right = '' },
-                section_separators = { left = '', right = '' },
+                component_separators = DECORATION_SEPARATOR_STATUSBAR,
+                section_separators = DECORATION_END_STATUSBAR,
                 disabled_filetypes = {
                     statusline = {},
                     winbar = {},
@@ -237,7 +241,9 @@ return {
             },
             sections = {
                 lualine_a = { 'mode' },
-                lualine_b = { 'branch', 'diff', {
+                lualine_b = {
+                    get_active_lsp_clients_by_typefile,
+                    lsp_status, {
                     'diagnostics',
                     padding = { left = 1, right = 1 },
                     symbols = {
@@ -246,15 +252,51 @@ return {
                         info = ICONS.info .. " ",
                         hint = ICONS.hint .. " ",
                     }
-                }, get_active_lsp_clients_by_typefile, lsp_status },
-                lualine_c = { 'filename' },
-                lualine_x = { get_neoformat_formatter, number_lsp_clients,
-                    { 'encoding', padding = { left = 1, right = 1 } } },
-                lualine_y = { { "filetype", padding = { left = 1, right = 0 } },
-                    { "progress", separator = " ",                  padding = { left = 1, right = 1 } }, },
-                lualine_z = {
-                    { "location", padding = { left = 0, right = 0 } },
-                    get_operating_system }
+                } },
+                lualine_c = {
+                    current_root_path, {
+                    'branch',
+                    icons_enabled = true,
+                    icon = '',
+                }, {
+                    'diff',
+                    icons_enabled = true,
+                    symbols = {
+                        added = ICONS.git.add .. " ",
+                        modified = ICONS.git.modified .. " ",
+                        removed = ICONS.git.removed .. " "
+                    }
+                }, },
+                lualine_x = {
+                    number_lsp_clients,
+                    get_neoformat_formatter,
+                    {
+                        'encoding',
+                        padding = {
+                            left = 1,
+                            right = 1
+                        }
+                    }, {
+                    "filetype",
+                    padding = {
+                        left = 1,
+                        right = 1
+                    }
+                } },
+                lualine_y = {
+                    {
+                        "location",
+                        padding =
+                        {
+                            left = 0,
+                            right = 0
+                        }
+                    }, {
+                    "progress",
+                    -- separator = " ",
+                    padding = { left = 1, right = 1 }
+                } },
+                lualine_z = { get_operating_system }
             },
             inactive_sections = {
                 lualine_a = {},
