@@ -43,7 +43,7 @@ end
 ---end
 ---```
 local function compile_code(command)
-    notification("Wait a moment, your code is compiling.", "info")
+    -- notification("Wait a moment, your code is compiling.", "info")
     local compileResult = os.execute(command)
     if compileResult ~= 0 then
         notification("An error occurred, your code could not be compiled.", "error")

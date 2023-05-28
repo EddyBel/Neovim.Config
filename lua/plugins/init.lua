@@ -1,7 +1,16 @@
 return {
-    'christoomey/vim-tmux-navigator',
-    'moll/vim-bbye',
-    'editorconfig/editorconfig-vim',
+    {
+        'christoomey/vim-tmux-navigator',
+        event = 'VeryLazy'
+    },
+    {
+        'moll/vim-bbye',
+        event = 'VeryLazy'
+    },
+    {
+        'editorconfig/editorconfig-vim',
+        event = 'VeryLazy'
+    },
     {
         'xiyaowong/transparent.nvim',
         config = function()
@@ -51,12 +60,14 @@ return {
     {
         'akinsho/toggleterm.nvim',
         config = true,
+        event = 'VeryLazy',
         opts = {
             direction = "float",
         }
     },
     {
         'mg979/vim-visual-multi',
+        event = 'VeryLazy',
         branch = 'master'
     },
     config = function()

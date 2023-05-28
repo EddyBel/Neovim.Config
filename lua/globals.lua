@@ -13,7 +13,9 @@
 ---5. gruvbox
 ---6. carbonfox, terafox, nordfox, duskfox, dawnfox, dayfox, nightfox
 ---7. oxocarbon
-_G.COLOR_THEME = "rose-pine"
+---8. dracula
+---9. tokyonight-night, tokyonight-storm, tokyonight-day, tokyonight-moon
+_G.COLOR_THEME = "tokyonight-night"
 
 ---This variable defines whether you want a transparent background in the editor.
 _G.BACKGROUND_TRANSPARENT = false
@@ -22,7 +24,7 @@ _G.BACKGROUND_TRANSPARENT = false
 ---
 ---You can learn more about the available themes in the plugin documentation:
 ---https://github.com/nvim-lualine/lualine.nvim/blob/master/THEMES.md
-_G.COLOR_THEME_STATUSBAR = "ayu_dark"
+_G.COLOR_THEME_STATUSBAR = "horizon"
 
 ---Indicates which will be the separator for each statusbar item.
 _G.DECORATION_SEPARATOR_STATUSBAR = { left = '', right = '' }
@@ -122,7 +124,7 @@ _G.ICONS = {
         enable = "",
         disable = "",
         warning = "",
-    },
+    }, -- Icons representing the copilot status
     git = {
         add = "",
         removed = "",

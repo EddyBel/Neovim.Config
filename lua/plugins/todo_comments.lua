@@ -2,7 +2,7 @@ return {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim", },
     cmd = { "TodoTrouble", "TodoTelescope", "TodoQuickFix" },
-    lazy = false,
+    event = 'VeryLazy',
     config = true,
     opts = {
         signs = TODO_ICONS.signs, -- show icons in the signs column

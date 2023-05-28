@@ -81,8 +81,14 @@ return {
 
         ---Design options for the neovim cmp window
         local ui_window = cmp.config.window.bordered()
+        ui_window.winhighlight = "Normal:CmpPmenu,CursorLine:Visual,Search:PmenuSel"
 
         cmp.setup {
+
+            -- completion = {
+            --     completeopt = "menu,menuone",
+            -- },
+
             -- Defines that the selection is made by default on the first element
             initial_select = cmp.SelectFirst,
 
@@ -171,12 +177,57 @@ return {
                 },
             },
 
+            -- formatting = {
+            --     fields = { 'menu', 'abbr', 'kind' },
+            --     format = function(entry, vim_item)
+            --         vim_item.kind = ({
+            --             Text = '',
+            --             Method = '',
+            --             Function = '󰆧',
+            --             Constructor = '',
+            --             Field = 'ﰠ',
+            --             Variable = '',
+            --             Class = '',
+            --             Interface = '',
+            --             Module = '',
+            --             Property = 'ﰠ',
+            --             Unit = '塞',
+            --             Value = '',
+            --             Enum = '',
+            --             Keyword = '',
+            --             Snippet = '',
+            --             Color = '',
+            --             File = '',
+            --             Reference = '',
+            --             Folder = '',
+            --             EnumMember = '',
+            --             Constant = '',
+            --             Struct = 'פּ',
+            --             Event = '',
+            --             Operator = '',
+            --             TypeParameter = '',
+            --         })[vim_item.kind]
+            --         vim_item.menu = ({
+            --             nvim_lsp = ICONS.lsp .. " ",
+            --             buffer = ICONS.cmp_buffer .. " ",
+            --             nvim_lua = ICONS.cmp_lua .. " ",
+            --             path = ICONS.cmp_path .. " ",
+            --             snippy = ICONS.cmp_snippets .. " ",
+            --             vsnip = ICONS.cmp_vsnip .. " ",
+            --             luasnip = ICONS.cmp_luasnip .. " ",
+            --             ["vim-dadbod-completion"] = ICONS.cmp_db .. " ",
+            --         })[entry.source.name]
+            --
+            --         return vim_item
+            --     end
+            -- }
+            -- ,
+
 
             -- La sección snippet define una función anónima expand que se utilizará para expandir los snippets. Dentro de la función, se llama a la función lsp_expand de la biblioteca luasnip
             snippet = {
                 expand = function(args)
                     require("luasnip").lsp_expand(args.body)
-                    -- require("snippy").expand_snippet(args.body)
                 end,
             },
 
@@ -189,14 +240,14 @@ return {
             ---they must return a boolean value indicating whether `lhs` is greater than `rhs`. The functions are applied in the
             ---order in which they appear in the table. In the example provided, the entries are sorted first by type
             ---(`kind`) and then by their sort text (`sort_text`).
-            sorting = {
-                priority_weight = 2,
-                comparators = {
-                    compare.kind,
-                    -- compare.score,
-                    compare.sort_text,
-                },
-            },
+            -- sorting = {
+            --     priority_weight = 2,
+            --     comparators = {
+            --         compare.kind,
+            --         -- compare.score,
+            --         compare.sort_text,
+            --     },
+            -- },
 
             ---`experimental` section is a table that allows to enable experimental functions in `cmp`.
             ---`native_menu` is a boolean option that allows you to enable the native menu functionality of the `cmp`.

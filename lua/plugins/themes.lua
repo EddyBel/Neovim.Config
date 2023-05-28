@@ -268,5 +268,15 @@ return { {
     config = function()
         vim.opt.background = "dark" -- set this to dark or light
     end
+}, {
+    'dracula/vim',
+    as = 'dracula',
+    lazy = true,
+    config = function() end
+}, {
+    "folke/tokyonight.nvim",
+    lazy = true,
+    config = function() end,
+    opts = {},
 }
 }
