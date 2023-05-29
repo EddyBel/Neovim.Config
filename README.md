@@ -18,19 +18,19 @@ This repository contains my custom configuration for Neovim, an advanced text ed
 
 ## Index
 
-- [Requeriments](#🔨-requirements)
-- [Features](#🦉-features)
+- [Requeriments](#-requirements)
+- [Features](#-features)
 - [Plugins](./docs/Plugins.md)
 - [Keyboard shortcuts](./docs/KeyboardShortcuts.md)
-- [Supported languages](#🔬-supported-languages)
-  - [Install LSP clients](#install-lsp-clients)
-  - [LSP configurations](#lsp-configuration)
-- [Configurations](#🛠-configurations)
-- [Aditional functions](#📦-additional-functions)
-- [How to install](#🧪-how-to-install)
+- [Supported languages](#-supported-languages)
+  - [Install LSP clients](#-install-lsp-clients)
+  - [LSP configurations](#-lsp-configuration)
+- [Configurations](#-configurations)
+- [Aditional functions](#-additional-functions)
+- [How to install](#-how-to-install)
   - [Fast installation](#fast-installation)
   - [Ststep by step installation](#step-by-step-installation)
-- [Project status](#🎢-project-status)
+- [Project status](#-project-status)
 
 ## 😸 Why ?
 
