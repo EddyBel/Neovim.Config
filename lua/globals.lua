@@ -20,20 +20,23 @@ _G.COLOR_THEME = "tokyonight-night"
 ---This variable defines whether you want a transparent background in the editor.
 _G.BACKGROUND_TRANSPARENT = false
 
----This variable stores the name of the theme to be used for the status bar of the lualine plugin.
----
----You can learn more about the available themes in the plugin documentation:
----https://github.com/nvim-lualine/lualine.nvim/blob/master/THEMES.md
-_G.COLOR_THEME_STATUSBAR = "horizon"
-
----Indicates which will be the separator for each statusbar item.
-_G.DECORATION_SEPARATOR_STATUSBAR = { left = '', right = '' }
-
----Indicate which will be the decorative separator for each special section of the statusbar.
-_G.DECORATION_END_STATUSBAR = { left = '', right = '' }
-
----Indicates which is the separator for the buffers opened in the tab
-_G.DECORATION_SEPARATOR_TABBAR = { left = '▎', right = ' ' }
+---This variable is an object that indicates the properties that the status bar (lualine) can have.
+---1. theme -> string
+---     This variable stores the name of the theme to be used for the status bar of the lualine plugin.
+---     You can learn more about the available themes in the plugin documentation:
+---     https://github.com/nvim-lualine/lualine.nvim/blob/master/THEMES.md
+---2. separator -> table Indicates which will be the separator for each statusbar item.
+---3. decorator -> table Indicate which will be the decorative separator for each special section of the statusbar.
+---4. type -> string Indicates the distribution of information in the status bar.
+---     - complete
+---     - simple
+---     - compact
+_G.STATUSBAR = {
+    theme = 'horizon',
+    separator = { left = '', right = '' },
+    decorator = { left = '', right = '' },
+    type = "simple"
+}
 
 ---This variable stores the front drawing ASCII that can be displayed when neovim is started.
 ---It is imported from the drawing file saved in the neovim configuration.
@@ -129,7 +132,7 @@ _G.ICONS = {
         add = "",
         removed = "",
         modified = ""
-    },
+    },                                                                   -- Icons indicating the status of git changes
     spinner = { "⠿", "⠞", "⠇", "⠑", "⠝", "⠞", "⠎", "⠕", "⠍", "⠑", "⠋" }, -- Icons representing the loading animation
     os = {
         ["Windows"] = "󰍲",
@@ -195,7 +198,30 @@ _G.TREE_WIDTH = 35
 _G.TREE_DIRECTION = "left"
 
 ---This variable indicates whether there will be a virtual text in the code hints.
-_G.CMP_GHOST_TEXT = false
+_G.CMP_GHOST_TEXT = true
+
+---This table contains the list of LSP clients to be installed automatically.
+_G.LSP_CLIENTS = {
+    "lua_ls",
+    "tsserver",
+    "marksman",
+    "pyright",
+    "cssls",
+    "jsonls",
+    "emmet_ls",
+    "html",
+    -- "rust_analyzer",
+    -- "clangd",
+    -- "tailwindcss",
+    -- "bashls",
+    -- "vimls",
+    -- "dockerls",
+    -- "sqlls",
+    -- "csharp_ls",
+    -- "gopls",
+    -- "jdtls",
+    -- "docker_compose_language_service"
+}
 
 ---This variable indicates which file types will be excluded from being formatted with neoformat and the default LSP formatting will be used.
 _G.EXCLUDE_FORMATTERS_FILES = { "lua", "vim", "vimscript" }

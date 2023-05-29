@@ -1,5 +1,10 @@
 return {
     {
+        "beauwilliams/focus.nvim",
+        event = 'VeryLazy',
+        config = function() require("focus").setup() end
+    },
+    {
         'christoomey/vim-tmux-navigator',
         event = 'VeryLazy'
     },

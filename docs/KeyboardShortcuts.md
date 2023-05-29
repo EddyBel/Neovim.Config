@@ -14,17 +14,17 @@
 
 ### Buffer
 
-| KEY                | MODE          | COMMAND                   | FUNCTION                                                               |
-| ------------------ | ------------- | ------------------------- | ---------------------------------------------------------------------- |
-| `Ctrl + q`         | normal        | `<cmd>:q<CR>`             | Closes the current buffer or the editor                                |
-| `<leader> + q + q` | normal        | `<cmd>:q!<CR>`            | Forces the buffer to close                                             |
-| `Ctrl + s`         | normal insert | `<cmd>:w<CR>`             | Saves changes made to the buffer                                       |
-| `Ctrl + h + h`     | normal        | `<cmd>:bprevious<CR>`     | Move to the previous buffer                                            |
-| `Ctrl + l + l`     | normal        | `<cmd>:bnext<CR>`         | Move to the next buffer                                                |
-| `Ctrl + q + q`     | normal        | `<cmd>:Bdelete<CR>`       | Closes the current buffer but does not close the entire editor         |
-| `<leader> + n + r` | normal        | `<cmd>:botright vnew<CR>` | Allows you to open a new workspace to the right of your current buffer |
-| `<leader> + n + b` | normal        | `<cmd>:botright new<CR>`  | Allows you to open a new workspace below your current buffer           |
-| `Ctrl + f`         | normal insert | `<Esc>/`                  | Allows you to search the buffer for the phrase you require             |
+| KEY                | MODE          | COMMAND               | FUNCTION                                                       |
+| ------------------ | ------------- | --------------------- | -------------------------------------------------------------- |
+| `q`                | normal        | `<cmd>:q<CR>`         | Closes the current buffer or the editor                        |
+| `<leader> + q + q` | normal        | `<cmd>:q!<CR>`        | Forces the buffer to close                                     |
+| `Ctrl + s`         | normal insert | `<cmd>:w<CR>`         | Saves changes made to the buffer                               |
+| `Ctrl + h + h`     | normal        | `<cmd>:bprevious<CR>` | Move to the previous buffer                                    |
+| `Ctrl + l + l`     | normal        | `<cmd>:bnext<CR>`     | Move to the next buffer                                        |
+| `Ctrl + q + q`     | normal        | `<cmd>:Bdelete<CR>`   | Closes the current buffer but does not close the entire editor |
+| `<leader> + n + r` | normal        | `<cmd>:vsplit<CR>`    | Open a window with the current buffer on the right side.       |
+| `<leader> + n + b` | normal        | `<cmd>:split<CR>`     | Open a window with the current buffer on the bottom side.      |
+| `Ctrl + f`         | normal insert | `<Esc>/`              | Allows you to search the buffer for the phrase you require     |
 
 ### Text Manipulation
 

@@ -36,7 +36,7 @@ return {
         ---Gets the current path where Neovim is running.
         ---This function uses the `vim.fn.getcwd()` function to get the current path.
         ---Returns the path where Neovim is opened.
-        local function current_path(fname)
+        local function current_path()
             return vim.fn.getcwd() -- Esta funcion obtiene la ruta donde se habre neovim
         end
 
@@ -309,6 +309,29 @@ return {
             root_dir = current_path
         })
 
+        -- Markdown
+        lspconfig.marksman.setup(
+            {
+                cmd = { "marksman", "server" },
+                filetypes = { "markdown" },
+                root_dir = current_path,
+                single_file_support = true,
+            }
+        )
+
+        -- Arduino
+        lspconfig.arduino_language_server.setup({
+            cmd = { getExecutableName("arduino-language-server") },
+            filetypes = { "arduino" },
+            root_dir = current_path
+        })
+
+        -- Assembly
+        lspconfig.asm_lsp.setup({
+            cmd = { getExecutableName("asm-lsp") },
+            filetypes = { "asm", "vmasm" },
+            root_dir = current_path
+        })
 
         --------------------------------------------> EXTRA STYLE SETTINGS <----------------------------------------------
 

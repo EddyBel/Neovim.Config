@@ -219,13 +219,117 @@ return {
             return ICONS.cmp_path .. " " .. root_folder_name
         end
 
+        ---This function defines the type of status bar to be used.
+        local function type_section()
+            local mode = 'mode'
+            local lsp_clients_by_file = get_active_lsp_clients_by_typefile
+            local lsp_status = lsp_status
+            local current_path = current_root_path
+            local system = get_operating_system
+            local count_lsp = number_lsp_clients
+            local formatter = get_all_lsp_clients
+            local diagnostic = {
+                'diagnostics',
+                padding = { left = 1, right = 1 },
+                symbols = {
+                    error = ICONS.error .. " ",
+                    warn = ICONS.warn .. " ",
+                    info = ICONS.info .. " ",
+                    hint = ICONS.hint .. " ",
+                }
+            }
+            local branch = {
+                'branch',
+                icons_enabled = true,
+                icon = '',
+            }
+            local diff = {
+                'diff',
+                icons_enabled = true,
+                symbols = {
+                    added = ICONS.git.add .. " ",
+                    modified = ICONS.git.modified .. " ",
+                    removed = ICONS.git.removed .. " "
+                }
+            }
+            local encoding = {
+                'encoding',
+                padding = {
+                    left = 1,
+                    right = 1
+                }
+            }
+            local filetype = {
+                "filetype",
+                padding = {
+                    left = 1,
+                    right = 1
+                }
+            }
+            local location = {
+                "location",
+                padding =
+                {
+                    left = 0,
+                    right = 0
+                }
+            }
+            local progress = {
+                "progress",
+                padding = { left = 1, right = 1 }
+            }
+            local filename = {
+                'filename',
+                padding = { left = 1, right = 1 }
+            }
+
+
+            if STATUSBAR.type == "complete" then
+                return {
+                    lualine_a = { mode },
+                    lualine_b = { lsp_clients_by_file, lsp_status, diagnostic },
+                    lualine_c = { current_path, branch, diff },
+                    lualine_x = { count_lsp, formatter, encoding, filetype },
+                    lualine_y = { location, progress },
+                    lualine_z = { system }
+                }
+            elseif STATUSBAR.type == "simple" then
+                return {
+                    lualine_a = { mode },
+                    lualine_b = { filename },
+                    lualine_c = { branch, diff },
+                    lualine_x = { lsp_clients_by_file, lsp_status, diagnostic },
+                    lualine_y = { current_path, progress },
+                    lualine_z = { system }
+                }
+            elseif STATUSBAR.type == "compact" then
+                return {
+                    lualine_a = { mode },
+                    lualine_b = { lsp_clients_by_file, lsp_status },
+                    lualine_c = { branch },
+                    lualine_x = { diagnostic },
+                    lualine_y = { progress },
+                    lualine_z = { system }
+                }
+            else
+                return {
+                    lualine_a = { mode },
+                    lualine_b = { filename },
+                    lualine_c = { branch },
+                    lualine_x = { diagnostic },
+                    lualine_y = { location, progress },
+                    lualine_z = { system }
+                }
+            end
+        end
+
         require("lualine").setup({
             options = {
                 icons_enabled = true,
-                theme = COLOR_THEME_STATUSBAR,
+                theme = STATUSBAR.theme,
 
-                component_separators = DECORATION_SEPARATOR_STATUSBAR,
-                section_separators = DECORATION_END_STATUSBAR,
+                component_separators = STATUSBAR.separator,
+                section_separators = STATUSBAR.decorator,
                 disabled_filetypes = {
                     statusline = {},
                     winbar = {},
@@ -239,73 +343,15 @@ return {
                     winbar = 1000,
                 }
             },
-            sections = {
-                lualine_a = { 'mode' },
-                lualine_b = {
-                    get_active_lsp_clients_by_typefile,
-                    lsp_status, {
-                    'diagnostics',
-                    padding = { left = 1, right = 1 },
-                    symbols = {
-                        error = ICONS.error .. " ",
-                        warn = ICONS.warn .. " ",
-                        info = ICONS.info .. " ",
-                        hint = ICONS.hint .. " ",
-                    }
-                } },
-                lualine_c = {
-                    current_root_path, {
-                    'branch',
-                    icons_enabled = true,
-                    icon = '',
-                }, {
-                    'diff',
-                    icons_enabled = true,
-                    symbols = {
-                        added = ICONS.git.add .. " ",
-                        modified = ICONS.git.modified .. " ",
-                        removed = ICONS.git.removed .. " "
-                    }
-                }, },
-                lualine_x = {
-                    number_lsp_clients,
-                    get_neoformat_formatter,
-                    {
-                        'encoding',
-                        padding = {
-                            left = 1,
-                            right = 1
-                        }
-                    }, {
-                    "filetype",
-                    padding = {
-                        left = 1,
-                        right = 1
-                    }
-                } },
-                lualine_y = {
-                    {
-                        "location",
-                        padding =
-                        {
-                            left = 0,
-                            right = 0
-                        }
-                    }, {
-                    "progress",
-                    -- separator = " ",
-                    padding = { left = 1, right = 1 }
-                } },
-                lualine_z = { get_operating_system }
-            },
-            inactive_sections = {
-                lualine_a = {},
-                lualine_b = {},
-                lualine_c = { 'filename' },
-                lualine_x = { 'location' },
-                lualine_y = {},
-                lualine_z = {}
-            },
+            sections = type_section(),
+            -- inactive_sections = {
+            --     lualine_a = {},
+            --     lualine_b = {},
+            --     lualine_c = { 'filename' },
+            --     lualine_x = { 'location' },
+            --     lualine_y = {},
+            --     lualine_z = {}
+            -- },
             tabline = {},
             winbar = {},
             inactive_winbar = {},

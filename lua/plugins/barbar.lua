@@ -32,7 +32,7 @@ return {
                     custom_colors = false,
                     enabled = true,
                 },
-                separator = DECORATION_SEPARATOR_TABBAR,
+                separator = { left = '▎', right = ' ' },
                 modified = { button = '●' },
                 pinned = { button = '', filename = true },
                 preset = 'default',
