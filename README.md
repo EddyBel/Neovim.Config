@@ -29,7 +29,8 @@ This repository contains my custom configuration for Neovim, an advanced text ed
 - [Aditional functions](#-additional-functions)
 - [How to install](#-how-to-install)
   - [Fast installation](#fast-installation)
-  - [Ststep by step installation](#step-by-step-installation)
+  - [Step by step installation](#step-by-step-installation)
+  - [Delete configuration](#delete-configuration)
 - [Project status](#-project-status)
 
 ## 😸 Why ?
@@ -77,15 +78,15 @@ In order to be able to use the code editor correctly, it is necessary to have so
 - `java` - jdtls
 - `C` - clangd
 - `C++` - clangd
-- `Objective C` - clangd
+- `objective C` - clangd
 - `C#` - csharp_ls
-- `Dockerfile` - dockerls
-- `Docker-Compose` - docker_compose_language_service
-- `SQL` - sqlls
-- `MYSQL` - sqlls
-- `Markdown` - marksman
-- `Assembly` - asm_lsp
-- `Arduino` - arduino_language_server
+- `dockerfile` - dockerls
+- `docker-Compose` - docker_compose_language_service
+- `sql` - sqlls
+- `mysql` - sqlls
+- `markdown` - marksman
+- `assembly` - asm_lsp
+- `arduino` - arduino_language_server
 
 ### ⚗ Install LSP Clients
 
@@ -113,7 +114,6 @@ The editor has some settings that can be useful and quick to configure, these ar
 | COLOR_LINE               | Table   | This variable stores a color table to use when highlighting the cursor line.                                                                                                                                                                                   |
 | TODO_PATTERN             | String  | This variable stores the search pattern to search for TODO comments in the code.                                                                                                                                                                               |
 | TODO_ICONS               | Table   | This variable indicates the table of icons to represent each TODO comment.                                                                                                                                                                                     |
-| COMPILERS_EXECUTABLES    | Table   | This variable stores a table with the structure of how a script should be written to execute a code.                                                                                                                                                           |
 | ICONS                    | Table   | This variable stores a table of most of the icons found throughout the editor for general use.                                                                                                                                                                 |
 | GIT_SYMBOLS              | Table   | This variable stores a table with the icons or symbols that you will use to identify changes in a git repository.                                                                                                                                              |
 | TREE_SYMBOLS             | Table   | This variable stores a table with the icons to be used by the Neotree file manager.                                                                                                                                                                            |
@@ -128,22 +128,22 @@ The editor has some settings that can be useful and quick to configure, these ar
 
 The editor has some additional commands for different proportions, here is a list of the available commands.
 
-| COMMAND                      | FUNCTION                                                                                                                                        |
-| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:InitPrettierConfig`        | The command creates a `.pretierrc` file in your project's root path.                                                                            |
-| `:InitEditorConfig`          | The command creates a `.editorconfig` file in your project root path                                                                            |
-| `:InitDockerfile`            | The command creates a `dockerfile` file in your project root path                                                                               |
-| `:InitDockerCompose`         | The command creates a `docker-compose.yaml` file in your project root path                                                                      |
-| `:InitSassEstructure <path>` | The command creates a default file structure for sass, the command receives as a parameter the path where the folders are to be created         |
-| `:InitNodeEstructure <path>` | The command creates a default file structure for node project, the command receives as a parameter the path where the folders are to be created |
-| `:RunPython`                 | The command executes the python file at the side of the editor.                                                                                 |
-| `:RunJavaScript`             | The command executes the javascript file at the side of the editor                                                                              |
-| `:RunTypeScript`             | The command compiles the typescript file, and then executes the resulting javascript file next to the editor.                                   |
-| `:RunScss`                   | The command compiles the current scss file                                                                                                      |
-| `:RunGo`                     | The command compiles the open go file and then executes the resulting binary at the side of the editor.                                         |
-| `:RunCPP`                    | The command compiles the open c++ file and then executes the resulting binary at the side of the editor.                                        |
-| `:RunC`                      | The command compiles the open c file and then executes the resulting binary at the side of the editor.                                          |
-| `:OpenHTML`                  | This command opens the current HTML file in your default browser.                                                                               |
+| COMMAND                        | FUNCTION                                                                                                                                        |
+| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `:InitialPrettierrc`           | The command creates a `.pretierrc` file in your project's root path.                                                                            |
+| `:InitialEditorconfig`         | The command creates a `.editorconfig` file in your project root path                                                                            |
+| `:InitialDockerfile`           | The command creates a `dockerfile` file in your project root path                                                                               |
+| `:InitialDockercompose`        | The command creates a `docker-compose.yaml` file in your project root path                                                                      |
+| `:InitialStructureSass <path>` | The command creates a default file structure for sass, the command receives as a parameter the path where the folders are to be created         |
+| `:InitialStructureNode <path>` | The command creates a default file structure for node project, the command receives as a parameter the path where the folders are to be created |
+| `:RunPython`                   | The command executes the python file at the side of the editor.                                                                                 |
+| `:RunJavascript`               | The command executes the javascript file at the side of the editor                                                                              |
+| `:RunTypescript`               | The command compiles the typescript file, and then executes the resulting javascript file next to the editor.                                   |
+| `:RunScss`                     | The command compiles the current scss file                                                                                                      |
+| `:RunGo`                       | The command compiles the open go file and then executes the resulting binary at the side of the editor.                                         |
+| `:RunCPP`                      | The command compiles the open c++ file and then executes the resulting binary at the side of the editor.                                        |
+| `:RunC`                        | The command compiles the open c file and then executes the resulting binary at the side of the editor.                                          |
+| `:OpenHTML`                    | This command opens the current HTML file in your default browser.                                                                               |
 
 ## 🧪 How to install
 
@@ -159,13 +159,13 @@ Once you have the above requirements you can proceed to install the configuratio
    _Windows_
 
    ```sh
-   git clone https://github.com/EddyBel/Neovim.Config.git $HOME\AppData\Local\nvim --depth 1 && nvim
+   git clone --branch main https://github.com/EddyBel/Neovim.Config.git $HOME\AppData\Local\nvim --depth 1 && nvim
    ```
 
    _Linux_ / _Macos_
 
    ```bash
-   git clone https://github.com/EddyBel/Neovim.Config.git ~/.config/nvim --depth 1 && nvim
+   git clone --branch main https://github.com/EddyBel/Neovim.Config.git ~/.config/nvim --depth 1 && nvim
    ```
 
    This command will clone the latest version of the repository in the configuration path of neovim, once cloned, neovim will be opened with the `nvim` command so that lazy proceeds with the installation of all plugins.
@@ -177,7 +177,7 @@ Once you have fulfilled the necessary requirements for the correct functioning o
 1. The first thing is to clone the configuration repository this can be done with git or download it directly from github. to clone it with git you can use this command:
 
    ```bash
-   git clone https://github.com/EddyBel/Neovim.Config.git
+   git clone --branch main https://github.com/EddyBel/Neovim.Config.git --depth 1
    ```
 
 2. Next is to move to the cloned repository folder once there you must copy the files `init.lua`, `lazy-lock.json` and finally the `lua` folder, these must go in your neovim configuration folder, for Linux systems you can use `~/.config/nvim`, for Windows you can use `C:\Users\Username\AppData\Local\nvim` or wherever neovim defines the configuration path.
@@ -218,6 +218,28 @@ Once you have fulfilled the necessary requirements for the correct functioning o
 
 4. Finally you can open the editor with the command `nvim` and lazy will install all the plugins automatically, and that's it! you can start coding.
 
+### Delete configuration
+
+You can remove the configuration by deleting the configuration folder (where the `init.lua` file is located) and the folder that stores the plugins and their respective plugin manager data (the neovim data folder), for this you can use the following command:
+
+_Windows cmd_
+
+```sh
+rmdir /s $HOME\AppData\Local\nvim\ $HOME\AppData\Local\nvim-data\
+```
+
+_Windows powershell_
+
+```sh
+Remove-Item -Recurse -Force $HOME\AppData\Local\nvim\, $HOME\AppData\Local\nvim-data\
+```
+
+_Linux_ / _Macos_
+
+```bash
+rm -rf ~/.config/nvim ~/.local/share/nvim/
+```
+
 ## 🎢 Project status
 
 The project is constantly changing because it is my usual code editor and I will be improving and adding things as I see fit.
@@ -231,8 +253,8 @@ This project is released under the terms of the MIT license. The MIT license all
 <p align="center">
   <a href="https://github.com/EddyBel" target="_blank">
     <img alt="Github" src="https://img.shields.io/badge/GitHub-%2312100E.svg?&style=for-the-badge&logo=Github&logoColor=white" />
-  </a> 
+  </a>
   <a href="https://www.linkedin.com/in/eduardo-rangel-eddybel/" target="_blank">
     <img alt="LinkedIn" src="https://img.shields.io/badge/linkedin-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" />
-  </a> 
+  </a>
 </p>

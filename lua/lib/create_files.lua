@@ -109,6 +109,30 @@ max_line_length = off
 indent_size = 2
 indent_style = space]]
 
+files_manager.name_dockerfile = "dockerfile"
+files_manager.content_dockerfile = [[
+# Type the image that will use the container of your project
+FROM image
+
+# The work area will be the internal app folder.
+WORKDIR /app
+
+# Set the environment variables that you can use
+ARG PORT=3000
+
+# Time copy all project files to the work area.
+COPY . /app
+
+# Install the necessary requirements from the copied file.
+RUN install command
+
+# Specifies the port to expose.
+EXPOSE 3000
+
+# Execute the command to initialize the project.
+CMD ["command", "param"]
+]]
+
 files_manager.name_dockercompose = "docker-compose.yaml"
 files_manager.content_dockercompose = [[
 # Specify the version of Docker Compose being used
@@ -172,6 +196,8 @@ vim.cmd(
     [[command! InitialEditorconfig lua FILES_MANAGER.create_file(FILES_MANAGER.name_editorconfig, FILES_MANAGER.content_editorconfig)]])
 vim.cmd(
     [[command! InitialDockercompose lua FILES_MANAGER.create_file(FILES_MANAGER.name_dockercompose, FILES_MANAGER.content_dockercompose)]])
+vim.cmd(
+    [[command! InitialDockerfile lua FILES_MANAGER.create_file(FILES_MANAGER.name_dockerfile, FILES_MANAGER.content_dockerfile)]])
 
 -- Structures commands
 
