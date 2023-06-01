@@ -1,9 +1,13 @@
+local files_manager = {}
+
+--- Auxiliary functions
+
 ---This function creates a file in the current working directory.
 ---Checks if the file to create exists in the directory
 ---Sends a message or notification that the file has been created or can not be created
 ---@param name_file string Name of the file to be created
 ---@param content_file string Content of the file to be created
-function create_file(name_file, content_file)
+files_manager.create_file = function(name_file, content_file)
     if vim.fn.filereadable(name_file) == 0 then
         local file = io.open(name_file, "w")
         file:write(content_file)
@@ -18,14 +22,14 @@ end
 ---Creates a directory tree according to the instructions of a table
 ---@param structure table Table denoting file structure
 ---@param directory string Directory where the structure will be created
-function create_folders_structure(structure, directory)
+files_manager.folders_structure = function(structure, directory)
     if directory == nil then directory = vim.fn.getcwd() end -- Obtener el directorio base si no se proporciona ningun directorio
 
     for key, value in pairs(structure) do
         if type(value) == "table" then
             local new_directory = directory .. "/" .. key
             vim.fn.mkdir(new_directory)
-            create_folders_structure(value, new_directory) -- llamada recursiva con el nuevo directorio
+            files_manager.folders_structure(value, new_directory) -- llamada recursiva con el nuevo directorio
         elseif value == "directory" then
             local new_directory = directory .. "/" .. key
             vim.fn.mkdir(new_directory)
@@ -41,34 +45,10 @@ function create_folders_structure(structure, directory)
     notification("Structure created", "info")
 end
 
--- Define los archivos a crear y su Contenido
+--- FILES PROPERTYS
 
-vim.g.name_dockerfile_config = "dockerfile"
-vim.g.content_dockerfile_config = [[
-# Type the image that will use the container of your project
-FROM image
-
-# The work area will be the internal app folder.
-WORKDIR /app
-
-# Set the environment variables that you can use
-ARG PORT=3000
-
-# Time copy all project files to the work area.
-COPY . /app
-
-# Install the necessary requirements from the copied file.
-RUN install command
-
-# Specifies the port to expose.
-EXPOSE 3000
-
-# Execute the command to initialize the project.
-CMD ["command", "param"]
-]]
-
-vim.g.name_prettier_config = ".prettierrc"
-vim.g.content_prettier_config = [[
+files_manager.name_prettier = ".prettierrc"
+files_manager.content_prettier = [[
 {
    "printWidth": 120,
    "tabWidth": 2,
@@ -105,8 +85,8 @@ vim.g.content_prettier_config = [[
    ]
 }]]
 
-vim.g.name_editor_config = ".editorconfig"
-vim.g.content_editor_config = [[
+files_manager.name_editorconfig = ".editorconfig"
+files_manager.content_editorconfig = [[
 # top-most EditorConfig file
 root = true
 
@@ -129,8 +109,8 @@ max_line_length = off
 indent_size = 2
 indent_style = space]]
 
-vim.g.name_dockercompose = "docker-compose.yaml"
-vim.g.content_dockercompose = [[
+files_manager.name_dockercompose = "docker-compose.yaml"
+files_manager.content_dockercompose = [[
 # Specify the version of Docker Compose being used
 version: '3'
 
@@ -157,9 +137,9 @@ services:
     command: initialization_command_for_service2
 ]]
 
--- Define las estructuras de archivos que vas a utilizar
+--- Folder structures
 
-vim.g.sass_estructure = {
+files_manager.structure_sass = {
     sass = {
         base = "directory",
         common = "directory",
@@ -168,7 +148,7 @@ vim.g.sass_estructure = {
         global = "scss"
     }
 }
-vim.g.srcnode_estructure = {
+files_manager.structure_node = {
     src = {
         controllers = "directory",
         models = "directory",
@@ -180,9 +160,22 @@ vim.g.srcnode_estructure = {
     index = "js"
 }
 
-vim.cmd("command! InitPrettierConfig lua create_file(vim.g.name_prettier_config, vim.g.content_prettier_config)") -- Crea el comando para crear un archivo prettierrc
-vim.cmd("command! InitEditorConfig lua create_file(vim.g.name_editor_config, vim.g.content_editor_config)")       -- Crea el archivo inicial para editorconfig
-vim.cmd("command! InitDockerfile lua create_file(vim.g.name_dockerfile_config, vim.g.content_dockerfile_config)") -- Crea el archivo inicial para dockerfile
-vim.cmd("command! InitDockerCompose lua create_file(vim.g.name_dockercompose, vim.g.content_dockercompose)")      -- Crea el archivo inicial para docker-compose
-vim.cmd("command! -nargs=1 InitSassEstructure lua create_folders_structure(vim.g.sass_estructure, <f-args>)")     -- Crea la estructura de archivos Sass
-vim.cmd("command! -nargs=1 InitNodeEstructure lua create_folders_structure(vim.g.srcnode_estructure, <f-args>)")  -- Crea la estructura de archivos NodeJS
+_G.FILES_MANAGER = files_manager
+
+--- Declare neovim commands
+
+-- Files commands
+
+vim.cmd(
+    [[command! InitialPrettierrc lua FILES_MANAGER.create_file(FILES_MANAGER.name_prettier, FILES_MANAGER.content_prettier)]])
+vim.cmd(
+    [[command! InitialEditorconfig lua FILES_MANAGER.create_file(FILES_MANAGER.name_editorconfig, FILES_MANAGER.content_editorconfig)]])
+vim.cmd(
+    [[command! InitialDockercompose lua FILES_MANAGER.create_file(FILES_MANAGER.name_dockercompose, FILES_MANAGER.content_dockercompose)]])
+
+-- Structures commands
+
+vim.cmd(
+    [[command! -nargs=1 InitialStructureSass lua FILES_MANAGER.folders_structure(FILES_MANAGER.structure_sass, <f-args>)]])
+vim.cmd(
+    [[command! -nargs=1 InitialStructureNode lua FILES_MANAGER.folders_structure(FILES_MANAGER.structure_node, <f-args>)]])

@@ -9,7 +9,7 @@ vim.keymap.set('n', '<leader>qq', '<cmd>:q!<CR>', { noremap = true })        -- 
 vim.keymap.set({ 'n', 'i' }, '<C-s>', '<cmd>:w<CR>', { noremap = true })     -- Save the buffer
 vim.keymap.set('n', '<C-h><C-h>', '<cmd>:bprevious<CR>', { noremap = true }) -- Move to previous buffer (left)
 vim.keymap.set('n', '<C-l><C-l>', '<cmd>:bnext<CR>', { noremap = true })     -- Move to the next buffer (right)
-vim.keymap.set('n', '<C-q><C-q>', '<cmd>:Bdelete<CR>', { noremap = true })   -- Close the tab or buffer you are in.
+vim.keymap.set('n', '<C-q>', '<cmd>:Bdelete<CR>', { noremap = true })        -- Close the tab or buffer you are in.
 vim.keymap.set('n', '<leader>nr', '<cmd>:vsplit<CR>', { noremap = true })    -- Open new window with current buffer
 vim.keymap.set('n', '<leader>nb', '<cmd>:split<CR>', { noremap = true })     -- Open new window with current buffer
 vim.keymap.set({ 'n', 'i' }, '<C-f>', '<Esc>/', { noremap = true })          -- Searches for a word in the buffer
@@ -60,8 +60,8 @@ vim.keymap.set('n', '<leader>oh', '<cmd>:OpenHTML<CR>', { noremap = true })     
 vim.keymap.set('n', '<leader>rp', '<cmd>:RunPython<CR>', { noremap = true })             -- Runs a Python script
 vim.keymap.set('n', '<leader>rcpp', '<cmd>:RunCPP<CR>', { noremap = true })              -- Run a C++ script
 vim.keymap.set('n', '<leader>rc', '<cmd>:RunC<CR>', { noremap = true })                  -- Run a C script
-vim.keymap.set('n', '<leader>rjs', '<cmd>:RunJavaScript<CR>', { noremap = true })        -- Runs a JavaScript script
-vim.keymap.set('n', '<leader>rts', '<cmd>:RunTypeScript<CR>', { noremap = true })        -- Run a TypeScript script
+vim.keymap.set('n', '<leader>rjs', '<cmd>:RunJavascript<CR>', { noremap = true })        -- Runs a JavaScript script
+vim.keymap.set('n', '<leader>rts', '<cmd>:RunTypescript<CR>', { noremap = true })        -- Run a TypeScript script
 vim.keymap.set('n', '<leader>rscs', '<cmd>:RunScss<CR>', { noremap = true })             -- Runs a Sass script
 vim.keymap.set('n', '<leader>rgo', '<cmd>:RunGo<CR>', { noremap = true })                -- Runs a Go script
 
@@ -76,3 +76,6 @@ vim.keymap.set('n', '<C-k>', vim.lsp.buf.code_action, { noremap = true })       
 vim.keymap.set('n', '<C-e>', function()
     vim.diagnostic.open_float(0, { scope = "line", border = "rounded" })
 end, { noremap = true }) -- open in a floating window the error diagnostics
+vim.keymap.set({ 'n' }, '<C-k>', function()
+    require('lsp_signature').toggle_float_win()
+end, { silent = true, noremap = true, desc = 'toggle signature' })

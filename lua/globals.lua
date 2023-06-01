@@ -15,7 +15,11 @@
 ---7. oxocarbon
 ---8. dracula
 ---9. tokyonight-night, tokyonight-storm, tokyonight-day, tokyonight-moon
-_G.COLOR_THEME = "tokyonight-night"
+---10. onenord, onenord-light
+---12. ayu-dark, ayu-light, ayu-mirage
+---13. vscode
+---14. github_dark, github_dark_dimmed, github_dark_high_contrast, github_dark_colorblind, github_dark_tritanopia, github_light, github_light_default, github_light_colorblind, github_light_tritanopia
+_G.COLOR_THEME = "rose-pine"
 
 ---This variable defines whether you want a transparent background in the editor.
 _G.BACKGROUND_TRANSPARENT = false
@@ -32,9 +36,10 @@ _G.BACKGROUND_TRANSPARENT = false
 ---     - simple
 ---     - compact
 _G.STATUSBAR = {
-    theme = 'horizon',
+    theme = 'auto',
     separator = { left = '', right = '' },
-    decorator = { left = '', right = '' },
+    -- decorator = { left = '', right = '' },
+    decorator = { left = '', right = '' },
     type = "simple"
 }
 
@@ -79,26 +84,6 @@ _G.TODO_ICONS = {
     test = "󰳪",
     exam = ""
 }
-
----
--- _G.COMPILERS_EXECUTABLES is a dictionary that stores a series of executable compilers for different programming languages.
--- for different programming languages. Each key in the dictionary represents the name of the
--- language and its associated value is a text string that specifies the command needed to
--- execute the corresponding compiler.
---
--- INPUT and OUTPUT represent the input and output file names needed to compile,
--- these are replaced later in the function that calls the compilers.
----
-_G.COMPILERS_EXECUTABLES = {
-    python = "python INPUT",
-    javascript = "node INPUT",
-    typescript = "tsc INPUT",
-    sass = "sass INPUT OUTPUT.css",
-    cpp = "g++ INPUT -o OUTPUT",
-    c = "gcc INPUT -o OUTPUT",
-    go = "go build INPUT"
-}
-
 
 ---
 -- _G.ICONS is a dictionary containing several icons used in some specific context.
@@ -161,6 +146,9 @@ _G.GIT_SYMBOLS = {
     untracked    = '┆',
 }
 
+---This variabel indicates if you want to show information of the last commit in each line of the editor.
+_G.GIT_INFO = true
+
 ---G.TREE_SYMBOLS is a dictionary containing various symbols used in a context
 ---related to the visual representation of a hierarchical structure, such as a
 ---directory tree. Each key in the dictionary represents a symbolic name associated
@@ -222,6 +210,9 @@ _G.LSP_CLIENTS = {
     -- "jdtls",
     -- "docker_compose_language_service"
 }
+
+-- Indicates if you want to have a parameter highlight when calling a function.
+_G.PARAMETER_HIGHLIGHTING = true
 
 ---This variable indicates which file types will be excluded from being formatted with neoformat and the default LSP formatting will be used.
 _G.EXCLUDE_FORMATTERS_FILES = { "lua", "vim", "vimscript" }

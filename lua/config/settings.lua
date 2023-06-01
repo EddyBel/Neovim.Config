@@ -31,4 +31,5 @@ vim.cmd("colorscheme " .. COLOR_THEME)
 
 ------------------------------> CONFIGURES BASIC AUTOMATIC FUNCTIONS <---------------------------------
 
-vim.cmd([[ autocmd BufWritePre * lua validates_the_code_formatting_type() ]])
+vim.cmd([[ autocmd BufWritePre * lua validates_the_code_formatting_type() ]]) -- Execute a function that formats the code each time the buffer is saved.
+vim.cmd([[ autocmd BufWritePre * :%s/\s\+$//e ]])                             -- Removes residual spaces or tabs at the end of each line.

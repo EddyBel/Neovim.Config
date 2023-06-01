@@ -46,6 +46,8 @@ return {
             },
         }
 
-        vim.cmd([[autocmd VimEnter * silent! Gitsigns toggle_current_line_blame]])
-    end
+        if GIT_INFO then
+            vim.cmd('silent! Gitsigns toggle_current_line_blame')
+        end
+    end,
 }

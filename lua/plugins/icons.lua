@@ -169,6 +169,12 @@ return {
                 color = "#D2B4DE",
                 cterm_color = '220',
                 name = 'assembly'
+            },
+            ["ipynb"] = {
+                icon = "",
+                color = "#F8C471",
+                cterm_color = "220",
+                name = 'jupyter'
             }
 
         },

@@ -4,41 +4,7 @@ return {
     config = function()
         local lspconfig = require('lspconfig')
         local util = require('lspconfig/util')
-
-        ------------------------------------------------> AUXILIARY FUNCTIONS <---------------------------------------------------------------
-
-        ---Gets the name of the executable with the appropriate extension according to the operating system.
-        ---This function performs the following steps:
-        ---1. Gets the operating system name using the first character of `package.config`.
-        ---2. Converts the operating system name to lowercase.
-        ---3. If the operating system is Windows ('character'), append the '.cmd' extension to the executable name.
-        ---4. If the operating system is Linux or macOS ('/' character), returns the executable name unchanged.
-        --
-        ---@param executable string The executable name without extension.
-        ---@return string newExecutable The name of the executable with the appropriate extension according to the operating system.
-        --
-        ---@example
-        ---````lua
-        ---local exeName = getExecutableName("myprogram")
-        ---Gets the name of the executable with the appropriate extension according to the operating system.
-        ---```
-        function getExecutableName(executable)
-            local os_name = string.lower(package.config:sub(1, 1)) -- Obtener el nombre del sistema operativo (windows: '\', linux y macOS: '/')
-
-            -- Si wl sistema operativo es Windows entonces agrega al ejecutable la extención .cmd
-            if os_name == '\\' then
-                return executable .. ".cmd"
-            else
-                return executable
-            end
-        end
-
-        ---Gets the current path where Neovim is running.
-        ---This function uses the `vim.fn.getcwd()` function to get the current path.
-        ---Returns the path where Neovim is opened.
-        local function current_path()
-            return vim.fn.getcwd() -- Esta funcion obtiene la ruta donde se habre neovim
-        end
+        local windows_extension = ".cmd"
 
         --------------------------------------> LSP CUSTOMER CONFIGURATIONS <-------------------------------------------------------
 
@@ -48,9 +14,9 @@ return {
 
         -- Python
         lspconfig.pyright.setup({
-            cmd = { getExecutableName("pyright-langserver"), "--stdio" },
+            cmd = { UTILS.get_executable_extension("pyright-langserver", windows_extension), "--stdio" },
             filetypes = { "python" },
-            root_dir = current_path,
+            root_dir = UTILS.current_path,
             single_file_support = true,
             setting = {
                 python = {
@@ -65,34 +31,34 @@ return {
 
         -- JavaScript, TypeScript, JavaScriptReact, TypescriptReact
         lspconfig.tsserver.setup({
-            cmd = { getExecutableName("typescript-language-server"), "--stdio" },
+            cmd = { UTILS.get_executable_extension("typescript-language-server", windows_extension), "--stdio" },
             filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact",
                 "typescript.tsx" },
             init_options = {
                 hostInfo = "neovim"
             },
-            root_dir = current_path,
+            root_dir = UTILS.current_path,
             single_file_support = true
         })
 
         -- JSON
         lspconfig.jsonls.setup({
             capabilities = capabilities,
-            cmd = { getExecutableName("vscode-json-language-server"), "--stdio" },
+            cmd = { UTILS.get_executable_extension("vscode-json-language-server", windows_extension), "--stdio" },
             filetypes = { "json", "jsonc" },
             init_options = {
                 provideFormatter = true
             },
-            root_dir = current_path,
+            root_dir = UTILS.current_path,
             single_file_support = true
         })
 
         -- CSS, SASS, SCSS, LESS
         lspconfig.cssls.setup({
             capabilities = capabilities,
-            cmd = { getExecutableName("vscode-css-language-server"), "--stdio" },
+            cmd = { UTILS.get_executable_extension("vscode-css-language-server", windows_extension), "--stdio" },
             filetypes = { "css", "scss", "less" },
-            root_dir = current_path,
+            root_dir = UTILS.current_path,
             single_file_support = true,
             settings = {
                 css = {
@@ -110,7 +76,7 @@ return {
         --HTML
         lspconfig.html.setup({
             capabilities = capabilities,
-            cmd = { getExecutableName("vscode-html-language-server"), "--stdio" },
+            cmd = { UTILS.get_executable_extension("vscode-html-language-server", windows_extension), "--stdio" },
             filetypes = { "html" },
             init_options = {
                 configurationSection = { "html", "css", "javascript" },
@@ -120,22 +86,22 @@ return {
                 },
                 provideFormatter = true
             },
-            root_dir = current_path,
+            root_dir = UTILS.current_path,
             single_file_support = true
         })
         lspconfig.emmet_ls.setup({
-            cmd = { getExecutableName("emmet-ls"), "--stdio" },
+            cmd = { UTILS.get_executable_extension("emmet-ls", windows_extension), "--stdio" },
             filetypes = { "astro", "eruby", "html", "htmldjango", "javascriptreact", "pug", "svelte", "typescriptreact",
                 "vue" },
-            root_dir = current_path,
+            root_dir = UTILS.current_path,
             single_file_support = true
         })
 
         --BASH
         lspconfig.bashls.setup({
-            cmd = { getExecutableName("bash-language-server"), "start" },
+            cmd = { UTILS.get_executable_extension("bash-language-server", windows_extension), "start" },
             filetypes = { "sh" },
-            root_dir = current_path,
+            root_dir = UTILS.current_path,
             settings = {
                 bashIde = {
                     globPattern = "*@(.sh|.inc|.bash|.command)"
@@ -146,10 +112,10 @@ return {
 
         --Lua
         lspconfig.lua_ls.setup({
-            cmd = { getExecutableName("lua-language-server") },
+            cmd = { UTILS.get_executable_extension("lua-language-server", windows_extension) },
             filetypes = { "lua" },
             log_level = 2,
-            root_dir = current_path,
+            root_dir = UTILS.current_path,
             single_file_support = true,
             settings = {
                 Lua = {
@@ -171,7 +137,7 @@ return {
 
         --VIM
         lspconfig.vimls.setup({
-            cmd = { getExecutableName("vim-language-server"), "--stdio" },
+            cmd = { UTILS.get_executable_extension("vim-language-server", windows_extension), "--stdio" },
             filetypes = { "vim" },
             init_options = {
                 diagnostic = {
@@ -192,28 +158,29 @@ return {
                 },
                 vimruntime = ""
             },
-            root_dir = current_path,
+            root_dir = UTILS.current_path,
             single_file_support = true
         })
 
         --Java
         lspconfig.jdtls.setup({
-            cmd = { getExecutableName("jdtls"), "-configuration", "/home/user/.cache/jdtls/config", "-data",
+            cmd = { UTILS.get_executable_extension("jdtls", windows_extension), "-configuration",
+                "/home/user/.cache/jdtls/config", "-data",
                 "/home/user/.cache/jdtls/workspace" },
             filetypes = { "java" },
             init_options = {
                 jvm_args = {},
                 workspace = "/home/user/.cache/jdtls/workspace"
             },
-            root_dir = current_path,
+            root_dir = UTILS.current_path,
             single_file_support = true
         })
 
         --Rust
         lspconfig.rust_analyzer.setup({
-            cmd = { getExecutableName("rust-analyzer") },
+            cmd = { UTILS.get_executable_extension("rust-analyzer", windows_extension) },
             filetypes = { "rust" },
-            root_dir = current_path,
+            root_dir = UTILS.current_path,
             settings = {
                 ['rust-analyzer'] = {
                     diagnostics = {
@@ -225,26 +192,26 @@ return {
 
         --Go
         lspconfig.gopls.setup({
-            cmd = { getExecutableName("gopls") },
+            cmd = { UTILS.get_executable_extension("gopls", windows_extension) },
             filetypes = { "go", "gomod", "gowork", "gotmpl" },
-            root_dir = current_path,
+            root_dir = UTILS.current_path,
             single_file_support = true
         })
 
         --C++ C Objective C
         lspconfig.clangd.setup({
-            cmd = { getExecutableName("clangd") },
+            cmd = { UTILS.get_executable_extension("clangd", windows_extension) },
             capabilities = capabilities,
             filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
-            root_dir = current_path,
+            root_dir = UTILS.current_path,
             single_file_support = true
         })
 
         --Tailwindcss
         lspconfig.tailwindcss.setup({
-            cmd = { getExecutableName("tailwindcss-language-server"), "--stdio" },
+            cmd = { UTILS.get_executable_extension("tailwindcss-language-server", windows_extension), "--stdio" },
             autostart = false,
-            root_dir = current_path,
+            root_dir = UTILS.current_path,
             filetypes = { "aspnetcorerazor", "astro", "astro-markdown", "blade", "clojure", "django-html", "htmldjango",
                 "edge", "eelixir", "elixir", "ejs", "erb", "eruby", "gohtml", "haml", "handlebars", "hbs", "html",
                 "html-eex",
@@ -278,59 +245,64 @@ return {
 
         --C#
         lspconfig.csharp_ls.setup({
-            cmd = { getExecutableName("csharp-ls") },
+            cmd = { UTILS.get_executable_extension("csharp-ls", windows_extension) },
             filetypes = { "cs" },
             init_options = {
                 AutomaticWorkspaceInit = true
             },
-            root_dir = current_path
+            root_dir = UTILS.current_path
         })
 
         --Dockerfile
         lspconfig.dockerls.setup({
-            cmd = { getExecutableName("docker-langserver"), "--stdio" },
+            cmd = { UTILS.get_executable_extension("docker-langserver", windows_extension), "--stdio" },
             filetypes = { "dockerfile" },
-            root_dir = current_path,
+            root_dir = UTILS.current_path,
             single_file_support = true
         })
 
         --Docker-Compose
         lspconfig.docker_compose_language_service.setup({
-            cmd = { getExecutableName("docker-compose-langserver"), "--stdio" },
+            cmd = { UTILS.get_executable_extension("docker-compose-langserver", windows_extension), "--stdio" },
             filetypes = { "yaml" },
-            root_dir = current_path,
+            root_dir = UTILS.current_path,
             single_file_support = true
         })
 
         -- SQL, MYSQL
         lspconfig.sqlls.setup({
-            cmd = { getExecutableName("sql-language-server"), "up", "--method", "stdio" },
+            cmd = { UTILS.get_executable_extension("sql-language-server", windows_extension), "up", "--method", "stdio" },
             filetypes = { "sql", "mysql" },
-            root_dir = current_path
+            root_dir = UTILS.current_path
         })
 
         -- Markdown
-        lspconfig.marksman.setup(
-            {
-                cmd = { "marksman", "server" },
-                filetypes = { "markdown" },
-                root_dir = current_path,
-                single_file_support = true,
-            }
-        )
+        lspconfig.marksman.setup({
+            cmd = { UTILS.get_executable_extension("marksman", windows_extension), "server" },
+            filetypes = { "markdown" },
+            root_dir = UTILS.current_path,
+            single_file_support = true,
+        })
 
         -- Arduino
         lspconfig.arduino_language_server.setup({
-            cmd = { getExecutableName("arduino-language-server") },
+            cmd = { UTILS.get_executable_extension("arduino-language-server", windows_extension) },
             filetypes = { "arduino" },
-            root_dir = current_path
+            root_dir = UTILS.current_path
         })
 
         -- Assembly
         lspconfig.asm_lsp.setup({
-            cmd = { getExecutableName("asm-lsp") },
+            cmd = { UTILS.get_executable_extension("asm-lsp", windows_extension) },
             filetypes = { "asm", "vmasm" },
-            root_dir = current_path
+            root_dir = UTILS.current_path
+        })
+
+        -- Kotlin
+        lspconfig.kotlin_language_server.setup({
+            cmd = { UTILS.get_executable_extension("kotlin-language-server", windows_extension) },
+            filetypes = { "kotlin" },
+            root_dir = UTILS.current_path
         })
 
         --------------------------------------------> EXTRA STYLE SETTINGS <----------------------------------------------

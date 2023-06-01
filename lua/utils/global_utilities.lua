@@ -49,29 +49,3 @@ function notification(message, type)
         print(message)
     end
 end
-
----
--- Toggles the comment on the current line.
---
--- This function toggles the comment status of the current line using the `:CommentToggle` command. If the line is empty, it adds an "s" character to the beginning of the line before executing the command to avoid errors. Then, if the line is not empty, simply execute the `:CommentToggle` command.
---
--- Usage example:
--- toggle_comment()
--- Toggles the comment status of the current line.
----
-function toggle_comment()
-    -- Obtener la información de la línea actual
-    local line = vim.api.nvim_get_current_line()
-    -- Si la línea está vacía
-    if line == "" then
-        -- Escribir la letra s
-        vim.api.nvim_set_current_line("s")
-        -- Ejecutar el comando :CommentToggle
-        vim.cmd("CommentToggle")
-        -- Ir al final de la línea y borrar el último carácter
-        vim.cmd("normal! $x")
-    else
-        -- Si la línea tiene algo, solo ejecutar el comando :CommentToggle
-        vim.cmd("CommentToggle")
-    end
-end

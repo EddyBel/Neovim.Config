@@ -1,127 +1,48 @@
 return {
     'nvim-lualine/lualine.nvim',
     config = function()
-        ---
-        -- Gets the name of the current operating system.
-        --
-        -- This function performs the following steps:
-        -- 1. Maps the operating system names to corresponding icons.
-        -- 2. Obtains the operating system name using the `vim.loop.os_uname()` function.
-        -- 3. Compares the operating system name with specific patterns to determine the current operating system.
-        -- 4. If the operating system is Windows, returns the icon corresponding to Windows.
-        -- 5. If the operating system is macOS (Darwin), returns the icon corresponding to macOS.
-        -- 6. If the operating system is Linux, it checks for specific distributions by reading the contents of the "/etc/os-release" file.
-        -- 7. If it finds a match with a specific distribution, it returns the icon corresponding to that distribution.
-        -- 8. If no specific distribution is found, it returns the icon corresponding to Linux by default.
-        -- 9. If the operating system does not match any pattern, returns the icon corresponding to the operating system name or the default icon.
-        --
-        -- Has no explicit parameters.
-        --
-        -- @return The icon corresponding to the current operating system.
-        --
-        -- Usage example:
-        -- local osIcon = get_operating_system().
-        -- Gets the icon corresponding to the current operating system.
-        ---
-        function get_operating_system()
-            local os_map = ICONS.os
-            local sys_name = vim.loop.os_uname().sysname
-
-            if sys_name:match("Windows") then
-                return os_map["Windows"]
-            elseif sys_name:match("Darwin") then
-                return os_map["Darwin"]
-            elseif sys_name == "Linux" then
-                -- Verificar distribuciones específicas de Linux
-                local release_file = io.open("/etc/os-release", "r")
-                if release_file then
-                    local release_content = release_file:read("*all")
-                    release_file:close()
-
-                    for key, value in pairs(os_map) do
-                        if release_content:match(key) then
-                            return os_map[value] or os_map["Defaul"]
-                        end
+        ---This function must return the icon corresponding to the operating system, if it finds a distribution then it returns the icon of the distribution.
+        ---@return string os Returns the operating system icon
+        local function icon_system()
+            if ENV.OS == ENV.WINDOWS then
+                return ICONS.os["Windows"]
+            elseif ENV.OS == ENV.MACOS then
+                return ICONS.os["Darwin"]
+            elseif ENV.OS == ENV.LINUX then
+                for key, value in pairs(ICONS.os) do
+                    if string.find(ENV.LINUX_DISTRIBUTION, key) then
+                        return value
                     end
                 end
-
-                -- Si no se encuentra ninguna distribución específica, retornar "Linux" por defecto
-                return os_map["Linux"]
+                return ICONS.os["Linux"]
             else
-                return os_map[sys_name] or os_map["Default"]
+                return ICONS.os["Default"]
             end
         end
 
-        ---
-        -- Obtains a representation of active LSP clients.
-        --
-        -- This function performs the following steps:
-        -- 1. Creates an empty table `client_names` to store the LSP client names.
-        -- 2. Gets the active LSP clients using `vim.lsp.get_active_clients()`.
-        -- 3. Defines a client name separator, by default a whitespace.
-        -- 4. Define a default message when no LSP clients are active.
-        -- 5. If there are no active LSP clients, returns the default icon and message.
-        -- 6. Iterates over the active LSP clients and adds their names to the `client_names` table.
-        -- 7. Returns a representation of the active LSP clients, consisting of the LSP icon followed by the client names separated by the separator.
-        --
-        -- @return A representation of the active LSP clients.
-        --
-        -- Usage example:
-        -- local clients = get_all_lsp_clients().
-        -- Gets a representation of the active LSP clients.
-        ---
-        local function get_all_lsp_clients()
+        ---This function gets the name of all the active LSP servers, and returns the name of all the servers
+        ---@return string LSP_names Returns a string with the names of the lsp servers.
+        local function all_lsp_clients()
             local client_names = {}
             local active_clients = vim.lsp.get_active_clients()
             local separator = " "
             local default_message = "LSP"
 
-            if #active_clients == 0 then return icon .. " " .. default_message end
+            if #active_clients == 0 then return ICONS.lsp .. " " .. default_message end
             for _, client in ipairs(active_clients) do table.insert(client_names, client.name) end
             return ICONS.lsp .. " " .. table.concat(client_names, separator)
         end
 
-        ---
-        -- Gets the number of active LSP clients.
-        --
-        -- This function performs the following steps:
-        -- 1. Gets the active LSP clients using `vim.lsp.get_active_clients()`.
-        -- Returns a representation of the LSP icon followed by the number of active LSP clients.
-        --
-        -- @return The number of active LSP clients.
-        --
-        -- Usage example:
-        -- local count = number_lsp_clients().
-        -- Gets the number of active LSP clients.
-        ---
+        ---This function obtains the total number of active LSP clients.
+        ---@return string count_lsp Returns a string with the total number of LSP clients
         local function number_lsp_clients()
             local activate_clients = vim.lsp.get_active_clients()
             return ICONS.lsp .. " " .. #activate_clients
         end
 
-        ---
-        -- Gets a representation of active LSP clients that support the current file type.
-        --
-        -- This function performs the following steps:
-        -- 1. Creates an empty table `client_names` to store the names of the LSP clients that support the current file type.
-        -- 2. Gets the current buffer number using `vim.api.nvim_get_current_buf()`.
-        -- 3. Get the file type of the current buffer using `vim.api.nvim_buf_get_get_option(bufnr, 'filetype')`.
-        -- 4. Gets the active LSP clients using `vim.lsp.get_active_clients()`.
-        -- 5. Defines a client name separator, by default a whitespace.
-        -- 6. Define a default message when there are no active LSP clients.
-        -- 7. If there are no active LSP clients, returns an empty string.
-        -- 8. Iterates over the active LSP clients and checks if they support the current file type.
-        -- 9. If a client supports the current file type, adds its name to the `client_names` table.
-        -- 10. If no clients were found that support the current file type, returns the default icon and message.
-        -- 11. Returns a representation of the active LSP clients supporting the current file type, consisting of the LSP icon followed by the client names separated by the separator.
-        --
-        -- @return A representation of the active LSP clients supporting the current file type.
-        --
-        -- Usage example:
-        -- local clients = get_active_lsp_clients_by_typefile().
-        -- Gets a representation of the active LSP clients that support the current file type.
-        ---
-        local function get_active_lsp_clients_by_typefile()
+        ---This function gets the names of the active LSP clients for the current file.
+        ---@return string lsp_names Returns a string with the names of the active servers for the file
+        local function lsp_clients_by_typefile()
             local client_names = {}
             local bufnr = vim.api.nvim_get_current_buf()
             local buf_ft = vim.api.nvim_buf_get_option(bufnr, 'filetype')
@@ -140,26 +61,10 @@ return {
             return ICONS.lsp .. " " .. table.concat(client_names, separator)
         end
 
-        ---
-        -- Gets the current status of the LSP server.
-        --
-        -- This function performs the following steps:
-        -- 1. Defines the `loading_chars` that are used for the loading animation.
-        -- Defines the default text message when there are no LSP servers available.
-        -- Gets the status of the LSP clients using `vim.lsp.buf_get_clients()`.
-        -- If no LSP servers are available, a current load character is selected based on the local time for the load animation.
-        -- Returns the combination of the current load character, followed by the text message.
-        -- If LSP servers are available, an empty string is returned.
-        --
-        -- @return The current status of the LSP server.
-        --
-        -- Usage example:
-        -- local status = lsp_status().
-        -- Gets the current status of the LSP server.
-        ---
+        ---This function displays a load style when there are no active LSP clients yet.
+        ---@return string loader Returns a string symbolizing the load of the LSP clients
         local function lsp_status()
             local loading_chars = ICONS.spinner
-            -- local message_text = "Waiting for LSP"
             local message_text = "LSP"
             local lsp_status = vim.lsp.buf_get_clients()
 
@@ -172,39 +77,14 @@ return {
             end
         end
 
-        ---
-        -- Gets the current date in time format.
-        --
-        -- This function uses `os.date` to get the current date in time format.
-        -- The time format used is `%R`, which represents the time in 24-hour format (e.g. `14:30`).
-        -- Then, it combines the icon corresponding to the time with the result obtained from `os.date`.
-        --
-        -- @return The current date in time format.
-        --
-        -- Usage example:
-        -- local date = get_date()
-        -- Gets the current date in time format.
-        ---
-        local function get_date()
+        ---This function obtains the current time
+        ---@return string current_date Returns a string with the current time
+        local function current_date()
             return ICONS.time .. " " .. os.date("%R")
         end
 
 
-        ---
-        -- Gets the enabled formatter for the current file type according to the Neoformat settings.
-        --
-        -- This function gets the current file type and searches the Neoformat configuration for the enabled formatter for that file type.
-        -- The Neoformat configuration contains a number of global variables with names like `neoformat_enabled_xxx`, where `xxx` represents the file type name.
-        -- Uses the current file type to access the corresponding global variable and get the enabled formatter for that file type.
-        -- Then, it combines the icon corresponding to the formatter with the values obtained from the Neoformat configuration using `table.concat`.
-        --
-        -- @return The enabled formatter for the current file type according to the Neoformat configuration.
-        --
-        -- Usage example:
-        -- local formatter = get_neoformat_formatter().
-        -- Gets the enabled formatter for the current file type as configured by Neoformat.
-        ---
-        function get_neoformat_formatter()
+        local function neoformat_formatter()
             local filetype = vim.bo.filetype
             local formatters = CODE_FORMATTERS
             local formatter_by_file = formatters[filetype]
@@ -213,112 +93,100 @@ return {
             return ICONS.formatter .. " " .. formatter_by_file_string
         end
 
-        local function current_root_path(fname)
+        local function current_root()
             local current_directory = vim.fn.getcwd()
             local root_folder_name = vim.fn.fnamemodify(current_directory, ":t")
             return ICONS.cmp_path .. " " .. root_folder_name
         end
 
+        local diagnostic = {
+            'diagnostics',
+            padding = { left = 1, right = 1 },
+            symbols = {
+                error = ICONS.error .. " ",
+                warn = ICONS.warn .. " ",
+                info = ICONS.info .. " ",
+                hint = ICONS.hint .. " ",
+            }
+        }
+        local branch = {
+            'branch',
+            icons_enabled = true,
+            icon = '',
+        }
+
+        local diff = {
+            'diff',
+            icons_enabled = true,
+            symbols = {
+                added = ICONS.git.add .. " ",
+                modified = ICONS.git.modified .. " ",
+                removed = ICONS.git.removed .. " "
+            }
+        }
+        local encoding = {
+            'encoding',
+            padding = { left = 1, right = 1 }
+        }
+        local filetypes = {
+            "filetype",
+            padding = { left = 1, right = 1 }
+        }
+
+        local location = {
+            "location",
+            padding =
+            { left = 0, right = 0 }
+        }
+
+        local progress = {
+            "progress",
+            padding = { left = 1, right = 1 }
+        }
+
+        local filename = {
+            'filename',
+            padding = { left = 1, right = 1 }
+        }
+
         ---This function defines the type of status bar to be used.
+        ---@return table sections Returns an object with the structure that will have the lualine status bar.
         local function type_section()
-            local mode = 'mode'
-            local lsp_clients_by_file = get_active_lsp_clients_by_typefile
-            local lsp_status = lsp_status
-            local current_path = current_root_path
-            local system = get_operating_system
-            local count_lsp = number_lsp_clients
-            local formatter = get_all_lsp_clients
-            local diagnostic = {
-                'diagnostics',
-                padding = { left = 1, right = 1 },
-                symbols = {
-                    error = ICONS.error .. " ",
-                    warn = ICONS.warn .. " ",
-                    info = ICONS.info .. " ",
-                    hint = ICONS.hint .. " ",
-                }
-            }
-            local branch = {
-                'branch',
-                icons_enabled = true,
-                icon = '',
-            }
-            local diff = {
-                'diff',
-                icons_enabled = true,
-                symbols = {
-                    added = ICONS.git.add .. " ",
-                    modified = ICONS.git.modified .. " ",
-                    removed = ICONS.git.removed .. " "
-                }
-            }
-            local encoding = {
-                'encoding',
-                padding = {
-                    left = 1,
-                    right = 1
-                }
-            }
-            local filetype = {
-                "filetype",
-                padding = {
-                    left = 1,
-                    right = 1
-                }
-            }
-            local location = {
-                "location",
-                padding =
-                {
-                    left = 0,
-                    right = 0
-                }
-            }
-            local progress = {
-                "progress",
-                padding = { left = 1, right = 1 }
-            }
-            local filename = {
-                'filename',
-                padding = { left = 1, right = 1 }
-            }
-
-
             if STATUSBAR.type == "complete" then
                 return {
-                    lualine_a = { mode },
-                    lualine_b = { lsp_clients_by_file, lsp_status, diagnostic },
-                    lualine_c = { current_path, branch, diff },
-                    lualine_x = { count_lsp, formatter, encoding, filetype },
+                    lualine_a = { 'mode' },
+                    lualine_b = { lsp_clients_by_typefile, lsp_status, diagnostic },
+                    lualine_c = { current_root, branch, diff },
+                    lualine_x = { number_lsp_clients, neoformat_formatter, encoding, filetypes },
                     lualine_y = { location, progress },
-                    lualine_z = { system }
+                    lualine_z = { icon_system }
                 }
             elseif STATUSBAR.type == "simple" then
                 return {
-                    lualine_a = { mode },
+                    lualine_a = { 'mode' },
                     lualine_b = { filename },
                     lualine_c = { branch, diff },
-                    lualine_x = { lsp_clients_by_file, lsp_status, diagnostic },
-                    lualine_y = { current_path, progress },
-                    lualine_z = { system }
+                    lualine_x = { lsp_clients_by_typefile, lsp_status, diagnostic },
+                    lualine_y = { current_root, progress },
+                    lualine_z = { icon_system }
                 }
             elseif STATUSBAR.type == "compact" then
                 return {
-                    lualine_a = { mode },
-                    lualine_b = { lsp_clients_by_file, lsp_status },
+                    lualine_a = { 'mode' },
+                    lualine_b = { lsp_clients_by_typefile, lsp_status },
                     lualine_c = { branch },
                     lualine_x = { diagnostic },
                     lualine_y = { progress },
-                    lualine_z = { system }
+                    lualine_z = { icon_system }
                 }
             else
                 return {
-                    lualine_a = { mode },
+                    lualine_a = { 'mode' },
                     lualine_b = { filename },
                     lualine_c = { branch },
                     lualine_x = { diagnostic },
                     lualine_y = { location, progress },
-                    lualine_z = { system }
+                    lualine_z = { icon_system }
                 }
             end
         end
@@ -344,14 +212,6 @@ return {
                 }
             },
             sections = type_section(),
-            -- inactive_sections = {
-            --     lualine_a = {},
-            --     lualine_b = {},
-            --     lualine_c = { 'filename' },
-            --     lualine_x = { 'location' },
-            --     lualine_y = {},
-            --     lualine_z = {}
-            -- },
             tabline = {},
             winbar = {},
             inactive_winbar = {},
