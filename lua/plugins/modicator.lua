@@ -1,5 +1,6 @@
 return {
     'mawkler/modicator.nvim',
+    -- event = "VeryLazy",
     init = function()
         -- These are required for Modicator to work
         vim.o.cursorline = true

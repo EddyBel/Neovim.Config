@@ -325,4 +325,11 @@ return { {
     'projekt0n/github-nvim-theme',
     lazy = true,
     config = function() end
+}, {
+    'sainnhe/everforest',
+    lazy = true,
+    config = function()
+        vim.cmd([[set background=dark]])
+        vim.cmd([[let g:everforest_background = 'hard']])
+    end,
 } }

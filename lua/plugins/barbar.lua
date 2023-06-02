@@ -33,7 +33,7 @@ return {
                     enabled = true,
                 },
                 separator = { left = '▎', right = ' ' },
-                modified = { button = '●' },
+                modified = { button = '' },
                 pinned = { button = '', filename = true },
                 preset = 'default',
                 alternate = { filetype = { enabled = false } },

@@ -94,8 +94,12 @@ return {
         end
 
         local function current_root()
+            local max_lenght = 10
             local current_directory = vim.fn.getcwd()
             local root_folder_name = vim.fn.fnamemodify(current_directory, ":t")
+            if string.len(root_folder_name) > max_lenght then
+                root_folder_name = string.sub(root_folder_name, 1, max_lenght) .. "..."
+            end
             return ICONS.cmp_path .. " " .. root_folder_name
         end
 
@@ -136,7 +140,7 @@ return {
         local location = {
             "location",
             padding =
-            { left = 0, right = 0 }
+            { left = 1, right = 1 }
         }
 
         local progress = {
@@ -152,13 +156,23 @@ return {
         ---This function defines the type of status bar to be used.
         ---@return table sections Returns an object with the structure that will have the lualine status bar.
         local function type_section()
-            if STATUSBAR.type == "complete" then
+            if STATUSBAR.type == "completed" then
                 return {
                     lualine_a = { 'mode' },
                     lualine_b = { lsp_clients_by_typefile, lsp_status, diagnostic },
                     lualine_c = { current_root, branch, diff },
                     lualine_x = { number_lsp_clients, neoformat_formatter, encoding, filetypes },
                     lualine_y = { location, progress },
+                    lualine_z = { icon_system }
+                }
+            elseif STATUSBAR.type == "completed v2" then
+                return {
+                    lualine_a = { 'mode' },
+                    lualine_b = { filename },
+                    lualine_c = { branch, diff },
+                    lualine_x = { neoformat_formatter, number_lsp_clients, lsp_clients_by_typefile, lsp_status,
+                        diagnostic },
+                    lualine_y = { current_root, location },
                     lualine_z = { icon_system }
                 }
             elseif STATUSBAR.type == "simple" then

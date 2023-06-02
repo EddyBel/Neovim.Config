@@ -19,7 +19,8 @@
 ---12. ayu-dark, ayu-light, ayu-mirage
 ---13. vscode
 ---14. github_dark, github_dark_dimmed, github_dark_high_contrast, github_dark_colorblind, github_dark_tritanopia, github_light, github_light_default, github_light_colorblind, github_light_tritanopia
-_G.COLOR_THEME = "rose-pine"
+---15. everforest
+_G.COLOR_THEME = "everforest"
 
 ---This variable defines whether you want a transparent background in the editor.
 _G.BACKGROUND_TRANSPARENT = false
@@ -32,7 +33,8 @@ _G.BACKGROUND_TRANSPARENT = false
 ---2. separator -> table Indicates which will be the separator for each statusbar item.
 ---3. decorator -> table Indicate which will be the decorative separator for each special section of the statusbar.
 ---4. type -> string Indicates the distribution of information in the status bar.
----     - complete
+---     - completed
+---     - completed v2
 ---     - simple
 ---     - compact
 _G.STATUSBAR = {
@@ -40,7 +42,7 @@ _G.STATUSBAR = {
     separator = { left = '', right = '' },
     -- decorator = { left = '', right = '' },
     decorator = { left = '', right = '' },
-    type = "simple"
+    type = "completed v2"
 }
 
 ---This variable stores the front drawing ASCII that can be displayed when neovim is started.
