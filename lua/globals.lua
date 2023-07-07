@@ -1,27 +1,3 @@
----This variable contains the name of the theme to be used
----
----It is important to note that to place any custom theme
----you must install it in the editor, the configuration and
----installation of the theme can be done in the "themes.lua"
----file in the "plugins" folder "./plugins/themes.lua".
----
----Available topics
----1. kanagawa-wave, kanagawa-dragon, kanagawa-lotus
----2. catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
----3. rose-pine, rose-pine-moon, rose-pine-dawn
----4. onedark
----5. gruvbox
----6. carbonfox, terafox, nordfox, duskfox, dawnfox, dayfox, nightfox
----7. oxocarbon
----8. dracula
----9. tokyonight-night, tokyonight-storm, tokyonight-day, tokyonight-moon
----10. onenord, onenord-light
----12. ayu-dark, ayu-light, ayu-mirage
----13. vscode
----14. github_dark, github_dark_dimmed, github_dark_high_contrast, github_dark_colorblind, github_dark_tritanopia, github_light, github_light_default, github_light_colorblind, github_light_tritanopia
----15. everforest
-_G.COLOR_THEME = "everforest"
-
 ---This variable defines whether you want a transparent background in the editor.
 _G.BACKGROUND_TRANSPARENT = false
 
@@ -40,28 +16,12 @@ _G.BACKGROUND_TRANSPARENT = false
 _G.STATUSBAR = {
     theme = 'auto',
     separator = { left = '', right = '' },
-    -- decorator = { left = '', right = '' },
     decorator = { left = '', right = '' },
-    type = "completed v2"
 }
 
 ---This variable stores the front drawing ASCII that can be displayed when neovim is started.
 ---It is imported from the drawing file saved in the neovim configuration.
 _G.ALPHA = require("utils.drawings").min_hydra
-
----This table stores the colors to be used by the modicator plugin.
----highlighting the line number in which it is located for each mode.
-_G.COLOR_LINE = {
-    normal = "#BB8FCE",
-    insert = "#85C1E9",
-    visual = "#F7DC6F",
-    select = "#F7F9F9",
-    replacement = "#EC7063",
-    command = "#58D68D",
-    visual_line = "#F9E79F",
-    insert_code = "#2E86C1",
-    select_line = "#D7DBDD"
-}
 
 ---This variable defines the search pattern to search ALL in the code.
 ---
@@ -96,7 +56,7 @@ _G.TODO_ICONS = {
 ---
 _G.ICONS = {
     prefix = "",     -- Prefix displayed in the virtual text
-    error = '',      -- Error icon
+    error = '',      -- Error icon
     warn = '',       -- Warning icon
     info = '󰅺',      -- Info icon
     hint = '',       -- Hint icon
@@ -122,17 +82,25 @@ _G.ICONS = {
     },                                                                   -- Icons indicating the status of git changes
     spinner = { "⠿", "⠞", "⠇", "⠑", "⠝", "⠞", "⠎", "⠕", "⠍", "⠑", "⠋" }, -- Icons representing the loading animation
     os = {
-        ["Windows"] = "󰍲",
-        ["Darwin"]  = "",
-        ["Ubuntu"]  = "",
-        ["Kali"]    = "",
-        ["Arch"]    = "",
-        ["Debian"]  = "",
-        ["Fedora"]  = "",
-        ["Parrot"]  = "",
-        ["Linux"]   = "",
-        ["Default"] = ""
-    } --  Icons representing each operating system
+        ["Windows"]    = "󰍲",                                         -- 󰍲  󰖳  󰨡
+        ["Darwin"]     = "",                                          --  󰇄
+        ["Ubuntu"]     = "",                                          --  󰕈  
+        ["Kali"]       = "",                                          --  
+        ["Arch"]       = "",                                          --   󰣇
+        ["Debian"]     = "",                                          -- 󰣚
+        ["Fedora"]     = "",                                          --  󰣛 󰮤
+        ["Parrot"]     = "",                                          -- 
+        ["Alpine"]     = "",                                          -- 
+        ["Centos"]     = "",                                          --  󱄚
+        ["Elementary"] = "",                                          -- 
+        ["Gentoo"]     = "󰣨",                                         --  󰣨
+        ["Manjaro"]    = "",                                          --  󱘊
+        ["Mint"]       = "󰣭",                                         -- 󰣭
+        ["Opensuse"]   = "",                                          -- 
+        ["Raspbian"]   = "",                                          --  󰐿
+        ["Linux"]      = "",                                          -- 󰌽
+        ["Default"]    = ""                                           --    
+    }                                                                    --  Icons representing each operating system
 }
 
 ---G.GIT is a dictionary containing different icons used in a context
@@ -142,9 +110,9 @@ _G.ICONS = {
 _G.GIT_SYMBOLS = {
     add          = '│',
     change       = '│',
-    delete       = '_',
-    topdelete    = '‾',
-    changedelete = '~',
+    delete       = '',
+    topdelete    = '󰅃',
+    changedelete = '',
     untracked    = '┆',
 }
 

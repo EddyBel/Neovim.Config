@@ -5,10 +5,6 @@ return {
         config = function() require("focus").setup() end
     },
     {
-        'christoomey/vim-tmux-navigator',
-        event = 'VeryLazy'
-    },
-    {
         'moll/vim-bbye',
         event = 'VeryLazy'
     },
@@ -99,3 +95,4 @@ return {
         vim.g.closetag_enable_react_fragment = 1
     end
 }
+

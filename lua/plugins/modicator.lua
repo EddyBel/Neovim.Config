@@ -24,35 +24,35 @@ return {
                 -- Color and bold/italic options for each mode. You can add a bold and/or
                 -- italic key pair to override the default highlight for a specific mode if
                 -- you would like.
-                modes = {
-                    ['n']   = {
-                        foreground = COLOR_LINE.normal,
-                    },
-                    ['i']   = {
-                        foreground = COLOR_LINE.insert,
-                    },
-                    ['v']   = {
-                        foreground = COLOR_LINE.visual,
-                    },
-                    ['V']   = {
-                        foreground = COLOR_LINE.visual_line,
-                    },
-                    ['�'] = { -- This symbol is the ^V character
-                        foreground = COLOR_LINE.insert_code,
-                    },
-                    ['s']   = {
-                        foreground = COLOR_LINE.select,
-                    },
-                    ['S']   = {
-                        foreground = COLOR_LINE.select_line,
-                    },
-                    ['R']   = {
-                        foreground = COLOR_LINE.replacement,
-                    },
-                    ['c']   = {
-                        foreground = COLOR_LINE.command,
-                    },
-                },
+                -- modes = {
+                --     ['n']   = {
+                --         foreground = COLOR_LINE.normal,
+                --     },
+                --     ['i']   = {
+                --         foreground = COLOR_LINE.insert,
+                --     },
+                --     ['v']   = {
+                --         foreground = COLOR_LINE.visual,
+                --     },
+                --     ['V']   = {
+                --         foreground = COLOR_LINE.visual_line,
+                --     },
+                --     ['�'] = { -- This symbol is the ^V character
+                --         foreground = COLOR_LINE.insert_code,
+                --     },
+                --     ['s']   = {
+                --         foreground = COLOR_LINE.select,
+                --     },
+                --     ['S']   = {
+                --         foreground = COLOR_LINE.select_line,
+                --     },
+                --     ['R']   = {
+                --         foreground = COLOR_LINE.replacement,
+                --     },
+                --     ['c']   = {
+                --         foreground = COLOR_LINE.command,
+                --     },
+                -- },
             },
         })
     end,

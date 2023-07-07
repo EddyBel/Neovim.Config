@@ -9,8 +9,23 @@ return {
         --------------------------------------> LSP CUSTOMER CONFIGURATIONS <-------------------------------------------------------
 
         local capabilities = vim.lsp.protocol.make_client_capabilities()
-        capabilities.textDocument.completion.completionItem.snippetSupport = true
-
+        capabilities.textDocument.completion.completionItem = {
+            documentationFormat = { "markdown", "plaintext" },
+            snippetSupport = true,
+            preselectSupport = true,
+            insertReplaceSupport = true,
+            labelDetailsSupport = true,
+            deprecatedSupport = true,
+            commitCharactersSupport = true,
+            tagSupport = { valueSet = { 1 } },
+            resolveSupport = {
+                properties = {
+                    "documentation",
+                    "detail",
+                    "additionalTextEdits",
+                },
+            },
+        }
 
         -- Python
         lspconfig.pyright.setup({
@@ -31,6 +46,7 @@ return {
 
         -- JavaScript, TypeScript, JavaScriptReact, TypescriptReact
         lspconfig.tsserver.setup({
+            capabilities = capabilities,
             cmd = { UTILS.get_executable_extension("typescript-language-server", windows_extension), "--stdio" },
             filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact",
                 "typescript.tsx" },
@@ -74,28 +90,29 @@ return {
         })
 
         --HTML
-        lspconfig.html.setup({
-            capabilities = capabilities,
-            cmd = { UTILS.get_executable_extension("vscode-html-language-server", windows_extension), "--stdio" },
-            filetypes = { "html" },
-            init_options = {
-                configurationSection = { "html", "css", "javascript" },
-                embeddedLanguages = {
-                    css = true,
-                    javascript = true
-                },
-                provideFormatter = true
-            },
-            root_dir = UTILS.current_path,
-            single_file_support = true
-        })
         lspconfig.emmet_ls.setup({
+            capabilities = capabilities,
             cmd = { UTILS.get_executable_extension("emmet-ls", windows_extension), "--stdio" },
-            filetypes = { "astro", "eruby", "html", "htmldjango", "javascriptreact", "pug", "svelte", "typescriptreact",
-                "vue" },
+            filetypes = { "astro", "eruby", "html", "htmldjango", "javascriptreact", "pug", "svelte",
+                "typescriptreact", "vue" },
             root_dir = UTILS.current_path,
             single_file_support = true
         })
+        -- lspconfig.html.setup({
+        --     capabilities = capabilities,
+        --     cmd = { UTILS.get_executable_extension("vscode-html-language-server", windows_extension), "--stdio" },
+        --     filetypes = { "html", "javascript" },
+        --     init_options = {
+        --         configurationSection = { "html", "css", "javascript" },
+        --         embeddedLanguages = {
+        --             css = true,
+        --             javascript = true
+        --         },
+        --         provideFormatter = true
+        --     },
+        --     root_dir = UTILS.current_path,
+        --     single_file_support = true
+        -- })
 
         --BASH
         lspconfig.bashls.setup({

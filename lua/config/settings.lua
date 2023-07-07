@@ -13,7 +13,7 @@ vim.opt.showmode = false                              -- Hides the current mode 
 vim.opt.clipboard:append { 'unnamed', 'unnamedplus' } -- Set whatever is copied to go to the clipboard
 vim.opt.fillchars = { eob = ' ' }                     -- Clears the ~ symbols from the editor
 vim.o.termguicolors = true                            -- Setting that enhances colors and layouts
-vim.opt.wrap = false                                  -- Do not wrap to monitor size
+vim.opt.wrap = true                                   -- Do not wrap to monitor size
 vim.opt.history = 1000                                -- Set the size of the history that will be displayed
 -- vim.opt.relativenumber = true                      -- Enable line numbers relative to the cursor
 -- vim.opt.opt.t_ut = ''                              -- In case of background failures
@@ -24,10 +24,6 @@ vim.opt.history = 1000                                -- Set the size of the his
 vim.opt.expandtab = true -- Use spaces instead of tabs
 vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
-
-------------------------------> EDITOR THEME SETTINGS <------------------------------------------------
-
-vim.cmd("colorscheme " .. COLOR_THEME)
 
 ------------------------------> CONFIGURES BASIC AUTOMATIC FUNCTIONS <---------------------------------
 

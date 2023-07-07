@@ -71,8 +71,6 @@ return {
         local function go_close_menu(fallback)
             if cmp.visible() then
                 cmp.close()
-            elseif luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
             else
                 fallback()
             end
@@ -83,11 +81,25 @@ return {
         local ui_window = cmp.config.window.bordered()
         ui_window.winhighlight = "Normal:CmpPmenu,CursorLine:Visual,Search:PmenuSel"
 
+        -- Get the keymaps for autocompletion
+        local key_close = KEYMAPS.autocomplete_close[2]
+        local key_open = (ENV.OS == ENV.LINUX) and KEYMAPS.autocomplete_open_linux[2] or
+            (ENV.OS == ENV.MACOS) and KEYMAPS.autocomplete_open_linux[2] or
+            (ENV.OS == ENV.WINDOWS) and KEYMAPS.autocomplete_down_move[2] or
+            "<C-S-Space>"
+        local key_confirm = KEYMAPS.autocomplete_confirm[2]
+        local key_confirm_secondary = KEYMAPS.autocomplete_confirm_secondary[2]
+        local key_move_up = KEYMAPS.autocomplete_up_move[2]
+        local key_move_down = KEYMAPS.autocomplete_down_move[2]
+        local key_move_up_docs = KEYMAPS.autocomplete_move_up_docs[2]
+        local key_move_down_docs = KEYMAPS.autocomplete_move_down_docs[2]
+
         cmp.setup {
 
-            -- completion = {
-            --     completeopt = "menu,menuone",
-            -- },
+            -- Marks the first menu item at startup
+            completion = {
+                completeopt = 'menu,menuone,noinsert'
+            },
 
             -- Defines that the selection is made by default on the first element
             initial_select = cmp.SelectFirst,
@@ -99,27 +111,20 @@ return {
             },
 
             -- Configures the keys to be used to operate the menu
-            -- Ctrl + d Shift up 4 elements of the help documents
-            -- Ctrl + f Scrolls down 4 elements of the help documents
-            -- Down Scrolls down the options
-            -- Up Scrolls the options upwards
-            -- Enter to confirm autocomplete selection -- Ctrl + space to complete the autocomplete selection
-            -- Ctrl + space to complete the autocompletion
             mapping = {
-                ["<C-j>"] = cmp.mapping.scroll_docs(-4),
-                ["<C-k>"] = cmp.mapping.scroll_docs(4),
-                ["<Down>"] = cmp.mapping(go_down_in_menu, { "i", "s" }),
-                ["<Up>"] = cmp.mapping(go_up_in_menu, { "i", "s" }),
-                ["<C-c>"] = cmp.mapping(go_close_menu, { "i", "s" }),
-                ["<Enter>"] = cmp.mapping.confirm {
+                [key_move_down_docs] = cmp.mapping.scroll_docs(-4),
+                [key_move_up_docs] = cmp.mapping.scroll_docs(4),
+                [key_move_up] = cmp.mapping(go_up_in_menu, { "i", "s" }),
+                [key_move_down] = cmp.mapping(go_down_in_menu, { "i", "s" }),
+                [key_confirm] = cmp.mapping.confirm {
                     behavior = cmp.ConfirmBehavior.Insert,
                     select = true, },
-                ["<Tab>"] = cmp.mapping.confirm {
+                [key_confirm_secondary] = cmp.mapping.confirm {
                     behavior = cmp.ConfirmBehavior.Insert,
                     select = true
                 },
-                ["<C-Space>"] = cmp.mapping.complete(),
-                ["<C-n>"] = cmp.mapping.complete()
+                [key_close] = cmp.mapping(go_close_menu, { "i", "s" }),
+                [key_open] = cmp.mapping.complete(),
             },
 
             -- Define the sources to use to display autocomplete information.

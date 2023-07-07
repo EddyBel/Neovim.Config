@@ -4,15 +4,19 @@ vim.keymap.set({ 'i', 'n' }, '<Esc>', '<Esc><cmd>:VMClear <BAR> :nohl <CR>', { n
 
 ------------------------------> KEYBOARD SHORTCUTS FOR FILES AND BUFFERS <-----------------------------------------------
 
-vim.keymap.set('n', 'q', '<cmd>:q<CR>', { noremap = true })                  -- Close the buffer
-vim.keymap.set('n', '<leader>qq', '<cmd>:q!<CR>', { noremap = true })        -- Force the buffer to close
-vim.keymap.set({ 'n', 'i' }, '<C-s>', '<cmd>:w<CR>', { noremap = true })     -- Save the buffer
-vim.keymap.set('n', '<C-h><C-h>', '<cmd>:bprevious<CR>', { noremap = true }) -- Move to previous buffer (left)
-vim.keymap.set('n', '<C-l><C-l>', '<cmd>:bnext<CR>', { noremap = true })     -- Move to the next buffer (right)
-vim.keymap.set('n', '<C-q>', '<cmd>:Bdelete<CR>', { noremap = true })        -- Close the tab or buffer you are in.
-vim.keymap.set('n', '<leader>nr', '<cmd>:vsplit<CR>', { noremap = true })    -- Open new window with current buffer
-vim.keymap.set('n', '<leader>nb', '<cmd>:split<CR>', { noremap = true })     -- Open new window with current buffer
-vim.keymap.set({ 'n', 'i' }, '<C-f>', '<Esc>/', { noremap = true })          -- Searches for a word in the buffer
+vim.keymap.set('n', 'q', '<cmd>:q<CR>', { noremap = true })                     -- Close the buffer
+vim.keymap.set('n', '<leader>qq', '<cmd>:q!<CR>', { noremap = true })           -- Force the buffer to close
+vim.keymap.set({ 'n', 'i' }, '<C-s>', '<cmd>:w<CR>', { noremap = true })        -- Save the buffer
+vim.keymap.set({ 'n', 'i' }, '<C-h>', '<cmd>:wincmd h<CR>', { noremap = true }) -- Move cursor to the left window
+vim.keymap.set({ 'n', 'i' }, '<C-l>', '<cmd>:wincmd l<CR>', { noremap = true }) -- Move cursor to the right window
+vim.keymap.set({ 'n', 'i' }, '<C-k>', '<cmd>:wincmd k<CR>', { noremap = true }) -- Move cursor to the up window
+vim.keymap.set({ 'n', 'i' }, '<C-j>', '<cmd>:wincmd j<CR>', { noremap = true }) -- Move cursor to the down window
+vim.keymap.set('n', '<C-h><C-h>', '<cmd>:bprevious<CR>', { noremap = true })    -- Move to previous buffer (left)
+vim.keymap.set('n', '<C-l><C-l>', '<cmd>:bnext<CR>', { noremap = true })        -- Move to the next buffer (right)
+vim.keymap.set('n', '<C-q>', '<cmd>:Bdelete<CR>', { noremap = true })           -- Close the tab or buffer you are in.
+vim.keymap.set('n', '<leader>nr', '<cmd>:vsplit<CR>', { noremap = true })       -- Open new window with current buffer
+vim.keymap.set('n', '<leader>nb', '<cmd>:split<CR>', { noremap = true })        -- Open new window with current buffer
+vim.keymap.set({ 'n', 'i' }, '<C-f>', '<Esc>/', { noremap = true })             -- Searches for a word in the buffer
 
 ------------------------------> KEYBOARD SHORTCUTS FOR TEXT MANIPULATION <-----------------------------------------------
 
