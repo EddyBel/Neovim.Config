@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { NavBar } from './navbar';
-import { NAVIGATION_PRIMARY, NAVIGATION_SECONDARY } from '../web.config';
+import { NAVIGATION_PRIMARY } from '../web.config';
 
 type PropsNavigation = {
   children?: any;
