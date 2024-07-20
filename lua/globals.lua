@@ -1,5 +1,9 @@
+---This variable represents the welcome greeting to the editor
+_G.GRETING_MESSAGE = "✨ Hello! Welcome back 💻"
 ---This variable defines whether you want a transparent background in the editor.
 _G.BACKGROUND_TRANSPARENT = false
+---This variable represents the waiting time to automatically eliminate buffers that are no longer being used.
+_G.WAIT_MINUTES_TO_CLEAR_BUFFERS = 30 -- min
 
 ---This variable is an object that indicates the properties that the status bar (lualine) can have.
 ---1. theme -> string
@@ -15,8 +19,8 @@ _G.BACKGROUND_TRANSPARENT = false
 ---     - compact
 _G.STATUSBAR = {
     theme = 'auto',
-    separator = { left = '', right = '' },
-    decorator = { left = '', right = '' },
+    separator = {left = '', right = ''},
+    decorator = {left = '', right = ''}
 }
 
 ---This variable stores the front drawing ASCII that can be displayed when neovim is started.
@@ -36,7 +40,7 @@ _G.TODO_PATTERN = [[.*(KEYWORDS).*]]
 ---The sings property defines whether to use icons at the side of the comment.
 _G.TODO_ICONS = {
     signs = true, -- Defines whether icons will be used
-    type = "fg",  -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty. (wide and wide_bg is the same as bg, but will also highlight surrounding characters, wide_fg acts accordingly but with fg)
+    type = "fg", -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty. (wide and wide_bg is the same as bg, but will also highlight surrounding characters, wide_fg acts accordingly but with fg)
     fix = "",
     todo = "",
     hack = "󰈸",
@@ -55,52 +59,47 @@ _G.TODO_ICONS = {
 -- Associated value is the character or set of characters represented by that icon.
 ---
 _G.ICONS = {
-    prefix = "",     -- Prefix displayed in the virtual text
-    error = '',      -- Error icon
-    warn = '',       -- Warning icon
-    info = '󰅺',      -- Info icon
-    hint = '',       -- Hint icon
-    time = '󱑃',      --  Icon representing each operating system
-    formatter = "",  -- Icon representing code formatter
-    lsp = "",        -- Icon representing LSP clients
+    prefix = "", -- Prefix displayed in the virtual text
+    error = '', -- Error icon
+    warn = '', -- Warning icon
+    info = '󰅺', -- Info icon
+    hint = '', -- Hint icon
+    time = '󱑃', --  Icon representing each operating system
+    formatter = "", -- Icon representing code formatter
+    lsp = "", -- Icon representing LSP clients
     cmp_buffer = "", -- Icon representing Buffer suggestions
-    cmp_lua = "",    -- Icon that represents the suggestions of lua
-    cmp_path = "",   -- Icon representing route suggestions
+    cmp_lua = "", -- Icon that represents the suggestions of lua
+    cmp_path = "", -- Icon representing route suggestions
     cmp_snippets = "", -- Icon representing snippet suggestions (snippy)
     cmp_vsnip = "󰨞", -- Icon representing vsnip suggestions
     cmp_luasnip = "", -- Icon representing lua snippet suggestions
-    cmp_db = "",     -- Icon representing database suggestions
-    copilot = {
-        enable = "",
-        disable = "",
-        warning = "",
-    }, -- Icons representing the copilot status
-    git = {
-        add = "",
-        removed = "",
-        modified = ""
-    },                                                                   -- Icons indicating the status of git changes
-    spinner = { "⠿", "⠞", "⠇", "⠑", "⠝", "⠞", "⠎", "⠕", "⠍", "⠑", "⠋" }, -- Icons representing the loading animation
+    cmp_db = "", -- Icon representing database suggestions
+    copilot = {enable = "", disable = "", warning = ""}, -- Icons representing the copilot status
+    git = {add = "", removed = "", modified = ""}, -- Icons indicating the status of git changes
+    spinner = {
+        "⠿", "⠞", "⠇", "⠑", "⠝", "⠞", "⠎", "⠕", "⠍", "⠑",
+        "⠋"
+    }, -- Icons representing the loading animation
     os = {
-        ["Windows"]    = "󰍲",                                         -- 󰍲  󰖳  󰨡
-        ["Darwin"]     = "",                                          --  󰇄
-        ["Ubuntu"]     = "",                                          --  󰕈  
-        ["Kali"]       = "",                                          --  
-        ["Arch"]       = "",                                          --   󰣇
-        ["Debian"]     = "",                                          -- 󰣚
-        ["Fedora"]     = "",                                          --  󰣛 󰮤
-        ["Parrot"]     = "",                                          -- 
-        ["Alpine"]     = "",                                          -- 
-        ["Centos"]     = "",                                          --  󱄚
-        ["Elementary"] = "",                                          -- 
-        ["Gentoo"]     = "󰣨",                                         --  󰣨
-        ["Manjaro"]    = "",                                          --  󱘊
-        ["Mint"]       = "󰣭",                                         -- 󰣭
-        ["Opensuse"]   = "",                                          -- 
-        ["Raspbian"]   = "",                                          --  󰐿
-        ["Linux"]      = "",                                          -- 󰌽
-        ["Default"]    = ""                                           --    
-    }                                                                    --  Icons representing each operating system
+        ["Windows"] = "󰍲", -- 󰍲  󰖳  󰨡
+        ["Darwin"] = "", --  󰇄
+        ["Ubuntu"] = "", --  󰕈  
+        ["Kali"] = "", --  
+        ["Arch"] = "", --   󰣇
+        ["Debian"] = "", -- 󰣚
+        ["Fedora"] = "", --  󰣛 󰮤
+        ["Parrot"] = "", -- 
+        ["Alpine"] = "", -- 
+        ["Centos"] = "", --  󱄚
+        ["Elementary"] = "", -- 
+        ["Gentoo"] = "󰣨", --  󰣨
+        ["Manjaro"] = "", --  󱘊
+        ["Mint"] = "󰣭", -- 󰣭
+        ["Opensuse"] = "", -- 
+        ["Raspbian"] = "", --  󰐿
+        ["Linux"] = "", -- 󰌽
+        ["Default"] = "" --    
+    } --  Icons representing each operating system
 }
 
 ---G.GIT is a dictionary containing different icons used in a context
@@ -108,12 +107,12 @@ _G.ICONS = {
 ---a symbolic name associated with a specific icon, and the associated
 ---value is the character representing that icon.
 _G.GIT_SYMBOLS = {
-    add          = '│',
-    change       = '│',
-    delete       = '',
-    topdelete    = '󰅃',
+    add = '│',
+    change = '│',
+    delete = '',
+    topdelete = '󰅃',
     changedelete = '',
-    untracked    = '┆',
+    untracked = '┆'
 }
 
 ---This variabel indicates if you want to show information of the last commit in each line of the editor.
@@ -126,25 +125,25 @@ _G.GIT_INFO = true
 ---characters represented by that symbol.
 _G.TREE_SYMBOLS = {
     -- Change type
-    added              = "+", -- or "✚", but this is redundant info if you use git_status_colors on the name
-    modified           = "", -- or "", but this is redundant info if you use git_status_colors on the name
-    deleted            = "x", -- this can only be used in the git_status source
-    renamed            = "", -- this can only be used in the git_status source
+    added = "+", -- or "✚", but this is redundant info if you use git_status_colors on the name
+    modified = "", -- or "", but this is redundant info if you use git_status_colors on the name
+    deleted = "x", -- this can only be used in the git_status source
+    renamed = "", -- this can only be used in the git_status source
     -- Status type
-    untracked          = "",
-    ignored            = "",
-    unstaged           = "",
-    staged             = "",
-    conflict           = "",
+    untracked = "",
+    ignored = "",
+    unstaged = "",
+    staged = "",
+    conflict = "",
     -- Icons
-    folder_closed      = "",
-    folder_open        = "",
-    folder_empty       = "",
-    modified_symbol    = "[+]",
-    indent_marker      = "│",
+    folder_closed = "",
+    folder_open = "",
+    folder_empty = "",
+    modified_symbol = "[+]",
+    indent_marker = "│",
     last_indent_marker = "└",
     expander_collapsed = "",
-    expander_expanded  = "",
+    expander_expanded = ""
 }
 
 ---This variable stores the size of the file manager window.
@@ -160,14 +159,8 @@ _G.CMP_GHOST_TEXT = true
 
 ---This table contains the list of LSP clients to be installed automatically.
 _G.LSP_CLIENTS = {
-    "lua_ls",
-    "tsserver",
-    "marksman",
-    "pyright",
-    "cssls",
-    "jsonls",
-    "emmet_ls",
-    "html",
+    "lua_ls", "tsserver", "marksman", "pyright", "cssls", "jsonls", "emmet_ls",
+    "html"
     -- "rust_analyzer",
     -- "clangd",
     -- "tailwindcss",
@@ -185,56 +178,56 @@ _G.LSP_CLIENTS = {
 _G.PARAMETER_HIGHLIGHTING = true
 
 ---This variable indicates which file types will be excluded from being formatted with neoformat and the default LSP formatting will be used.
-_G.EXCLUDE_FORMATTERS_FILES = { "lua", "vim", "vimscript" }
+_G.EXCLUDE_FORMATTERS_FILES = {"lua", "vim", "vimscript"}
 
 ---This variable indicates the order of the code formats to be used for each language.
 ---In this table you can easily configure the formatter.
 ---You can search the neoformat documentation: https://github.com/sbdchd/neoformat to find out which formatters are supported.
 _G.CODE_FORMATTERS = {
-    python = { 'black' },
-    javascript = { 'prettier' },
-    typescript = { 'prettier' },
-    html = { 'prettier' },
-    css = { 'prettier' },
-    scss = { 'prettier' },
-    javascriptreact = { 'prettier' },
-    typescriptreact = { 'prettier' },
-    json = { 'prettier' },
-    markdown = { 'prettier' },
-    xml = { 'prettier' },
-    yaml = { 'prettier' },
-    java = { 'prettier' },
-    kotlin = { 'prettier' },
-    less = { 'prettier' },
-    php = { 'prettier' },
-    astro = { 'prettier' },
-    ruby = { 'prettier' },
-    lua = { 'luaformatter' },
-    cpp = { 'clangformat' },
-    c = { 'clangformat' },
-    csharp = { 'clangformat' },
-    arduino = { 'clangformat' },
-    objc = { 'clangformat' },
-    go = { 'gofmt' },
-    assembly = { 'asmfmt' },
-    bazel = { 'buildifier' },
-    cmake = { 'cmake_format' },
-    csv = { 'prettydiff' },
-    dart = { 'dartfmt' },
-    erlang = { 'erlfmt' },
-    graphql = { 'prettier' },
-    toml = { 'taplo' },
-    htmldjango = { 'djlint' },
-    vue = { 'prettier' },
-    swift = { 'Swiftformat' },
-    sql = { 'sqlfmt' },
-    rust = { 'rustfmt' },
-    sass = { 'stylelint' },
-    pug = { 'pug-beautifier' },
-    zsh = { 'shfmt' },
-    svelte = { 'prettierd' },
-    ps1 = { 'PSScriptAnalyzer' },
-    prisma = { 'prettier' },
-    jsonc = { 'prettier' },
-    blade = { 'blade-formatter' }
+    python = {'black'},
+    javascript = {'prettier'},
+    typescript = {'prettier'},
+    html = {'prettier'},
+    css = {'prettier'},
+    scss = {'prettier'},
+    javascriptreact = {'prettier'},
+    typescriptreact = {'prettier'},
+    json = {'prettier'},
+    markdown = {'prettier'},
+    xml = {'prettier'},
+    yaml = {'prettier'},
+    java = {'prettier'},
+    kotlin = {'prettier'},
+    less = {'prettier'},
+    php = {'prettier'},
+    astro = {'prettier'},
+    ruby = {'prettier'},
+    lua = {'luaformatter'},
+    cpp = {'clangformat'},
+    c = {'clangformat'},
+    csharp = {'clangformat'},
+    arduino = {'clangformat'},
+    objc = {'clangformat'},
+    go = {'gofmt'},
+    assembly = {'asmfmt'},
+    bazel = {'buildifier'},
+    cmake = {'cmake_format'},
+    csv = {'prettydiff'},
+    dart = {'dartfmt'},
+    erlang = {'erlfmt'},
+    graphql = {'prettier'},
+    toml = {'taplo'},
+    htmldjango = {'djlint'},
+    vue = {'prettier'},
+    swift = {'Swiftformat'},
+    sql = {'sqlfmt'},
+    rust = {'rustfmt'},
+    sass = {'stylelint'},
+    pug = {'pug-beautifier'},
+    zsh = {'shfmt'},
+    svelte = {'prettierd'},
+    ps1 = {'PSScriptAnalyzer'},
+    prisma = {'prettier'},
+    jsonc = {'prettier'},
+    blade = {'blade-formatter'}
 }

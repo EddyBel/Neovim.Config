@@ -5,7 +5,7 @@ local run_code = {}
 ---The INPUT string defines the input file name
 ---The string OUTPUT defines the output file name
 run_code.compilers_executables = {
-    python = "python INPUT",
+    python = "python3 INPUT",
     javascript = "node INPUT",
     typescript = "tsc INPUT",
     sass = "sass INPUT OUTPUT.css",
@@ -30,7 +30,8 @@ run_code.compile_code = function(command)
     -- notification("Wait a moment, your code is compiling.", "info")
     local compileResult = os.execute(command)
     if compileResult ~= 0 then
-        notification("An error occurred, your code could not be compiled.", "error")
+        notification("An error occurred, your code could not be compiled.",
+                     "error")
         return false
     end
     notification("Your code has been successfully compiled", "info")
@@ -50,7 +51,6 @@ run_code.validate_extension = function(filename, extension)
     end
     return true
 end
-
 
 ---Create a new command by replacing the strings "INPUT" and "OUTPUT" with the values provided.
 ---@param input (string) The input value to replace in the string.
@@ -86,7 +86,8 @@ run_code.run_python = function()
     if not validate then return end
 
     -- Run the resulting executable in the terminal
-    local command = string.gsub(run_code.compilers_executables.python, "INPUT", currentFile)
+    local command = string.gsub(run_code.compilers_executables.python, "INPUT",
+                                currentFile)
     run_code.run_terminal(command)
 end
 
@@ -101,7 +102,8 @@ run_code.run_javascript = function()
     if not validate then return end
 
     -- Run the resulting executable in the terminal
-    local command = string.gsub(run_code.compilers_executables.javascript, "INPUT", currentFile)
+    local command = string.gsub(run_code.compilers_executables.javascript,
+                                "INPUT", currentFile)
     run_code.run_terminal(command)
 end
 
@@ -117,11 +119,15 @@ run_code.run_typescript = function()
     local validate = run_code.validate_extension(currentFile, extension)
     if not validate then return end
 
-    local command_typescript = string.gsub(run_code.compilers_executables.typescript, "INPUT", currentFile)
+    local command_typescript = string.gsub(
+                                   run_code.compilers_executables.typescript,
+                                   "INPUT", currentFile)
     local compile = run_code.compile_code(command_typescript)
     if not compile then return end
 
-    local command_javascript = string.gsub(run_code.compilers_executables.javascript, "INPUT", outputFile .. ".js")
+    local command_javascript = string.gsub(
+                                   run_code.compilers_executables.javascript,
+                                   "INPUT", outputFile .. ".js")
     run_code.run_terminal(command_javascript)
 end
 
@@ -138,12 +144,14 @@ run_code.run_cpp = function()
     if not validate then return end
 
     -- Run the code compiler
-    local command = run_code.new_command(currentFile, outputFile, run_code.compilers_executables.cpp)
+    local command = run_code.new_command(currentFile, outputFile,
+                                         run_code.compilers_executables.cpp)
     local compile = run_code.compile_code(command)
     if not compile then return end
 
     -- Run the resulting executable in the terminal
-    run_code.run_terminal(UTILS.get_executable_extension(outputFile, windows_executable))
+    run_code.run_terminal(UTILS.get_executable_extension(outputFile,
+                                                         windows_executable))
 end
 
 run_code.run_c = function()
@@ -159,12 +167,14 @@ run_code.run_c = function()
     if not validate then return end
 
     -- Run the code compiler
-    local command = run_code.new_command(currentFile, outputFile, run_code.compilers_executables.c)
+    local command = run_code.new_command(currentFile, outputFile,
+                                         run_code.compilers_executables.c)
     local compile = run_code.compile_code(command)
     if not compile then return end
 
     -- Run the resulting executable in the terminal
-    run_code.run_terminal(UTILS.get_executable_extension(outputFile, windows_executable))
+    run_code.run_terminal(UTILS.get_executable_extension(outputFile,
+                                                         windows_executable))
 end
 
 run_code.run_go = function()
@@ -179,11 +189,13 @@ run_code.run_go = function()
     local validate = run_code.validate_extension(currentFile, extension)
     if not validate then return end
 
-    local command = string.gsub(run_code.compilers_executables.go, "INPUT", currentFile)
+    local command = string.gsub(run_code.compilers_executables.go, "INPUT",
+                                currentFile)
     local compile = run_code.compile_code(command)
     if not compile then return end
 
-    run_code.run_terminal(UTILS.get_executable_extension(outputFile, windows_executable))
+    run_code.run_terminal(UTILS.get_executable_extension(outputFile,
+                                                         windows_executable))
 end
 
 run_code.run_scss = function()
@@ -199,7 +211,8 @@ run_code.run_scss = function()
     if not validate then return end
 
     -- Run the code compiler
-    local command = run_code.new_command(currentFile, outputFile, run_code.compilers_executables.sass)
+    local command = run_code.new_command(currentFile, outputFile,
+                                         run_code.compilers_executables.sass)
     local compile = run_code.compile_code(command)
     if not compile then return end
 end
@@ -221,13 +234,15 @@ run_code.open_html = function()
     elseif ENV.OS == ENV.MACOS then
         command = "open"
     else
-        notification("Cannot determine the command to open the browser on this operating system.", "warn")
+        notification(
+            "Cannot determine the command to open the browser on this operating system.",
+            "warn")
         return
     end
 
     -- Ejecuta el comando para abrir el archivo HTML en el navegador
     local command = command .. " " .. currentFile
-    vim.fn.jobstart(command, { detach = true })
+    vim.fn.jobstart(command, {detach = true})
     notification("HTML file opened correctly.", "info")
 end
 

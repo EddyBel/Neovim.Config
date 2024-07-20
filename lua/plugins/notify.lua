@@ -2,13 +2,9 @@ return {
     "rcarriga/nvim-notify",
     -- lazy = true,
     event = "VeryLazy",
+    opts = {},
     config = function()
-        local notify = require "notify"
-        -- this for transparency
-        notify.setup {
-            background_colour = "#000000",
-        }
-        -- this overwrites the vim notify function
-        vim.notify = notify.notify
-    end,
+        vim.notify = require("notify")
+        vim.notify(GRETING_MESSAGE, "info", {title = "Greeting", timeout = 1000})
+    end
 }

@@ -1,5 +1,5 @@
 -- REQUIRED INITIAL SETTINGS
-vim.g.mapleader = " "      -- Defines the leader key of neovim
+vim.g.mapleader = " " -- Defines the leader key of neovim
 vim.o.termguicolors = true -- Enables the use of colors in the terminal
 -- VARIABLES AND INITIAL FUNCTIONS
 require("globals")
@@ -13,6 +13,7 @@ require("config.settings")
 -- PERSONAL LIBRARIES
 require("lib.create_files")
 require("lib.execute_codes")
+require("lib.clean-optimizate")
 -- PLUGIN LOADING
 require("config.lazy")
 require("lazy").setup("plugins")
