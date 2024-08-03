@@ -1,22 +1,13 @@
 return {
     "hrsh7th/nvim-cmp",
     dependencies = {
-        "hrsh7th/cmp-buffer",
-        "hrsh7th/cmp-path",
-        "hrsh7th/cmp-nvim-lua",
-        "hrsh7th/cmp-nvim-lsp",
-        "hrsh7th/cmp-cmdline",
-        "hrsh7th/cmp-git",
-        'dcampos/cmp-snippy',
-        "dcampos/nvim-snippy",
-        "saadparwaiz1/cmp_luasnip",
-        "onsails/lspkind-nvim",
-        "windwp/nvim-autopairs",
-        "hrsh7th/cmp-nvim-lsp-signature-help",
-        "honza/vim-snippets",
-        'hrsh7th/cmp-vsnip',
-        'hrsh7th/vim-vsnip',
-        "L3MON4D3/LuaSnip",
+        "hrsh7th/cmp-buffer", "hrsh7th/cmp-path", "hrsh7th/cmp-nvim-lua",
+        "hrsh7th/cmp-nvim-lsp", "hrsh7th/cmp-cmdline", "hrsh7th/cmp-git",
+        'dcampos/cmp-snippy', "dcampos/nvim-snippy", "saadparwaiz1/cmp_luasnip",
+        "onsails/lspkind-nvim", "windwp/nvim-autopairs",
+        "hrsh7th/cmp-nvim-lsp-signature-help", "honza/vim-snippets",
+        'hrsh7th/cmp-vsnip', 'hrsh7th/vim-vsnip', "L3MON4D3/LuaSnip",
+        "luckasRanarison/tailwind-tools.nvim", "onsails/lspkind-nvim",
     },
     event = "VeryLazy",
     config = function()
@@ -29,8 +20,8 @@ return {
         -- Configures the automatic insertion of character pairs
         -- Indicates how to concatenate code hints
         require("nvim-autopairs").setup()
-        cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done { map_char = { tex = "" } })
-
+        cmp.event:on("confirm_done",
+            cmp_autopairs.on_confirm_done { map_char = { tex = "" } })
 
         ---Scroll up in a drop-down menu, or select the next option in an autocomplete.
         ---If a drop-down menu is visible, select the previous option.
@@ -76,55 +67,52 @@ return {
             end
         end
 
-
         ---Design options for the neovim cmp window
-        local ui_window = cmp.config.window.bordered()
-        ui_window.winhighlight = "Normal:CmpPmenu,CursorLine:Visual,Search:PmenuSel"
+        ---@param cmp.config.window.bordered cmp.config.window.bordered
+        local ui_window = CMP_BORDER and cmp.config.window.bordered({
+            border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+            winhighlight = "Normal:CmpPmenu,CursorLine:Visual,Search:PmenuSel"
+        }) or nil
+
 
         -- Get the keymaps for autocompletion
         local key_close = KEYMAPS.autocomplete_close[2]
-        local key_open = (ENV.OS == ENV.LINUX) and KEYMAPS.autocomplete_open_linux[2] or
-            (ENV.OS == ENV.MACOS) and KEYMAPS.autocomplete_open_linux[2] or
-            (ENV.OS == ENV.WINDOWS) and KEYMAPS.autocomplete_down_move[2] or
-            "<C-S-Space>"
+        local key_open = (ENV.OS == ENV.LINUX) and
+            KEYMAPS.autocomplete_open_linux[2] or
+            (ENV.OS == ENV.MACOS) and
+            KEYMAPS.autocomplete_open_linux[2] or
+            (ENV.OS == ENV.WINDOWS) and
+            KEYMAPS.autocomplete_down_move[2] or "<C-S-Space>"
         local key_confirm = KEYMAPS.autocomplete_confirm[2]
-        local key_confirm_secondary = KEYMAPS.autocomplete_confirm_secondary[2]
         local key_move_up = KEYMAPS.autocomplete_up_move[2]
         local key_move_down = KEYMAPS.autocomplete_down_move[2]
         local key_move_up_docs = KEYMAPS.autocomplete_move_up_docs[2]
         local key_move_down_docs = KEYMAPS.autocomplete_move_down_docs[2]
+        local lspkind = require('lspkind')
 
         cmp.setup {
 
             -- Marks the first menu item at startup
-            completion = {
-                completeopt = 'menu,menuone,noinsert'
-            },
+            completion = { completeopt = 'menu,menuone,noinsert' },
 
             -- Defines that the selection is made by default on the first element
             initial_select = cmp.SelectFirst,
 
             -- Design of cmp floating windows
-            window = {
-                completion = ui_window,
-                documentation = ui_window
-            },
+            window = { completion = ui_window, documentation = ui_window },
 
             -- Configures the keys to be used to operate the menu
             mapping = {
-                [key_move_down_docs] = cmp.mapping.scroll_docs(-4),
-                [key_move_up_docs] = cmp.mapping.scroll_docs(4),
+                [key_move_up_docs] = cmp.mapping.scroll_docs(-4),
+                [key_move_down_docs] = cmp.mapping.scroll_docs(4),
                 [key_move_up] = cmp.mapping(go_up_in_menu, { "i", "s" }),
                 [key_move_down] = cmp.mapping(go_down_in_menu, { "i", "s" }),
                 [key_confirm] = cmp.mapping.confirm {
                     behavior = cmp.ConfirmBehavior.Insert,
-                    select = true, },
-                [key_confirm_secondary] = cmp.mapping.confirm {
-                    behavior = cmp.ConfirmBehavior.Insert,
                     select = true
                 },
                 [key_close] = cmp.mapping(go_close_menu, { "i", "s" }),
-                [key_open] = cmp.mapping.complete(),
+                [key_open] = cmp.mapping.complete()
             },
 
             -- Define the sources to use to display autocomplete information.
@@ -135,27 +123,26 @@ return {
             -- nvim_lsp_signature_help -> Uses the LSP protocol to display help information in the signature of a function or method while writing to a file.
             -- buffer -> Uses the contents of the current buffer for auto-completion. This source is useful when working with files that do not have auto-completion support in Neovim, such as configuration files or plain text files.
             sources = {
-                { name = "nvim_lua" },
-                { name = "nvim_lsp" },
-                { name = "path" },
-                { name = "luasnip" },
-                { name = 'vsnip' },
-                { name = 'snippy' },
-                { name = "nvim_lsp_signature_help" },
-                {
-                    name = "buffer",
-                    keyword_length = 4,
-                    option = {
-                        get_bufnrs = function()
-                            local bufs = {}
-                            for _, win in ipairs(vim.api.nvim_list_wins()) do
-                                local bufnr = vim.api.nvim_win_get_buf(win)
-                                if vim.api.nvim_buf_get_option(bufnr, 'buftype') ~= 'terminal' then bufs[bufnr] = true end
+                { name = "nvim_lua" }, { name = "nvim_lsp" }, { name = "path" },
+                { name = "luasnip" }, { name = 'vsnip' }, { name = 'snippy' },
+                { name = "codeium" }, { name = "nvim_lsp_signature_help" },
+                { name = "supermaven" }, {
+                name = "buffer",
+                keyword_length = 4,
+                option = {
+                    get_bufnrs = function()
+                        local bufs = {}
+                        for _, win in ipairs(vim.api.nvim_list_wins()) do
+                            local bufnr = vim.api.nvim_win_get_buf(win)
+                            if vim.api.nvim_buf_get_option(bufnr, 'buftype') ~=
+                                'terminal' then
+                                bufs[bufnr] = true
                             end
-                            return vim.tbl_keys(bufs)
-                        end,
-                    },
+                        end
+                        return vim.tbl_keys(bufs)
+                    end
                 }
+            }
             },
 
             ---```formatting`` is a table that allows you to customize the appearance of autocomplete items in `cmp`.
@@ -177,10 +164,98 @@ return {
                         snippy = ICONS.cmp_snippets .. " ",
                         vsnip = ICONS.cmp_vsnip .. " ",
                         luasnip = ICONS.cmp_luasnip .. " ",
-                        ["vim-dadbod-completion"] = ICONS.cmp_db .. " ",
+                        ["supermaven"] = ICONS.cmp_supermaven .. " ",
+                        ["codeium"] = ICONS.cmp_codeium .. " ",
+                        ["vim-dadbod-completion"] = ICONS.cmp_db .. " "
                     },
-                },
+                    model = "simbol",
+                    maxwidth = 50,
+                    ellipsis_char = '...',
+                    before = require("tailwind-tools.cmp").lspkind_format
+                }
             },
+
+            -- formatting = {
+            --     format = function(entry, vim_item)
+            --         local KIND_ICONS = {
+            --             Tailwind = '󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞',
+            --             Color = ' ',
+            --             -- Class = 7,
+            --             -- Constant = '󰚞',
+            --             -- Constructor = 4,
+            --             -- Enum = 13,
+            --             -- EnumMember = 20,
+            --             -- Event = 23,
+            --             -- Field = 5,
+            --             -- File = 17,
+            --             -- Folder = 19,
+            --             -- Function = 3,
+            --             -- Interface = 8,
+            --             -- Keyword = 14,
+            --             -- Method = 2,
+            --             -- Module = 9,
+            --             -- Operator = 24,
+            --             -- Property = 10,
+            --             -- Reference = 18,
+            --             Snippet = " ",
+            --             -- Struct = 22,
+            --             -- Text = "",
+            --             -- TypeParameter = 25,
+            --             -- Unit = 11,
+            --             -- Value = 12,
+            --             -- Variable = 6
+            --         }
+            --
+            --         if vim_item.kind == 'Color' and entry.completion_item.documentation then
+            --             local _, _, r, g, b =
+            --             ---@diagnostic disable-next-line: param-type-mismatch
+            --                 string.find(entry.completion_item.documentation, '^rgb%((%d+), (%d+), (%d+)')
+            --             local color
+            --
+            --             -- The next conditional is for the new tailwindcss version.
+            --             if r and g and b then
+            --                 color = string.format('%02x', r) .. string.format('%02x', g) .. string.format('%02x', b)
+            --             else
+            --                 color = entry.completion_item.documentation:gsub('#', '')
+            --             end
+            --             local group = 'Tw_' .. color
+            --
+            --             if vim.api.nvim_call_function('hlID', { group }) < 1 then
+            --                 vim.api.nvim_command('highlight' .. ' ' .. group .. ' ' .. 'guifg=#' .. color)
+            --             end
+            --
+            --             vim_item.kind = KIND_ICONS.Tailwind
+            --             vim_item.kind_hl_group = group
+            --
+            --             return vim_item
+            --         end
+            --
+            --         -- Apply lspkind formatting
+            --         local lspkind_format = lspkind.cmp_format {
+            --             with_text = true,
+            --             menu = {
+            --                 nvim_lsp = ICONS.lsp .. " ",
+            --                 buffer = ICONS.cmp_buffer .. " ",
+            --                 nvim_lua = ICONS.cmp_lua .. " ",
+            --                 path = ICONS.cmp_path .. " ",
+            --                 snippy = ICONS.cmp_snippets .. " ",
+            --                 vsnip = ICONS.cmp_vsnip .. " ",
+            --                 luasnip = ICONS.cmp_luasnip .. " ",
+            --                 ["supermaven"] = ICONS.cmp_supermaven .. " ",
+            --                 ["codeium"] = ICONS.cmp_codeium .. " ",
+            --                 ["vim-dadbod-completion"] = ICONS.cmp_db .. " "
+            --             },
+            --             mode = "symbol",
+            --             maxwidth = 50,
+            --             ellipsis_char = '...'
+            --         }
+            --
+            --         vim_item.kind = lspkind_format(entry, vim_item).kind or vim_item.kind
+            --
+            --         return vim_item
+            --     end,
+            --     fields = { 'menu', 'abbr', 'kind' }
+            -- },
 
             -- formatting = {
             --     fields = { 'menu', 'abbr', 'kind' },
@@ -228,12 +303,11 @@ return {
             -- }
             -- ,
 
-
             -- La sección snippet define una función anónima expand que se utilizará para expandir los snippets. Dentro de la función, se llama a la función lsp_expand de la biblioteca luasnip
             snippet = {
                 expand = function(args)
                     require("luasnip").lsp_expand(args.body)
-                end,
+                end
             },
 
             ---`sorting` is a table that allows you to customize how autocomplete entries are sorted in `cmp`.
@@ -260,10 +334,7 @@ return {
             ---compatibility issues with some environments. The default is `false`.
             ---`ghost_text` is a boolean option that allows ghost text to be enabled for entries from
             ---autocomplete. The default value is `false`.
-            experimental = {
-                native_menu = false,
-                ghost_text = CMP_GHOST_TEXT,
-            },
+            experimental = { native_menu = false, ghost_text = CMP_GHOST_TEXT }
         }
 
         --- `gitcommit` autocomplete settings
@@ -278,13 +349,9 @@ return {
         --- for this file type. In this case, the `cmp_git` source is placed first, followed by the `buffer` source.
         --- `buffer`.
         cmp.setup.filetype("gitcommit", {
-            sources = cmp.config.sources({
-                { name = "cmp_git" },
-            }, {
-                { name = "buffer" },
-            }),
+            sources = cmp.config
+                .sources({ { name = "cmp_git" } }, { { name = "buffer" } })
         })
-
 
         --- Command line autocomplete setting for buffered search
         ---@param trigger string The character to be used to trigger command line auto-completion.
@@ -302,11 +369,8 @@ return {
         --- exclusively for the buffered search.
         cmp.setup.cmdline("/", {
             mapping = cmp.mapping.preset.cmdline(),
-            sources = {
-                { name = "buffer" },
-            },
+            sources = { { name = "buffer" } }
         })
-
 
         ---Set the command line `cmp` extension.
         ---@param prefix string The prefix to be used to invoke the command line.
@@ -315,24 +379,43 @@ return {
         ---@field sources function A table containing the data sources for the command line.
         cmp.setup.cmdline(":", {
             mapping = cmp.mapping.preset.cmdline(),
-            sources = cmp.config.sources({
-                { name = "path" },
-            }, {
-                { name = "cmdline" },
-            }),
+            sources = cmp.config
+                .sources({ { name = "path" } }, { { name = "cmdline" } })
         })
-
 
         ---Configures `cmp` for SQL, MySQL and PL/SQL file types.
         ---@param filetypes table table containing the file types for which `cmp` will be configured.
         ---@param config table table containing the `cmp` configuration for the filetypes.
         ---@field sources function table containing the data sources for the file types.
         cmp.setup.filetype({ "sql", "mysql", "plsql" }, {
-            sources = cmp.config.sources({
-                { name = "vim-dadbod-completion" },
-            }, {
-                { name = "buffer" },
-            }),
+            sources = cmp.config.sources({ { name = "vim-dadbod-completion" } },
+                { { name = "buffer" } })
         })
-    end,
+
+        -- Función para imprimir las fuentes cargadas
+        function get_status_codeium()
+            local sources = cmp.core:get_sources()
+            for _, source in ipairs(sources) do
+                local isAvailable = source:is_available()
+                if isAvailable then
+                    if source.name == "codeium" then
+                        ENV.COPILOT_CODEIUM_IS_ACTIVATE = true
+                    end
+                end
+            end
+        end
+
+        -- Función para imprimir las fuentes cargadas y su estado
+        function print_cmp_sources()
+            local sources = cmp.core:get_sources()
+            for _, source in ipairs(sources) do
+                local isActivate = source:is_available()
+                if isActivate then
+                    print("-- " .. source.name .. " Activate")
+                else
+                    print("-- " .. source.name .. " Desactivo")
+                end
+            end
+        end
+    end
 }

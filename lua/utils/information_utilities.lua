@@ -1,8 +1,8 @@
-local data_utilities = {}
+local M = {}
 
 ---This function must return the icon corresponding to the operating system, if it finds a distribution then it returns the icon of the distribution.
 ---@return string os Returns the operating system icon
-data_utilities.get_system_icon = function()
+M.get_system_icon = function()
     if ENV.OS == ENV.WINDOWS then
         return ICONS.os["Windows"]
     elseif ENV.OS == ENV.MACOS then
@@ -22,27 +22,29 @@ end
 
 ---This function gets the name of all the active LSP servers, and returns the name of all the servers
 ---@return string LSP_names Returns a string with the names of the lsp servers.
-data_utilities.all_lsp_clients = function()
+M.all_lsp_clients = function()
     local client_names = {}
     local active_clients = vim.lsp.get_active_clients()
     local separator = " "
     local default_message = "LSP"
 
     if #active_clients == 0 then return ICONS.lsp .. " " .. default_message end
-    for _, client in ipairs(active_clients) do table.insert(client_names, client.name) end
+    for _, client in ipairs(active_clients) do
+        table.insert(client_names, client.name)
+    end
     return ICONS.lsp .. " " .. table.concat(client_names, separator)
 end
 
 ---This function obtains the total number of active LSP clients.
 ---@return string count_lsp Returns a string with the total number of LSP clients
-data_utilities.number_lsp_clients = function()
+M.number_lsp_clients = function()
     local activate_clients = vim.lsp.get_active_clients()
     return ICONS.lsp .. " " .. #activate_clients
 end
 
 ---This function gets the names of the active LSP clients for the current file.
 ---@return string lsp_names Returns a string with the names of the active servers for the file
-data_utilities.lsp_clients_by_typefile = function()
+M.lsp_clients_by_typefile = function()
     local client_names = {}
     local bufnr = vim.api.nvim_get_current_buf()
     local buf_ft = vim.api.nvim_buf_get_option(bufnr, 'filetype')
@@ -63,13 +65,14 @@ end
 
 ---This function displays a load style when there are no active LSP clients yet.
 ---@return string loader Returns a string symbolizing the load of the LSP clients
-data_utilities.lsp_status = function()
+M.lsp_status = function()
     local loading_chars = ICONS.spinner
     local message_text = "LSP"
     local lsp_status = vim.lsp.buf_get_clients()
 
     if next(lsp_status) == nil then
-        local current_char_index = math.floor(vim.fn.localtime() * 2) % #loading_chars + 1
+        local current_char_index = math.floor(vim.fn.localtime() * 2) %
+                                       #loading_chars + 1
         local loading_text = loading_chars[current_char_index]
         return loading_text .. " " .. message_text
     else
@@ -79,12 +82,9 @@ end
 
 ---This function obtains the current time
 ---@return string current_date Returns a string with the current time
-data_utilities.current_date = function()
-    return ICONS.time .. " " .. os.date("%R")
-end
+M.current_date = function() return ICONS.time .. " " .. os.date("%R") end
 
-
-data_utilities.neoformat_formatter = function()
+M.neoformat_formatter = function()
     local filetype = vim.bo.filetype
     local formatters = CODE_FORMATTERS
     local formatter_by_file = formatters[filetype]
@@ -97,7 +97,7 @@ data_utilities.neoformat_formatter = function()
     end
 end
 
-data_utilities.current_root = function()
+M.current_root = function()
     local max_lenght = 10
     local current_directory = vim.fn.getcwd()
     local root_folder_name = vim.fn.fnamemodify(current_directory, ":t")
@@ -107,12 +107,30 @@ data_utilities.current_root = function()
     return ICONS.cmp_path .. " " .. root_folder_name
 end
 
-data_utilities.get_filename = function()
+M.get_filename = function()
     local filename = vim.fn.expand('%:t')
     local extension = vim.fn.expand('%:e')
-    local icon = require 'nvim-web-devicons'.get_icon(filename, extension)
+    local icon = require'nvim-web-devicons'.get_icon(filename, extension)
     return icon .. ' ' .. filename
 end
 
+M.get_codeium_status = function()
+    if ENV.COPILOT_CODEIUM_IS_ACTIVATE then
+        return ICONS.cmp_codeium .. ' ' .. ENV.COPILOT_CODEIUM
+    else
+        return ''
+    end
+end
 
-_G.INFORMATION_UTILITIES = data_utilities
+M.get_supermaven_status = function()
+    local api = require("supermaven-nvim.api")
+    local is_running = api.is_running()
+    if is_running then
+        return ICONS.cmp_supermaven .. ' ' .. ENV.COPILOT_SUPERMAVEN
+    else
+        return ''
+    end
+
+end
+
+_G.INFORMATION_UTILITIES = M

@@ -40,32 +40,32 @@ return {
                 name = "Gitignore"
             },
             ['prettier.config.js'] = {
-                icon = '󰫽',
+                icon = '',
                 color = '#61affe',
                 name = 'PrettierConfigJS'
             },
             ['.prettierrc'] = {
-                icon = '󰫽',
+                icon = '',
                 color = '#61affe',
                 name = 'PrettierConfigRC'
             },
             ['.prettierrc.json'] = {
-                icon = '󰫽',
+                icon = '',
                 color = '#61affe',
                 name = 'PrettierConfigJSON'
             },
             ['.prettierrc.yml'] = {
-                icon = '󰫽',
+                icon = '',
                 color = '#61affe',
                 name = 'PrettierConfigYML'
             },
             ['.prettierrc.yaml'] = {
-                icon = '󰫽',
+                icon = '',
                 color = '#61affe',
                 name = 'PrettierConfigYAML'
             },
             ['.prettierrc.js'] = {
-                icon = '󰫽',
+                icon = '',
                 color = '#61affe',
                 name = 'PrettierConfigJS'
             },

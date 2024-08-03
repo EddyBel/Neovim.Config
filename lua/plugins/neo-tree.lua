@@ -9,16 +9,16 @@ return {
             's1n7ax/nvim-window-picker',
             version = '2.*',
             config = function()
-                require'window-picker'.setup({
+                require 'window-picker'.setup({
                     filter_rules = {
                         include_current_win = false,
                         autoselect_one = true,
                         -- filter using buffer options
                         bo = {
                             -- if the file type is one of following, the window will be ignored
-                            filetype = {'neo-tree', "neo-tree-popup", "notify"},
+                            filetype = { 'neo-tree', "neo-tree-popup", "notify" },
                             -- if the buffer type is one of following, the window will be ignored
-                            buftype = {'terminal', "quickfix"}
+                            buftype = { 'terminal', "quickfix" }
                         }
                     }
                 })
@@ -36,10 +36,10 @@ return {
             enable_diagnostics = true,
             -- open_files_do_not_replace_types = {"terminal", "trouble", "qf"} -- when opening files, do not use windows containing these filetypes or buftypes
             sort_case_insensitive = false,
-            neo_refres = true, -- used when sorting files and directories in the tree
+            neo_refres = true,   -- used when sorting files and directories in the tree
             sort_function = nil, -- use a custom function for sorting files and directories in the tree
             default_component_configs = {
-                container = {enable_character_fade = true},
+                container = { enable_character_fade = true },
                 indent = {
                     indent_size = 2,
                     padding = 1, -- extra padding on left hand side
@@ -73,10 +73,10 @@ return {
                 git_status = {
                     symbols = {
                         -- Change type
-                        added = TREE_SYMBOLS.added, -- or "✚", but this is redundant info if you use git_status_colors on the name
+                        added = TREE_SYMBOLS.added,       -- or "✚", but this is redundant info if you use git_status_colors on the name
                         modified = TREE_SYMBOLS.modified, -- or "", but this is redundant info if you use git_status_colors on the name
-                        deleted = TREE_SYMBOLS.deleted, -- this can only be used in the git_status source
-                        renamed = TREE_SYMBOLS.renamed, -- this can only be used in the git_status source
+                        deleted = TREE_SYMBOLS.deleted,   -- this can only be used in the git_status source
+                        renamed = TREE_SYMBOLS.renamed,   -- this can only be used in the git_status source
                         -- Status type
                         untracked = TREE_SYMBOLS.untracked,
                         ignored = TREE_SYMBOLS.ignored,
@@ -93,7 +93,7 @@ return {
             window = {
                 position = TREE_DIRECTION,
                 width = TREE_WIDTH,
-                mapping_options = {noremap = true, nowait = true},
+                mapping_options = { noremap = true, nowait = true },
                 mappings = {
                     ["<space>"] = {
                         "toggle_node",
@@ -102,7 +102,7 @@ return {
                     ["<2-LeftMouse>"] = "open",
                     ["<cr>"] = "open",
                     ["<esc>"] = "revert_preview",
-                    ["P"] = {"toggle_preview", config = {use_float = true}},
+                    ["P"] = { "toggle_preview", config = { use_float = true } },
                     ["l"] = "focus_preview",
                     ["S"] = "open_split",
                     ["s"] = "open_vsplit",
@@ -158,9 +158,11 @@ return {
                         -- ".null-ls_*",
                     }
                 },
-                follow_current_file = false, -- This will find and focus the file in the active buffer every
+                follow_current_file = {
+                    enable = false
+                },                                      -- This will find and focus the file in the active buffer every
                 -- time the current file is changed while the tree is open.
-                group_empty_dirs = false, -- when true, empty folders will be grouped together
+                group_empty_dirs = false,               -- when true, empty folders will be grouped together
                 hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
                 -- in whatever position is specified in window.position
                 -- "open_current",  -- netrw disabled, opening a directory opens within the
@@ -193,7 +195,9 @@ return {
                 commands = {} -- Add a custom command or override a global one using the same function name
             },
             buffers = {
-                follow_current_file = true, -- This will find and focus the file in the active buffer every
+                follow_current_file = {
+                    enable = true
+                },
                 -- time the current file is changed while the tree is open.
                 group_empty_dirs = true, -- when true, empty folders will be grouped together
                 show_unloaded = true,

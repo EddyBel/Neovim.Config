@@ -164,12 +164,10 @@ _G.KEYMAPS = {
     autocomplete_close = {{'i'}, '<Esc>', nil},
     -- Confirms the selected suggestion
     autocomplete_confirm = {{'i'}, '<Enter>', nil},
-    -- Confirms the selected suggestion for key secondary
-    autocomplete_confirm_secondary = {{'i'}, '<Tab>', nil},
     -- Move up in the menu
-    autocomplete_up_move = {{'i'}, '<Up>', nil},
+    autocomplete_up_move = {{'i'}, '<S-Tab>', nil},
     -- Move down in the menu
-    autocomplete_down_move = {{'i'}, '<Down>', nil},
+    autocomplete_down_move = {{'i'}, '<Tab>', nil},
     -- Move up in the documentation
     autocomplete_move_up_docs = {{'i'}, '<C-Up>', nil},
     -- Move down in the documentation

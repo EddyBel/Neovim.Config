@@ -1,14 +1,14 @@
-local optimizer = {}
+local M = {}
 
 local minutes = WAIT_MINUTES_TO_CLEAR_BUFFERS or 30 -- min
 local timer_convert = minutes * 60 * 1000
 
 -- Define la función
-optimizer.close_unneeded_buffers = function()
+M.close_unneeded_buffers = function()
     local current_buf = vim.api.nvim_get_current_buf()
     local buffers = vim.api.nvim_list_bufs()
     local closed_buffers_count = 0
-    local label = "Resource Optimizer"
+    local label = "Resource M"
 
     print("Clearing the buffers ...")
 
@@ -31,11 +31,11 @@ optimizer.close_unneeded_buffers = function()
     end
 end
 
-optimizer.save_and_close_unneeded_buffers = function()
+M.save_and_close_unneeded_buffers = function()
     local current_buf = vim.api.nvim_get_current_buf()
     local buffers = vim.api.nvim_list_bufs()
     local closed_buffers_count = 0
-    local label = "Resource Optimizer"
+    local label = "Resource M"
 
     print("Saving and clearing the buffers ...")
 
@@ -60,17 +60,21 @@ optimizer.save_and_close_unneeded_buffers = function()
     end
 end
 
-optimizer.remove_inactive_buffers = function(inactive_minutes)
+M.remove_inactive_buffers = function(inactive_minutes)
+    inactive_minutes = inactive_minutes or 30
     local current_time = os.time()
     local buffers = vim.api.nvim_list_bufs()
     local removed_buffers_count = 0
-    local label = "Resource Optimizer"
+    local label = "Resource M"
     local inactive_seconds = inactive_minutes * 60
 
     for _, buf in ipairs(buffers) do
         if vim.api.nvim_buf_is_loaded(buf) then
             local last_used = vim.fn.getbufvar(buf, "&lastused") or 0
-            if current_time - last_used > inactive_seconds then
+            -- Convertir last_used a número
+            last_used = tonumber(last_used)
+
+            if last_used and (current_time - last_used > inactive_seconds) then
                 vim.api.nvim_buf_delete(buf, {force = true})
                 removed_buffers_count = removed_buffers_count + 1
             end
@@ -85,7 +89,7 @@ optimizer.remove_inactive_buffers = function(inactive_minutes)
     end
 end
 
-optimizer.monitor_performance = function()
+M.monitor_performance = function()
     local memory_usage = collectgarbage("count")
     local label = "Resource Monitor"
 
@@ -101,19 +105,19 @@ end
 local function setup_timer()
     local timer = vim.loop.new_timer()
     timer:start(timer_convert, timer_convert,
-                vim.schedule_wrap(optimizer.close_unneeded_buffers))
+                vim.schedule_wrap(M.close_unneeded_buffers))
 end
 
 -- Ejecutar la configuración del temporizador al iniciar Neovim
 vim.api.nvim_create_autocmd("VimEnter", {callback = setup_timer})
 
 -- Exponer la función a comandos de Neovim
-_G.OPTIMIZER = optimizer
+_G.OPTIMIZE = M
 
-vim.cmd([[command! CleanAllBuffers lua OPTIMIZER.close_unneeded_buffers()]])
+vim.cmd([[command! CleanAllBuffers lua OPTIMIZE.close_unneeded_buffers()]])
 vim.cmd(
-    [[command! SaveAndCleanAllBuffers lua OPTIMIZER.save_and_close_unneeded_buffers()]])
-vim.cmd([[command! MonitorPerformance lua OPTIMIZER.monitor_performance()]])
+    [[command! SaveAndCleanAllBuffers lua OPTIMIZE.save_and_close_unneeded_buffers()]])
+vim.cmd([[command! MonitorPerformance lua OPTIMIZE.monitor_performance()]])
 vim.cmd(
-    [[command! RemoveInactiveBuffers lua OPTIMIZER.remove_inactive_buffers(30)]]) -- 30 minutos de inactividad
+    [[command! RemoveInactiveBuffers lua OPTIMIZE.remove_inactive_buffers(30)]]) -- 30 minutos de inactividad
 

@@ -10,6 +10,7 @@ require("utils.information_utilities")
 -- SETUPS AND KEYBOARD MAPPINGS
 require("config.keymaps")
 require("config.settings")
+require("config.commands")
 -- PERSONAL LIBRARIES
 require("lib.create_files")
 require("lib.execute_codes")

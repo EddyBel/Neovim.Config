@@ -27,9 +27,9 @@ return {
                     "jsonls",
                     "emmet_ls",
                     "html",
+                    "tailwindcss"
                     -- "rust_analyzer",
                     -- "clangd",
-                    -- "tailwindcss",
                     -- "bashls",
                     -- "vimls",
                     -- "dockerls",

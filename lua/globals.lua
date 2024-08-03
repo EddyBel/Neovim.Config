@@ -1,9 +1,16 @@
 ---This variable represents the welcome greeting to the editor
 _G.GRETING_MESSAGE = "✨ Hello! Welcome back 💻"
 ---This variable defines whether you want a transparent background in the editor.
-_G.BACKGROUND_TRANSPARENT = false
+_G.BACKGROUND_TRANSPARENT = true
 ---This variable represents the waiting time to automatically eliminate buffers that are no longer being used.
 _G.WAIT_MINUTES_TO_CLEAR_BUFFERS = 30 -- min
+
+---This variable defines the artificial intelligence assistant for code that will be used by the editor, it has multiple values
+-- - Codeium
+-- - Supermaven
+-- - Copilot
+-- - All -> To activate all assistants
+_G.COPILOT = "Supermaven"
 
 ---This variable is an object that indicates the properties that the status bar (lualine) can have.
 ---1. theme -> string
@@ -17,10 +24,14 @@ _G.WAIT_MINUTES_TO_CLEAR_BUFFERS = 30 -- min
 ---     - completed v2
 ---     - simple
 ---     - compact
+---Decorations suggestions
+--- 
+--- 
 _G.STATUSBAR = {
     theme = 'auto',
-    separator = {left = '', right = ''},
-    decorator = {left = '', right = ''}
+    type = "simple",
+    separator = { left = '', right = '' },
+    decorator = { left = '', right = '' }
 }
 
 ---This variable stores the front drawing ASCII that can be displayed when neovim is started.
@@ -40,7 +51,7 @@ _G.TODO_PATTERN = [[.*(KEYWORDS).*]]
 ---The sings property defines whether to use icons at the side of the comment.
 _G.TODO_ICONS = {
     signs = true, -- Defines whether icons will be used
-    type = "fg", -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty. (wide and wide_bg is the same as bg, but will also highlight surrounding characters, wide_fg acts accordingly but with fg)
+    type = "fg",  -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty. (wide and wide_bg is the same as bg, but will also highlight surrounding characters, wide_fg acts accordingly but with fg)
     fix = "",
     todo = "",
     hack = "󰈸",
@@ -74,8 +85,10 @@ _G.ICONS = {
     cmp_vsnip = "󰨞", -- Icon representing vsnip suggestions
     cmp_luasnip = "", -- Icon representing lua snippet suggestions
     cmp_db = "", -- Icon representing database suggestions
-    copilot = {enable = "", disable = "", warning = ""}, -- Icons representing the copilot status
-    git = {add = "", removed = "", modified = ""}, -- Icons indicating the status of git changes
+    cmp_codeium = "", -- Icon representing codeium artificial intelligence autocompletion
+    cmp_supermaven = "", -- Icon que representa a supermaven el asistente de inteligencia artificial
+    copilot = { enable = "", disable = "", warning = "" }, -- Icons representing the copilot status
+    git = { add = "", removed = "", modified = "" }, -- Icons indicating the status of git changes
     spinner = {
         "⠿", "⠞", "⠇", "⠑", "⠝", "⠞", "⠎", "⠕", "⠍", "⠑",
         "⠋"
@@ -155,13 +168,14 @@ _G.TREE_WIDTH = 35
 _G.TREE_DIRECTION = "left"
 
 ---This variable indicates whether there will be a virtual text in the code hints.
-_G.CMP_GHOST_TEXT = true
+_G.CMP_GHOST_TEXT = false
+---This variable decides if the cmp menu (code hints) will have a border.
+_G.CMP_BORDER = true
 
 ---This table contains the list of LSP clients to be installed automatically.
 _G.LSP_CLIENTS = {
     "lua_ls", "tsserver", "marksman", "pyright", "cssls", "jsonls", "emmet_ls",
-    "html"
-    -- "rust_analyzer",
+    "html" -- "rust_analyzer",
     -- "clangd",
     -- "tailwindcss",
     -- "bashls",
@@ -178,56 +192,56 @@ _G.LSP_CLIENTS = {
 _G.PARAMETER_HIGHLIGHTING = true
 
 ---This variable indicates which file types will be excluded from being formatted with neoformat and the default LSP formatting will be used.
-_G.EXCLUDE_FORMATTERS_FILES = {"lua", "vim", "vimscript"}
+_G.EXCLUDE_FORMATTERS_FILES = { "lua", "vim", "vimscript" }
 
 ---This variable indicates the order of the code formats to be used for each language.
 ---In this table you can easily configure the formatter.
 ---You can search the neoformat documentation: https://github.com/sbdchd/neoformat to find out which formatters are supported.
 _G.CODE_FORMATTERS = {
-    python = {'black'},
-    javascript = {'prettier'},
-    typescript = {'prettier'},
-    html = {'prettier'},
-    css = {'prettier'},
-    scss = {'prettier'},
-    javascriptreact = {'prettier'},
-    typescriptreact = {'prettier'},
-    json = {'prettier'},
-    markdown = {'prettier'},
-    xml = {'prettier'},
-    yaml = {'prettier'},
-    java = {'prettier'},
-    kotlin = {'prettier'},
-    less = {'prettier'},
-    php = {'prettier'},
-    astro = {'prettier'},
-    ruby = {'prettier'},
-    lua = {'luaformatter'},
-    cpp = {'clangformat'},
-    c = {'clangformat'},
-    csharp = {'clangformat'},
-    arduino = {'clangformat'},
-    objc = {'clangformat'},
-    go = {'gofmt'},
-    assembly = {'asmfmt'},
-    bazel = {'buildifier'},
-    cmake = {'cmake_format'},
-    csv = {'prettydiff'},
-    dart = {'dartfmt'},
-    erlang = {'erlfmt'},
-    graphql = {'prettier'},
-    toml = {'taplo'},
-    htmldjango = {'djlint'},
-    vue = {'prettier'},
-    swift = {'Swiftformat'},
-    sql = {'sqlfmt'},
-    rust = {'rustfmt'},
-    sass = {'stylelint'},
-    pug = {'pug-beautifier'},
-    zsh = {'shfmt'},
-    svelte = {'prettierd'},
-    ps1 = {'PSScriptAnalyzer'},
-    prisma = {'prettier'},
-    jsonc = {'prettier'},
-    blade = {'blade-formatter'}
+    python = { 'black' },
+    javascript = { 'prettier' },
+    typescript = { 'prettier' },
+    html = { 'prettier' },
+    css = { 'prettier' },
+    scss = { 'prettier' },
+    javascriptreact = { 'prettier' },
+    typescriptreact = { 'prettier' },
+    json = { 'prettier' },
+    markdown = { 'prettier' },
+    xml = { 'prettier' },
+    yaml = { 'prettier' },
+    java = { 'prettier' },
+    kotlin = { 'prettier' },
+    less = { 'prettier' },
+    php = { 'prettier' },
+    astro = { 'prettier' },
+    ruby = { 'prettier' },
+    lua = { 'luaformatter' },
+    cpp = { 'clangformat' },
+    c = { 'clangformat' },
+    csharp = { 'clangformat' },
+    arduino = { 'clangformat' },
+    objc = { 'clangformat' },
+    go = { 'gofmt' },
+    assembly = { 'asmfmt' },
+    bazel = { 'buildifier' },
+    cmake = { 'cmake_format' },
+    csv = { 'prettydiff' },
+    dart = { 'dartfmt' },
+    erlang = { 'erlfmt' },
+    graphql = { 'prettier' },
+    toml = { 'taplo' },
+    htmldjango = { 'djlint' },
+    vue = { 'prettier' },
+    swift = { 'Swiftformat' },
+    sql = { 'sqlfmt' },
+    rust = { 'rustfmt' },
+    sass = { 'stylelint' },
+    pug = { 'pug-beautifier' },
+    zsh = { 'shfmt' },
+    svelte = { 'prettierd' },
+    ps1 = { 'PSScriptAnalyzer' },
+    prisma = { 'prettier' },
+    jsonc = { 'prettier' },
+    blade = { 'blade-formatter' }
 }
