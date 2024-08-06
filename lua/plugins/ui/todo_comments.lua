@@ -1,3 +1,7 @@
+local globals = require("globals")
+local TODO_ICONS = globals.TODO_ICONS
+local TODO_PATTERN = globals.TODO_PATTERN
+
 return {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim", },

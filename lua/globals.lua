@@ -1,16 +1,56 @@
+local M = {}
+
 ---This variable represents the welcome greeting to the editor
-_G.GRETING_MESSAGE = "✨ Hello! Welcome back 💻"
+M.GRETING_MESSAGE = "✨ Hello! Welcome back 💻"
+
 ---This variable defines whether you want a transparent background in the editor.
-_G.BACKGROUND_TRANSPARENT = true
----This variable represents the waiting time to automatically eliminate buffers that are no longer being used.
-_G.WAIT_MINUTES_TO_CLEAR_BUFFERS = 30 -- min
+M.BACKGROUND_TRANSPARENT = false
+---This variable defines the theme of the editor.
+---1. catppuccin
+---2. catppuccin-latte
+---3. catppuccin-frappe
+---4. catppuccin-macchiato
+---5. catppuccin-mocha
+---6. kanagawa
+---7. kanagawa-wave
+---8. kanagawa-lotus
+---9. kanagawa-dragon
+---10. rose-pine
+---11. rose-pine-main
+---12. rose-pine-moon
+---13. rose-pine-dawn
+---14. tokyonight
+---15. tokyonight-night
+---16. tokyonight-storm
+---17. tokyonight-day
+---18. tokyonight-moon
+---19. gruvbox
+---20. everforest
+---21. nord
+M.THEME = "catppuccin-mocha"
+
+
+-- Configurations for the optimization libreries -------------------------------
+
+---This variable defines the mode of optimization for cleaning buffers.
+---1. timer -> It will clean the buffers every X minutes.
+---2. limit -> It will clean the buffers when the number of buffers reaches a certain limit.
+---3  max -> It will clean the buffers when the number of buffers reaches the maximum limit.
+---3  manual -> It will clean the buffers manually.
+M.OPTIMIZE_CLEAN_BUFFERS_MODE = "timer"
+M.OPTIMIZE_CLEAN_BUFFERS_TIMER = 30  -- min
+M.OPTIMIZE_CLEAN_BUFFERS_LIMIT = 100 -- limit of buffers
+M.OPTIMIZE_CLEAN_BUFFERS_MAX = 100   -- max limit of buffers
 
 ---This variable defines the artificial intelligence assistant for code that will be used by the editor, it has multiple values
 -- - Codeium
 -- - Supermaven
 -- - Copilot
--- - All -> To activate all assistants
-_G.COPILOT = "Supermaven"
+M.COPILOT = "Supermaven"
+---This variable indicates whether you want to use the copilot in the code hints.
+M.COPILOT_IN_CMP = false
+---This variable indicates whether you want to use the copilot in the code hints.
+M.COPILOT_IN_LINE = true
 
 ---This variable is an object that indicates the properties that the status bar (lualine) can have.
 ---1. theme -> string
@@ -27,16 +67,34 @@ _G.COPILOT = "Supermaven"
 ---Decorations suggestions
 --- 
 --- 
-_G.STATUSBAR = {
+M.STATUSBAR = {
     theme = 'auto',
     type = "simple",
     separator = { left = '', right = '' },
-    decorator = { left = '', right = '' }
+    decorator = { left = '', right = '' },
+    information = {
+        lsp_clients_names = false,
+        lsp_clients_number = true,
+        lsp_formatter = true,
+        assistant = true
+    }
+}
+
+M.FILEBAR = {
+    enabled = true,
+    divider = "┊",
+    indicator = {
+        file_modified = "●",
+        file_saved = "",
+        file_icon_not_found = "󰧮",
+        file_name_not_found = "[No Name]",
+        buffer_window_index = ""
+    }
 }
 
 ---This variable stores the front drawing ASCII that can be displayed when neovim is started.
 ---It is imported from the drawing file saved in the neovim configuration.
-_G.ALPHA = require("utils.drawings").min_hydra
+M.ALPHA = require("utils.drawings").min_kali
 
 ---This variable defines the search pattern to search ALL in the code.
 ---
@@ -45,11 +103,11 @@ _G.ALPHA = require("utils.drawings").min_hydra
 ---2. [[.*<(KEYWORDS)\s*:]] => <TODO:
 ---3. [[.*\s(KEYWORDS)\s*]] =>  TODO (TODO with a space before)
 ---4. [[.*(KEYWORDS)*:]] => TODO:
-_G.TODO_PATTERN = [[.*(KEYWORDS).*]]
+M.TODO_PATTERN = [[.*(KEYWORDS).*]]
 
 ---This object defines the icons that will be used by the comments throughout the code.
 ---The sings property defines whether to use icons at the side of the comment.
-_G.TODO_ICONS = {
+M.TODO_ICONS = {
     signs = true, -- Defines whether icons will be used
     type = "fg",  -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty. (wide and wide_bg is the same as bg, but will also highlight surrounding characters, wide_fg acts accordingly but with fg)
     fix = "",
@@ -78,6 +136,7 @@ _G.ICONS = {
     time = '󱑃', --  Icon representing each operating system
     formatter = "", -- Icon representing code formatter
     lsp = "", -- Icon representing LSP clients
+    cmp_machine_learning = "󰫢", -- Icon representing codeium artificial intelligence autocompletion
     cmp_buffer = "", -- Icon representing Buffer suggestions
     cmp_lua = "", -- Icon that represents the suggestions of lua
     cmp_path = "", -- Icon representing route suggestions
@@ -119,7 +178,7 @@ _G.ICONS = {
 ---related to Git version control. Each key in the dictionary represents
 ---a symbolic name associated with a specific icon, and the associated
 ---value is the character representing that icon.
-_G.GIT_SYMBOLS = {
+M.GIT_SYMBOLS = {
     add = '│',
     change = '│',
     delete = '',
@@ -129,7 +188,7 @@ _G.GIT_SYMBOLS = {
 }
 
 ---This variabel indicates if you want to show information of the last commit in each line of the editor.
-_G.GIT_INFO = true
+M.GIT_INFO = true
 
 ---G.TREE_SYMBOLS is a dictionary containing various symbols used in a context
 ---related to the visual representation of a hierarchical structure, such as a
@@ -168,16 +227,33 @@ _G.TREE_WIDTH = 35
 _G.TREE_DIRECTION = "left"
 
 ---This variable indicates whether there will be a virtual text in the code hints.
-_G.CMP_GHOST_TEXT = false
+M.CMP_GHOST_TEXT = false
 ---This variable decides if the cmp menu (code hints) will have a border.
-_G.CMP_BORDER = true
+M.CMP_BORDER = true
+---This variable indicates the type of border to be used in the code hints.
+---1.default
+---2 classic
+---3 japan
+---4 notebook
+---5 box
+---6 window
+---7 notes
+---8 solid
+---9 fill
+---10 modern
+---11 braille
+---12 braille_v2
+---13 cyber
+---14 pixel
+---15 pixel2
+M.CMP_BORDER_TYPE = "japan"
 
 ---This table contains the list of LSP clients to be installed automatically.
 _G.LSP_CLIENTS = {
     "lua_ls", "tsserver", "marksman", "pyright", "cssls", "jsonls", "emmet_ls",
-    "html" -- "rust_analyzer",
+    "tailwindcss", "html"
+    -- "rust_analyzer",
     -- "clangd",
-    -- "tailwindcss",
     -- "bashls",
     -- "vimls",
     -- "dockerls",
@@ -245,3 +321,7 @@ _G.CODE_FORMATTERS = {
     jsonc = { 'prettier' },
     blade = { 'blade-formatter' }
 }
+
+_G.GLOBALS = M
+
+return M

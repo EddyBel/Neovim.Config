@@ -1,6 +1,17 @@
+local globals = require("globals")
+local STATUSBAR = globals.STATUSBAR
+
 return {
     'nvim-lualine/lualine.nvim',
     config = function()
+        local information = STATUSBAR.information
+        local lualine_a = {}
+        local lualine_b = {}
+        local lualine_c = {}
+        local lualine_x = {}
+        local lualine_y = {}
+        local lualine_z = {}
+
         local diagnostic = {
             'diagnostics',
             symbols = {
@@ -29,8 +40,33 @@ return {
         }
 
         local location = { "location" }
-
         local progress = { "progress" }
+
+        --- Add information to the lualine_x
+
+        if information.lsp_clients_names then
+            table.insert(lualine_x, INFORMATION_UTILITIES.lsp_clients_by_typefile)
+        end
+
+        if information.lsp_formatter then
+            table.insert(lualine_x, INFORMATION_UTILITIES.neoformat_formatter)
+        end
+
+        table.insert(lualine_x, diagnostic)
+
+        --- Add information to the lualine_y
+
+        if information.assistant then
+            table.insert(lualine_y, INFORMATION_UTILITIES.get_codeium_status)
+            table.insert(lualine_y, INFORMATION_UTILITIES.get_supermaven_status)
+        end
+
+        if information.lsp_clients_number then
+            table.insert(lualine_y, INFORMATION_UTILITIES.number_lsp_clients)
+        end
+
+        table.insert(lualine_y, progress)
+
 
         require("lualine").setup({
             options = {
@@ -49,15 +85,8 @@ return {
                 lualine_a = { 'mode' },
                 lualine_b = { INFORMATION_UTILITIES.get_filename },
                 lualine_c = { branch },
-                lualine_x = {
-                    INFORMATION_UTILITIES.lsp_clients_by_typefile,
-                    INFORMATION_UTILITIES.neoformat_formatter, diagnostic
-                },
-                lualine_y = {
-                    INFORMATION_UTILITIES.get_codeium_status,
-                    INFORMATION_UTILITIES.get_supermaven_status,
-                    INFORMATION_UTILITIES.number_lsp_clients, progress
-                },
+                lualine_x = lualine_x,
+                lualine_y = lualine_y,
                 lualine_z = { INFORMATION_UTILITIES.get_system_icon }
             },
             tabline = {},

@@ -10,7 +10,7 @@ M.MACOS = "Darwin"
 ---This variable stores the name of the operating system where neovim is running.
 ---Return OS string Returns the name of the operating system Windows, Linux or MacOS, if not identified returns Unknown
 M.OS = (vim.fn.has("win32") == 1) and M.WINDOWS or (vim.fn.has("unix") == 1) and
-           M.LINUX or (vim.fn.has("mac") == 1) and M.MACOS or "Unknown"
+    M.LINUX or (vim.fn.has("mac") == 1) and M.MACOS or "Unknown"
 
 -- This code snippet gets the name of the Linux distribution in case you are using Linux
 if M.OS == M.LINUX then
@@ -49,5 +49,11 @@ M.COPILOT_CODEIUM = "Codeium"
 M.COPILOT_SUPERMAVEN = "Supermaven"
 M.COPILOT_GITHUB_COPILOT = "Copilot"
 M.COPILOT_CODEIUM_IS_ACTIVATE = false
+
+
+--- VARIABLES DINAMICS
+
+---This variable stores the number of buffers opened in the current session
+M.NUMBER_OPEN_BUFFERS = 0
 
 _G.ENV = M

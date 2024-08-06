@@ -1,187 +1,122 @@
-_G.KEYMAPS = {
-    --  Clears whatever the Visial-vim plugin does.
-    escape = {{'i', 'n'}, "<Esc>", "<Esc><cmd>:VMClear <BAR> :nohl <CR>"},
-    -- Close the buffer
-    close = {{'n'}, 'q', "<cmd>:q<CR>"},
-    -- Force the buffer to close
-    close_force = {{'n'}, '<leader>qq', "<cmd>:q!<CR>"},
+vim.g.mapleader = ',' -- Defines the leader key of neovim
+local M = {}
+local opts = { noremap = true, silent = true }
 
-    ------------------------------> KEYBOARD SHORTCUTS FOR TEXT MANIPULATION <-----------------------------------------------
+-------------- keymaps form basic commands ----------------
+vim.keymap.set({ 'i', 'n' }, "<Esc>", "<Esc><cmd>:VMClear <BAR> :nohl <CR>", opts)          -- Clears whatever the Visial-vim plugin does.
+vim.keymap.set('n', 'q', "<cmd>:q<CR>", opts)                                               -- Close the buffer
+vim.keymap.set('n', '<leader>qq', "<cmd>:q!<CR>", opts)                                     -- Force the buffer to close
+vim.keymap.set('v', '<C-c>', 'y', opts)                                                     -- Copy to document
+vim.keymap.set('v', '<C-v>', '<Esc>pi', opts)                                               -- Paste into document
+vim.keymap.set('v', '<C-x>', 'd', opts)                                                     -- Cut text
+vim.keymap.set('n', '<C-a>', '<Esc>gg0vG$', opts)                                           -- Select all text in document
+vim.keymap.set('n', '<S-Down>', 'yyp', opts)                                                -- Copy the line at the bottom of the document
+vim.keymap.set('n', '<A-Down>', '<cmd>:m+1<CR>', opts)                                      -- Moves the line to the bottom of the following line
+vim.keymap.set('n', '<A-Up>', '<cmd>:m-2<CR>', opts)                                        -- Move line to top of next line
+vim.keymap.set({ 'n', 'i' }, '<C-z>', '<cmd>:undo<CR>', opts)                               -- Undo the changes
+vim.keymap.set('n', '<C-y>', '<cmd>:redo<CR>', opts)                                        -- Rebuild changes
+vim.keymap.set('n', '<C-p>', '<cmd>:CommentToggle<CR>', opts)                               -- Comment out the line where you are located
+vim.keymap.set('n', '<C-p>', '<cmd>:CommentToggle<CR>', opts)                               -- Comment all selected lines (Visual)
+vim.keymap.set({ 'n', 'i' }, '<C-s>', "<cmd>:w<CR>", opts)                                  -- Save the buffer
+vim.keymap.set({ 'n', 'i' }, '<Space>wp', "<cmd>bprevious<CR>", opts)                       -- Move to previous buffer (left)
+vim.keymap.set({ 'n', 'i' }, '<Space>wn', "<cmd>bnext<CR>", opts)                           -- Move to the next buffer (right)
+vim.keymap.set({ 'n', 'i' }, '<C-f>', "<Esc>/", opts)                                       -- Searches for a word in the buffer
+vim.keymap.set({ 'n', 'i' }, '<C-h>', [[<cmd>lua require("tmux").move_left()<cr>]], opts)   -- Move cursor to the left window
+vim.keymap.set({ 'n', 'i' }, '<C-j>', [[<cmd>lua require("tmux").move_bottom()<cr>]], opts) -- Move cursor to the down window
+vim.keymap.set({ 'n', 'i' }, '<C-k>', [[<cmd>lua require("tmux").move_top()<cr>]], opts)    -- Move cursor to the up window
+vim.keymap.set({ 'n', 'i' }, '<C-l>', [[<cmd>lua require("tmux").move_right()<cr>]], opts)  -- Move cursor to the right window
+vim.keymap.set({ 'n' }, '<Space>wc', "<cmd>:bdelete<CR>", opts)                             -- Close the tab or buffer you are in.
+vim.keymap.set({ 'n' }, '<Space>wv', "<cmd>:vsplit<CR>", opts)                              -- Open new window with current buffer
+vim.keymap.set({ 'n' }, '<Space>wh', "<cmd>:split<CR>", opts)                               -- Open new window with current buffer
 
-    -- Copy to document
-    copy = {{'v'}, '<C-c>', 'y'},
-    -- Paste into document
-    paste = {{'i'}, '<C-v>', '<Esc>pi'},
-    -- Cut text
-    cut = {{'v'}, '<C-x>', 'd'},
-    -- Select all text in document
-    select_all = {{'n', 'v'}, '<C-a>', '<Esc>gg0vG$'},
-    -- Copy the line at the bottom of the document
-    copy_down_line = {{'n'}, '<S-Down>', 'yyp'},
-    -- Moves the line to the bottom of the following line
-    move_down_line = {{'n'}, '<A-Down>', '<cmd>:m+1<CR>'},
-    -- Move line to top of next line
-    mode_up_line = {{'n'}, '<A-Up>', '<cmd>:m-2<CR>'},
-    -- Undo the changes
-    undo_change = {{'n', 'i'}, '<C-z>', '<cmd>:undo<CR>'},
-    -- Rebuild changes
-    rebuild_change = {{'n', 'i'}, '<C-y>', '<cmd>:redo<CR>'},
-    -- Comment out the line where you are located
-    comment_line = {{'n', 'i'}, '<C-p>', '<cmd>:CommentToggle<CR>'},
-    -- Comment all selected lines (Visual)
-    cooment_lines = {{'v'}, '<C-p>', '<S-:>CommentToggle<CR>'},
+-------------- Keymaps form terminal commands ----------------
+vim.api.nvim_set_keymap('t', '<C-n>', [[<C-\><C-n>]], opts)                            -- Opens terminal in floating modes
+vim.keymap.set({ 'n' }, '<leader>tc', '<cmd>:ToggleTerm<CR>', opts)                    -- Opens terminal in floating modes
+vim.keymap.set({ 'n' }, '<leader>tv', '<cmd>:botright vnew <BAR> :terminal<CR>', opts) -- Opens terminal on the right side
+vim.keymap.set({ 'n' }, '<leader>th', '<cmd>:botright new <BAR> :terminal<CR>', opts)  -- Opens terminal on the bottom side
 
-    ------------------------------> KEYBOARD SHORTCUTS FOR FILES AND BUFFERS <-----------------------------------------------
+-------------- Keymaps form utils commands ----------------
+-- vim.keymap.set('n', '<Space>z', '<cmd>ZenModeToggle<CR>', opts) --- Enables the Zen Mode
 
-    -- Save the buffer
-    save = {{'n', 'i'}, '<C-s>', "<cmd>:w<CR>"},
-    -- Move cursor to the left window
-    move_left_window = {{'n', 'i'}, '<C-h>', "<cmd>:wincmd h<CR>"},
-    -- Move cursor to the right window
-    move_right_window = {{'n', 'i'}, '<C-l>', "<cmd>:wincmd l<CR>"},
-    -- Move cursor to the up window
-    move_up_window = {{'n', 'i'}, '<C-k>', "<cmd>:wincmd k<CR>"},
-    -- Move cursor to the down window
-    move_down_window = {{'n', 'i'}, '<C-j>', "<cmd>:wincmd j<CR>"},
-    -- Move to previous buffer (left)
-    move_previous_buffer = {{'n'}, '<C-h><C-h>', "<cmd>:bprevious<CR>"},
-    -- Move to the next buffer (right)
-    move_next_buffer = {{'n'}, '<C-l><C-l>', "<cmd>:bnext<CR>"},
-    -- Close the tab or buffer you are in.
-    close_buffer = {{'n'}, '<C-q>', "<cmd>:Bdelete<CR>"},
-    -- Open new window with current buffer
-    new_right_window = {{'n'}, '<leader>nr', "<cmd>:vsplit<CR>"},
-    -- Open new window with current buffer
-    new_bottom_window = {{'n'}, '<leader>nb', "<cmd>:split<CR>"},
-    -- Searches for a word in the buffer
-    search_buffer = {{'n', 'i'}, '<C-f>', "<Esc>/"},
+-------------- Keymaps form files and buffers telescope commands ----------------
+vim.keymap.set({ 'n', 'i' }, '<C-b>', "<Esc><cmd>Neotree toggle<CR>", opts)                                              -- Opens file tree
+vim.keymap.set({ 'n' }, '<Space>te', '<cmd>Telescope diagnostics<CR>', opts)                                             -- Displays all alerts found in the buffer
+vim.keymap.set({ 'n' }, '<Space>tb', '<cmd>Telescope buffers<CR>', opts)                                                 -- Show files and their documents
+vim.keymap.set({ 'n' }, '<Space>th', '<cmd>Telescope help_tags<CR>', opts)                                               -- Show help about plugins
+vim.keymap.set({ 'n' }, '<Space>thh', '<cmd>Telescope colorscheme<CR>', opts)                                            -- Show list of available themes
+vim.keymap.set({ 'n' }, '<Space>tgc', '<cmd>Telescope git_commits<CR>', opts)                                            -- Show list of available commits
+vim.keymap.set({ 'n' }, '<Space>tgs', '<cmd>Telescope git_status<CR>', opts)                                             -- Show available project statuses
+vim.keymap.set({ 'n' }, '<Space>tgf', '<cmd>Telescope git_files<CR>', opts)                                              -- Show list of available git files
+vim.keymap.set({ 'n' }, '<Space>tgb', '<cmd>Telescope git_branches<CR>', opts)                                           -- Show list of available branches
+vim.keymap.set({ 'n' }, '<Space>tc', '<cmd>TodoTelescope<CR>', opts)                                                     -- Show list of todo comments
+vim.keymap.set("n", "<Space>tt", '<cmd>TodoTelescope<CR>', opts)                                                         -- Show list of todo comments
+vim.keymap.set('n', '<Space>ff', '<cmd>Telescope find_files<CR>', opts)                                                  -- Displays all files in the document
+vim.keymap.set("n", ';;', [[<cmd>lua require("telescope.builtin").resume()<CR>]], opts)                                  -- Recuperate last search
+vim.keymap.set('n', '<Space>fd', [[<cmd>lua require("telescope.builtin").diagnostics()<CR>]], opts)                      -- Displays all files in the document
+vim.keymap.set("n", "<Space>fg", [[<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>]], opts) -- Displays all files in the document
 
-    ------------------------------------> KEYBOARD SHORTCUTS FOR TERMINAL <---------------------------------------------------
+-------------- Keymaps form Explorer commands ----------------
+vim.keymap.set("n", "-", "<CMD>Oil<CR>", opts)                                                            -- Open parent directory
+M.oil_show_help = { { 'n' }, '<Space>eh', ':Oil actions.show_help<CR>', opts }                            -- Show help
+M.oil_select = { { 'n' }, '<CR>', ':Oil actions.select<CR>', opts }                                       -- Select entry
+M.oil_select_vertical = { { 'n' }, '<Space>ev', ':Oil actions.select { vertical = true }<CR>', opts }     -- Open in vertical split
+M.oil_select_horizontal = { { 'n' }, '<Space>es', ':Oil actions.select { horizontal = true }<CR>', opts } -- Open in horizontal split
+M.oil_select_tab = { { 'n' }, '<Space>et', ':Oil actions.select { tab = true }<CR>', opts }               -- Open in new tab
+M.oil_preview = { { 'n' }, '<Space>ep', ':Oil actions.preview<CR>', opts }                                -- Preview entry
+M.oil_close = { { 'n' }, '<Space>ec', ':Oil actions.close<CR>', opts }                                    -- Close oil.nvim
+M.oil_refresh = { { 'n' }, '<Space>el', ':Oil actions.refresh<CR>', opts }                                -- Refresh oil.nvim
+M.oil_parent = { { 'n' }, '<Space>e-', ':Oil actions.parent<CR>', opts }                                  -- Go to parent directory
+M.oil_open_cwd = { { 'n' }, '<Space>eo', ':Oil actions.open_cwd<CR>', opts }                              -- Open current working directory
+M.oil_cd = { { 'n' }, '<Space>e`', ':Oil actions.cd<CR>', opts }                                          -- Change directory
+M.oil_cd_tab = { { 'n' }, '<Space>e~', ':Oil actions.cd { scope = "tab" }<CR>', opts }                    -- Change directory for tab
+M.oil_change_sort = { { 'n' }, '<Space>es', ':Oil actions.change_sort<CR>', opts }                        -- Change sort
+M.oil_open_external = { { 'n' }, '<Space>ex', ':Oil actions.open_external<CR>', opts }                    -- Open externally
+M.oil_toggle_hidden = { { 'n' }, '<Space>e.', ':Oil actions.toggle_hidden<CR>', opts }                    -- Toggle hidden files
+M.oil_toggle_trash = { { 'n' }, '<Space>e\\', ':Oil actions.toggle_trash<CR>', opts }                     -- Toggle trash
 
-    -- Opens terminal in floating modes
-    open_terminal = {{'n'}, '<leader>t', '<cmd>:ToggleTerm<CR>'},
-    -- Opens terminal on the right side
-    open_rigth_terminal = {
-        {'n'}, '<leader>tr', '<cmd>:botright vnew <BAR> :terminal<CR>'
-    },
-    -- Opens terminal on the bottom side
-    open_bottom_terminal = {
-        {'n'}, '<leader>tb', '<cmd>:botright new <BAR> :terminal<CR>'
-    },
+-------------- Keymaps form git commands ----------------
+vim.keymap.set({ 'n' }, '<Space>ggg', '<cmd>Gitsigns toggle_current_line_blame<CR>', opts) -- Displays inline changes made to the file.
 
-    ------------------------------------> KEYBOARD SHORTCUTS FOR FILE MANAGER <---------------------------------------------------
+-------------- Keymaps form preview code commands ----------------
+vim.keymap.set({ 'n' }, '<leader>pm', '<cmd>:MarkdownPreviewToggle<CR>', opts) -- Opens the markdown previewer
+vim.keymap.set({ 'n' }, '<leader>ph', '<cmd>:OpenHTML<CR>', opts)              -- Opens the markdown previewer
+vim.keymap.set({ 'n' }, '<leader>pp', '<cmd>:RunPython<CR>', opts)             -- Runs a Python script
+vim.keymap.set({ 'n' }, '<leader>pcpp', '<cmd>:RunCPP<CR>', opts)              -- Run a C++ script
+vim.keymap.set({ 'n' }, '<leader>pc', '<cmd>:RunC<CR>', opts)                  -- Run a C script
+vim.keymap.set({ 'n' }, '<leader>pjs', '<cmd>:RunJavascript<CR>', opts)        -- Runs a JavaScript script
+vim.keymap.set({ 'n' }, '<leader>pts', '<cmd>:RunTypescript<CR>', opts)        -- Run a TypeScript script
+vim.keymap.set({ 'n' }, '<leader>pscs', '<cmd>:RunScss<CR>', opts)             -- Runs a Sass script
+vim.keymap.set({ 'n' }, '<leader>pgo', '<cmd>:RunGo<CR>', opts)                -- Runs a Go script
 
-    -- Opens file tree
-    open_file_manager = {{'n', 'i'}, '<C-b>', '<Esc><cmd>:Neotree toggle<CR>'},
-    -- Displays all files in the document
-    telescope_files = {{'n'}, '<leader>ff', '<cmd>Telescope fd<CR>'},
-    -- Displays all alerts found in the buffer
-    telescope_diagnostics = {
-        {'n'}, '<leader>fe', '<cmd>Telescope diagnostics<CR>'
-    },
-    -- Show files and their documents
-    telescope_buffers = {{'n'}, '<leader>fb', '<cmd>Telescope buffers<CR>'},
-    -- Show help about plugins
-    telescope_helps = {{'n'}, '<leader>fh', '<cmd>Telescope help_tags<CR>'},
-    -- Show list of available themes
-    telescope_themes = {{'n'}, '<leader>hh', '<cmd>Telescope colorscheme<CR>'},
-    -- Show list of available commits
-    telescope_commits = {{'n'}, '<leader>gc', '<cmd>Telescope git_commits<CR>'},
-    -- Show available project statuses
-    telescope_status = {{'n'}, '<leader>gs', '<cmd>Telescope git_status<CR>'},
-    -- Show list of available git files
-    telescope_gitfiles = {{'n'}, '<leader>gf', '<cmd>Telescope git_files<CR>'},
-    -- Show list of available branches
-    telescope_branches = {
-        {'n'}, '<leader>gb', '<cmd>Telescope git_branches<CR>'
-    },
-    -- Show list of todo comments
-    telescope_todos_comments = {{'n'}, '<leader>tc', '<cmd>TodoTelescope<CR>'},
+-------------- Keymaps form LSP commands ----------------
+vim.keymap.set('n', '<leader>f', validates_the_code_formatting_type, opts)                     -- Format the documents
+vim.keymap.set('n', '<leader>ff', '<cmd>lua vim.lsp.buf.format()<CR>', opts)                   -- Force Format the documents
+vim.api.nvim_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)                    -- Show code information
+vim.api.nvim_set_keymap('n', '<Tab>', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)                -- Show code information
+vim.api.nvim_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)              -- Go to method definition
+vim.api.nvim_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)             -- Go to method declaration
+vim.api.nvim_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)          -- Go to method implementation
+vim.api.nvim_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)              -- Go to method references
+vim.keymap.set({ 'n', 'i' }, '<C-RightMouse>', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)  -- Go to method definition
+vim.keymap.set({ 'n' }, 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)                  -- Open in a floating window the error diagnostics
+vim.keymap.set({ 'n' }, '<C-d>',
+    function() vim.diagnostic.open_float(0, { scope = "line", border = "rounded" }) end, opts) -- Show code information
 
-    ------------------------------------> KEYBOARD SHORTCUTS FOR GIT <---------------------------------------------------
+-------------- Keymaps form CMP commands ----------------
+M.cmp_autocomplete_open_linux = { { 'i' }, '<C-Space>', nil }    -- Opens the autocomplete menu Linux and MacOS
+M.cmp_autocomplete_open_windows = { { 'i' }, '<C-n>', nil }      -- Opens the autocomplete menu Windows
+M.cmp_autocomplete_open_macos = { { 'i' }, '<C-Space>', nil }    -- Opens the autocomplete menu Linux and MacOS
+M.cmp_autocomplete_close = { { 'i' }, '<Esc>', nil }             -- Closes the autocomplete
+M.cmp_autocomplete_confirm = { { 'i' }, '<Enter>', nil }         -- Confirms the selected suggestion
+M.cmp_autocomplete_up_move = { { 'i' }, '<S-Tab>', nil }         -- Move up in the menu
+M.cmp_autocomplete_down_move = { { 'i' }, '<Tab>', nil }         -- Move up in the documentation
+M.cmp_autocomplete_move_up_docs = { { 'i' }, '<C-Up>', nil }     -- Move up in the documentation
+M.cmp_autocomplete_move_down_docs = { { 'i' }, '<C-Down>', nil } -- Move down in the documentation
 
-    -- Displays inline changes made to the file.
-    gitsigns_toggle_line_blame = {
-        {'n'}, '<C-g>', '<cmd>:Gitsigns toggle_current_line_blame<CR>'
-    },
+-------------- Keymaps form Machine Learnings Assistant commands ----------------
+M.assistant_accept_suggestion = { { 'i' }, '<Tab>', nil } -- Accept the selected suggestion
+M.assistant_clear_suggestion = { { 'i' }, '<C-]>', nil }  -- Clear the suggestion
+M.assistant_accept_word = { { 'i' }, '<C-j>', nil }       -- Accept the word
 
-    ------------------------> KEYBOARD SHORTCUTS FOR EXECUTING AND COMPILING CODE <---------------------------------------------------
-
-    -- Opens the markdown previewer
-    markdown_preview = {{'n'}, '<leader>mp', '<cmd>:MarkdownPreviewToggle<CR>'},
-    -- Opens the markdown previewer
-    open_html = {{'n'}, '<leader>oh', '<cmd>:OpenHTML<CR>'},
-    -- Runs a Python script
-    run_python = {{'n'}, '<leader>rp', '<cmd>:RunPython<CR>'},
-    -- Run a C++ script
-    run_cpp = {{'n'}, '<leader>rcpp', '<cmd>:RunCPP<CR>'},
-    -- Run a C script
-    run_c = {{'n'}, '<leader>rc', '<cmd>:RunC<CR>'},
-    -- Runs a JavaScript script
-    run_javascript = {{'n'}, '<leader>rjs', '<cmd>:RunJavascript<CR>'},
-    -- Run a TypeScript script
-    run_typescript = {{'n'}, '<leader>rts', '<cmd>:RunTypescript<CR>'},
-    -- Runs a Sass script
-    run_scss = {{'n'}, '<leader>rscs', '<cmd>:RunScss<CR>'},
-    -- Runs a Go script
-    run_go = {{'n'}, '<leader>rgo', '<cmd>:RunGo<CR>'},
-
-    -------------------------> KEYBOARD SHORTCUTS FOR LSP CLIENTS <---------------------------------------------------
-
-    -- Uses neoformat to format the code
-    format_code = {{'n', 'i'}, '<S-A-f>', validates_the_code_formatting_type},
-    -- Format the documents
-    format_code_force = {{'n'}, '<S-A-f>f', vim.lsp.buf.format},
-    -- Show code information
-    show_information = {{'n', 'i'}, '<C-S-Space>', vim.lsp.buf.hover},
-    show_information_secondary = {{'n'}, '<Tab>', vim.lsp.buf.hover},
-    -- Go to method definition
-    move_definition = {{'n'}, '<C-d>', vim.lsp.buf.definition},
-    -- Go to method definition
-    move_definition_mouse = {{'n'}, '<C-RightMouse>', vim.lsp.buf.definition},
-    -- Go to code action
-    code_actions = {{'n'}, '<C-S-o>', vim.lsp.buf.code_action},
-    -- Open in a floating window the error diagnostics
-    show_diagnostic = {
-        {'n'}, '<C-S-M>', function()
-            vim.diagnostic.open_float(0, {scope = "line", border = "rounded"})
-        end
-    },
-    show_diagnostic_secondary = {
-        {'n'}, '<C-e>', function()
-            vim.diagnostic.open_float(0, {scope = "line", border = "rounded"})
-        end
-    },
-    -- LSP signature
-    -- show_signature = { { 'i' }, '<C-S-Space>', function() require('lsp_signature').toggle_float_win() end },
-
-    -------------------------> AUTOCOMPLETE SHORTCUTS (CMP) <---------------------------------------------------
-    -- Opens the autocomplete menu Linux and MacOS
-    autocomplete_open_linux = {{'i'}, '<C-Space>', nil},
-    -- Opens the autocomplete menu Windows
-    autocomplete_open_windows = {{'i'}, '<C-n>', nil},
-    -- Closes the autocomplete
-    autocomplete_close = {{'i'}, '<Esc>', nil},
-    -- Confirms the selected suggestion
-    autocomplete_confirm = {{'i'}, '<Enter>', nil},
-    -- Move up in the menu
-    autocomplete_up_move = {{'i'}, '<S-Tab>', nil},
-    -- Move down in the menu
-    autocomplete_down_move = {{'i'}, '<Tab>', nil},
-    -- Move up in the documentation
-    autocomplete_move_up_docs = {{'i'}, '<C-Up>', nil},
-    -- Move down in the documentation
-    autocomplete_move_down_docs = {{'i'}, '<C-Down>', nil}
-}
-
---------------------------------> CREATES THE COMMANDS ACCORDING TO THE KEYMAPS TABLE <------------------------------------------------
-
-for key, value in pairs(KEYMAPS) do
-    local mode = value[1]
-    local keymap = value[2]
-    local command = value[3]
-
-    if command ~= nil then
-        vim.keymap.set(mode, keymap, command, {noremap = true})
-    end
-end
+_G.KEYMAPS = M
+return M

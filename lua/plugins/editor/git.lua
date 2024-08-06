@@ -1,3 +1,7 @@
+local globals = require("globals")
+local GIT_SYMBOLS = globals.GIT_SYMBOLS
+local GIT_INFO = globals.GIT_INFO
+
 return {
     {
         'lewis6991/gitsigns.nvim',

@@ -1,3 +1,6 @@
+local globals = require("globals")
+local ALPHA = globals.ALPHA
+
 return {
     'goolord/alpha-nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
