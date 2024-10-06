@@ -2,7 +2,7 @@
 ||                     NEOVIM.CONFIG                     ||
 ===========================================================
 
-CONFIG VERSION v4.8
+CONFIG VERSION v5.5.0
 NVIM v0.10.1
 LuaJIT 2.1.0-beta3
 ENTRY POINT init.lua

@@ -27,8 +27,7 @@ M.BACKGROUND_TRANSPARENT = false
 ---19. gruvbox
 ---20. everforest
 ---21. nord
-M.THEME = "catppuccin-mocha"
-
+M.THEME = "kanagawa"
 
 -- Configurations for the optimization libreries -------------------------------
 
@@ -38,9 +37,9 @@ M.THEME = "catppuccin-mocha"
 ---3  max -> It will clean the buffers when the number of buffers reaches the maximum limit.
 ---3  manual -> It will clean the buffers manually.
 M.OPTIMIZE_CLEAN_BUFFERS_MODE = "timer"
-M.OPTIMIZE_CLEAN_BUFFERS_TIMER = 30  -- min
+M.OPTIMIZE_CLEAN_BUFFERS_TIMER = 30 -- min
 M.OPTIMIZE_CLEAN_BUFFERS_LIMIT = 100 -- limit of buffers
-M.OPTIMIZE_CLEAN_BUFFERS_MAX = 100   -- max limit of buffers
+M.OPTIMIZE_CLEAN_BUFFERS_MAX = 100 -- max limit of buffers
 
 ---This variable defines the artificial intelligence assistant for code that will be used by the editor, it has multiple values
 -- - Codeium
@@ -70,8 +69,8 @@ M.COPILOT_IN_LINE = true
 M.STATUSBAR = {
     theme = 'auto',
     type = "simple",
-    separator = { left = '', right = '' },
-    decorator = { left = '', right = '' },
+    separator = {left = '', right = ''},
+    decorator = {left = '', right = ''},
     information = {
         lsp_clients_names = false,
         lsp_clients_number = true,
@@ -94,7 +93,7 @@ M.FILEBAR = {
 
 ---This variable stores the front drawing ASCII that can be displayed when neovim is started.
 ---It is imported from the drawing file saved in the neovim configuration.
-M.ALPHA = require("utils.drawings").min_kali
+M.ALPHA = require("utils.drawings").min_hydra
 
 ---This variable defines the search pattern to search ALL in the code.
 ---
@@ -109,7 +108,7 @@ M.TODO_PATTERN = [[.*(KEYWORDS).*]]
 ---The sings property defines whether to use icons at the side of the comment.
 M.TODO_ICONS = {
     signs = true, -- Defines whether icons will be used
-    type = "fg",  -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty. (wide and wide_bg is the same as bg, but will also highlight surrounding characters, wide_fg acts accordingly but with fg)
+    type = "fg", -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty. (wide and wide_bg is the same as bg, but will also highlight surrounding characters, wide_fg acts accordingly but with fg)
     fix = "",
     todo = "",
     hack = "󰈸",
@@ -146,8 +145,8 @@ _G.ICONS = {
     cmp_db = "", -- Icon representing database suggestions
     cmp_codeium = "", -- Icon representing codeium artificial intelligence autocompletion
     cmp_supermaven = "", -- Icon que representa a supermaven el asistente de inteligencia artificial
-    copilot = { enable = "", disable = "", warning = "" }, -- Icons representing the copilot status
-    git = { add = "", removed = "", modified = "" }, -- Icons indicating the status of git changes
+    copilot = {enable = "", disable = "", warning = ""}, -- Icons representing the copilot status
+    git = {add = "", removed = "", modified = ""}, -- Icons indicating the status of git changes
     spinner = {
         "⠿", "⠞", "⠇", "⠑", "⠝", "⠞", "⠎", "⠕", "⠍", "⠑",
         "⠋"
@@ -246,7 +245,7 @@ M.CMP_BORDER = true
 ---13 cyber
 ---14 pixel
 ---15 pixel2
-M.CMP_BORDER_TYPE = "japan"
+M.CMP_BORDER_TYPE = "default"
 
 ---This table contains the list of LSP clients to be installed automatically.
 _G.LSP_CLIENTS = {
@@ -268,59 +267,67 @@ _G.LSP_CLIENTS = {
 _G.PARAMETER_HIGHLIGHTING = true
 
 ---This variable indicates which file types will be excluded from being formatted with neoformat and the default LSP formatting will be used.
-_G.EXCLUDE_FORMATTERS_FILES = { "lua", "vim", "vimscript" }
+_G.EXCLUDE_FORMATTERS_FILES = {"lua", "vim", "vimscript"}
 
 ---This variable indicates the order of the code formats to be used for each language.
 ---In this table you can easily configure the formatter.
 ---You can search the neoformat documentation: https://github.com/sbdchd/neoformat to find out which formatters are supported.
 _G.CODE_FORMATTERS = {
-    python = { 'black' },
-    javascript = { 'prettier' },
-    typescript = { 'prettier' },
-    html = { 'prettier' },
-    css = { 'prettier' },
-    scss = { 'prettier' },
-    javascriptreact = { 'prettier' },
-    typescriptreact = { 'prettier' },
-    json = { 'prettier' },
-    markdown = { 'prettier' },
-    xml = { 'prettier' },
-    yaml = { 'prettier' },
-    java = { 'prettier' },
-    kotlin = { 'prettier' },
-    less = { 'prettier' },
-    php = { 'prettier' },
-    astro = { 'prettier' },
-    ruby = { 'prettier' },
-    lua = { 'luaformatter' },
-    cpp = { 'clangformat' },
-    c = { 'clangformat' },
-    csharp = { 'clangformat' },
-    arduino = { 'clangformat' },
-    objc = { 'clangformat' },
-    go = { 'gofmt' },
-    assembly = { 'asmfmt' },
-    bazel = { 'buildifier' },
-    cmake = { 'cmake_format' },
-    csv = { 'prettydiff' },
-    dart = { 'dartfmt' },
-    erlang = { 'erlfmt' },
-    graphql = { 'prettier' },
-    toml = { 'taplo' },
-    htmldjango = { 'djlint' },
-    vue = { 'prettier' },
-    swift = { 'Swiftformat' },
-    sql = { 'sqlfmt' },
-    rust = { 'rustfmt' },
-    sass = { 'stylelint' },
-    pug = { 'pug-beautifier' },
-    zsh = { 'shfmt' },
-    svelte = { 'prettierd' },
-    ps1 = { 'PSScriptAnalyzer' },
-    prisma = { 'prettier' },
-    jsonc = { 'prettier' },
-    blade = { 'blade-formatter' }
+    python = {'black'},
+    javascript = {'prettier'},
+    typescript = {'prettier'},
+    html = {'prettier'},
+    css = {'prettier'},
+    scss = {'prettier'},
+    javascriptreact = {'prettier'},
+    typescriptreact = {'prettier'},
+    json = {'prettier'},
+    markdown = {'prettier'},
+    xml = {'prettier'},
+    yaml = {'prettier'},
+    java = {'prettier'},
+    kotlin = {'prettier'},
+    less = {'prettier'},
+    php = {'prettier'},
+    astro = {'prettier'},
+    ruby = {'prettier'},
+    lua = {'luaformatter'},
+    cpp = {'clangformat'},
+    c = {'clangformat'},
+    csharp = {'clangformat'},
+    arduino = {'clangformat'},
+    objc = {'clangformat'},
+    go = {'gofmt'},
+    assembly = {'asmfmt'},
+    bazel = {'buildifier'},
+    cmake = {'cmake_format'},
+    csv = {'prettydiff'},
+    dart = {'dartfmt'},
+    erlang = {'erlfmt'},
+    graphql = {'prettier'},
+    toml = {'taplo'},
+    htmldjango = {'djlint'},
+    vue = {'prettier'},
+    swift = {'Swiftformat'},
+    sql = {'sqlfmt'},
+    rust = {'rustfmt'},
+    sass = {'stylelint'},
+    pug = {'pug-beautifier'},
+    zsh = {'shfmt'},
+    svelte = {'prettierd'},
+    ps1 = {'PSScriptAnalyzer'},
+    prisma = {'prettier'},
+    jsonc = {'prettier'},
+    blade = {'blade-formatter'}
 }
+
+--- Messages
+M.LSP_ALERTS_RUNNING = false
+
+--- System
+
+---This variable indicates whether you want to update the configuration of neovim when you open it.
+M.AUTO_UPDATE = true
 
 _G.GLOBALS = M
 

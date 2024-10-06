@@ -1,0 +1,6 @@
+M = {}
+
+M.INFORMATION = {VERSION_CONFIG = "5.5.0"}
+
+_G.INFORMATION = M
+

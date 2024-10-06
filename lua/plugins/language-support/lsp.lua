@@ -416,6 +416,12 @@ return {
             root_dir = UTILS.current_path
         })
 
+
+        -- Prisma
+        require 'lspconfig'.prismals.setup {
+            root_dir = UTILS.current_path
+        }
+
         --------------------------------------------> EXTRA STYLE SETTINGS <----------------------------------------------
 
         vim.diagnostic.config({
