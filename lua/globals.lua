@@ -327,7 +327,7 @@ M.LSP_ALERTS_RUNNING = false
 --- System
 
 ---This variable indicates whether you want to update the configuration of neovim when you open it.
-M.AUTO_UPDATE = true
+M.AUTO_UPDATE = false
 
 _G.GLOBALS = M
 

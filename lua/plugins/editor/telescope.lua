@@ -11,6 +11,9 @@ return {
         --- Confugurations basics for telescope
         telescope.setup({
             defaults = {
+                preview = {
+      treesitter = false
+    },
                 vimgrep_arguments = {
                     "rg",
                     "--color=never",
